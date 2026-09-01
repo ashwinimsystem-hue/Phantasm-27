@@ -1,7 +1,7 @@
 /* PHANTASM'27 — REGISTRATION FINAL UI */
 body:has(.Formcontainer) .Formcontainer{width:min(1120px,calc(100% - 40px))!important;margin:26px auto 60px!important;padding:30px!important;border:1px solid rgba(217,164,65,.24)!important;border-radius:18px!important;background:linear-gradient(180deg,rgba(31,18,8,.5),rgba(10,7,5,.98) 22%)!important;box-shadow:0 24px 64px rgba(0,0,0,.42)!important}
 
-/* Use a CSS-rendered canonical title so a malformed source glyph cannot appear. */
+/* Canonical registration title */
 body:has(.Formcontainer) .Formcontainer > h1,body:has(.Formcontainer) .Formcontainer > h2,body:has(.Formcontainer) .Registertitle,body:has(.Formcontainer) .register-title{font-size:0!important;text-align:center!important;margin:0 0 10px!important;color:#f3e6ca!important}
 body:has(.Formcontainer) .Formcontainer > h1::after,body:has(.Formcontainer) .Formcontainer > h2::after,body:has(.Formcontainer) .Registertitle::after,body:has(.Formcontainer) .register-title::after{content:"PHANTASM'27";display:block;font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,4vw,3.35rem);line-height:1.1;letter-spacing:.04em;color:#f3e6ca}
 
@@ -14,7 +14,7 @@ body:has(.Formcontainer) .Formcontainer :where(.event-filters,.event-tabs,.categ
 body:has(.Formcontainer) .Formcontainer :where(.event-list,.events-list,.event-grid,.events-grid){grid-column:1/-1!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important;max-height:500px!important;overflow:auto!important;padding:2px 3px 5px!important}
 body:has(.Formcontainer) .Formcontainer :where(.event-card,.event-option,.event-item){min-height:120px!important;padding:17px!important;border:1px solid rgba(217,164,65,.16)!important;border-radius:12px!important;background:linear-gradient(145deg,rgba(30,21,12,.72),rgba(10,7,5,.95))!important;box-sizing:border-box!important}
 
-/* Gender is never a fee condition. Never strike event fees. */
+/* Both Male and Female use the same standard event fee. No gender pricing. */
 body:has(.Formcontainer) .Formcontainer :where(.event-card,.event-option,.event-item) del,body:has(.Formcontainer) .Formcontainer :where(.event-card,.event-option,.event-item) s,body:has(.Formcontainer) .Formcontainer :where(.event-card,.event-option,.event-item) strike{text-decoration:none!important;text-decoration-line:none!important;color:#e8bd67!important;opacity:1!important}
 body:has(.Formcontainer) .Formcontainer :where(.fee,.price,.amount,.registration-fee,.event-fee,.event-price){color:#e8bd67!important;font-weight:900!important;text-decoration:none!important;text-decoration-line:none!important;opacity:1!important}
 body:has(.Formcontainer) .Formcontainer :where(.gender-fee,.gender-price,.male-fee,.female-fee,.male-price,.female-price,[data-gender-fee],[data-gender-price]){display:none!important}
