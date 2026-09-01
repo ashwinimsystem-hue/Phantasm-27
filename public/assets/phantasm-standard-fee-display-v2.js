@@ -1,7 +1,7 @@
-/* PHANTASM'27 — STANDARD EVENT FEE DISPLAY v5
-   Registration display rule: gender is NEVER a pricing input.
-   Every event shows its standard participant fee. Legacy FREE/zero labels are
-   replaced with the event's standard fee. Empty/orphan fee rows are removed.
+/* PHANTASM'27 — STANDARD EVENT FEE DISPLAY v6
+   Gender is participant information only. Male and female registrations use
+   the same canonical standard event fee. This script only repairs stale
+   presentation labels; payment totals remain governed by /api/pricing.js.
 */
 (function(){
   const isRegister=()=>/\/register\/?$/i.test(location.pathname);
@@ -15,37 +15,40 @@
     ['carrom',100],['chess',50],['bachelor samayal',100]
   ];
   const feeFor=name=>{const n=norm(name);const hit=FEES.find(([k])=>n===k||n.includes(k)||k.includes(n));return hit?hit[1]:null};
-  const titleFor=card=>{
-    const nodes=card.querySelectorAll('h1,h2,h3,h4,h5,h6,strong,b,[class*="title" i],[class*="name" i]');
-    for(const n of nodes){const t=n.textContent.trim();if(feeFor(t)!=null)return t}
-    return '';
-  };
+  const titleFor=card=>{for(const n of card.querySelectorAll('h1,h2,h3,h4,h5,h6,strong,b,[class*="title" i],[class*="name" i]')){const t=n.textContent.trim();if(feeFor(t)!=null)return t}return ''};
+  function repairOrphanFees(root){
+    for(const el of root.querySelectorAll('*')){
+      if(!el.isConnected||el.children.length||el.tagName==='SCRIPT'||el.tagName==='STYLE')continue;
+      const t=el.textContent.replace(/\s+/g,' ').trim();
+      if(!/^fee\s*:\s*₹?\s*100$/i.test(t))continue;
+      const parent=el.parentElement;
+      const parentText=norm(parent?.textContent||'');
+      if(!titleFor(parent) && !/advanced cnc|paper presentation|ansys|cad modeling|glider|line follower|technical quiz|water rocketry|free fire|carrom|chess|ipl auction|bachelor samayal/.test(parentText)){
+        (parent?.children?.length===1?parent:el).remove();
+      }
+    }
+  }
   function cleanCard(card){
     const title=titleFor(card), fee=feeFor(title); if(fee==null)return;
-    const leaves=[...card.querySelectorAll('*')].filter(n=>!n.children.length);
-    for(const n of leaves){
-      const t=n.textContent.replace(/\s+/g,' ').trim(); if(!t)continue;
+    for(const n of card.querySelectorAll('*')){
+      if(n.children.length)continue;
+      const t=n.textContent.replace(/\s+/g,' ').trim();if(!t)continue;
       if(/^free$/i.test(t)||/^(?:₹|rs\.?|inr)\s*0(?:\.00)?$/i.test(t)){n.textContent=`₹${fee}`;continue}
       if(/^fee\s*:/i.test(t)&&/\bfree\b/i.test(t)){const a=amount(t);n.textContent=a?`Fee: ₹${a}`:`Fee: ₹${fee}`;continue}
-      if(/^fee\s*:\s*₹?\s*$/i.test(t)||/^₹\s*$/i.test(t)||/^rs\.?\s*$/i.test(t))n.remove();
+      if(/^fee\s*:\s*₹?\s*$/i.test(t)||/^₹\s*$/.test(t))n.remove();
     }
-    // Remove a stray fee-only sibling that contains no event name/content.
-    [...card.children].forEach(child=>{
-      const text=child.textContent.replace(/\s+/g,' ').trim();
-      if(!text)return;
-      if(/^(?:fee\s*:\s*)?(?:₹|rs\.?|inr)?\s*100\s*$/i.test(text)&&!titleFor(child))child.remove();
-    });
   }
   function fix(root){
     if(!root||!isRegister())return;
-    const candidates=root.querySelectorAll('article,li,section,[class*="event-card" i],[class*="eventCard" i],[class*="workshop" i],[class*="event-item" i]');
-    candidates.forEach(cleanCard);
+    repairOrphanFees(root);
+    root.querySelectorAll('article,li,section,[class*="event-card" i],[class*="eventCard" i],[class*="event-item" i],[class*="workshop" i]').forEach(cleanCard);
+    repairOrphanFees(root);
   }
   function start(){
-    if(!isRegister())return; const root=document.getElementById('root');if(!root)return;
+    if(!isRegister())return;const root=document.getElementById('root');if(!root)return;
     fix(root);[300,800,1600,3000].forEach(t=>setTimeout(()=>fix(root),t));
-    if(root.dataset.standardFeeObserver)return;root.dataset.standardFeeObserver='true';
-    let timer;new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(()=>fix(root),80)}).observe(root,{childList:true,subtree:true});
+    if(root.dataset.standardFeeObserver)return;root.dataset.standardFeeObserver='true';let timer;
+    new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(()=>fix(root),80)}).observe(root,{childList:true,subtree:true});
   }
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start,{once:true}):start();
 })();
