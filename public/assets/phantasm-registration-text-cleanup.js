@@ -1,31 +1,47 @@
-/* PHANTASM'27 — registration text cleanup */
-(function(){
-  const TITLE="PHANTASM'27";
-  const BAD=/\bFREE\b/gi;
-  const REGISTER_FREE=/register\s+for\s+free/gi;
-  function clean(root=document){
-    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
-    const nodes=[];
-    while(walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach(n=>{
-      const p=n.parentElement;
-      if(!p || ['SCRIPT','STYLE','NOSCRIPT','OPTION'].includes(p.tagName)) return;
-      let t=n.nodeValue;
-      if(REGISTER_FREE.test(t)) t=t.replace(REGISTER_FREE,'Register');
-      BAD.lastIndex=0;
-      if(BAD.test(t)) t=t.replace(BAD,'').replace(/\s{2,}/g,' ').replace(/:\s*$/,'');
-      if(t!==n.nodeValue) n.nodeValue=t;
+/* PHANTASM'27 — safe registration UI text cleanup */
+(function () {
+  const TITLE = "PHANTASM'27";
+  const SKIP = new Set(['SCRIPT','STYLE','NOSCRIPT','OPTION','TEXTAREA']);
+
+  function cleanTextNode(node) {
+    if (!node || !node.parentElement || SKIP.has(node.parentElement.tagName)) return;
+    const text = node.nodeValue || '';
+    if (!/register\s+for\s+free|\bFREE\b/i.test(text)) return;
+    let next = text.replace(/register\s+for\s+free/gi, 'Register');
+    // Remove standalone FREE labels, but do not mutate words such as FREEFORM.
+    next = next.replace(/\bFREE\b/gi, '').replace(/[ \t]{2,}/g, ' ').trim();
+    if (next !== text.trim() && next) node.nodeValue = next;
+    else if (!next && /\bFREE\b/i.test(text)) node.nodeValue = '';
+  }
+
+  function fix() {
+    document.title = TITLE;
+    const root = document.getElementById('root') || document.body;
+    if (!root) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(cleanTextNode);
+    root.querySelectorAll('h1,h2,h3,h4,[class*="title" i]').forEach((el) => {
+      const t = (el.textContent || '').trim();
+      if (/^PHANTASM(?:.|\s)*(?:27|2k27)?$/i.test(t) || /^PHANTASM/i.test(t)) {
+        el.textContent = TITLE;
+      }
     });
   }
-  function fixTitle(){
-    document.querySelectorAll('.Formcontainer h1,.Formcontainer h2,.Formcontainer h3,.Registertitle,.register-title').forEach(el=>{
-      const text=(el.textContent||'').trim();
-      if(/PHANTASM/i.test(text)) el.textContent=TITLE;
+
+  const start = () => {
+    fix();
+    const root = document.getElementById('root') || document.body;
+    if (!root) return;
+    let timer = 0;
+    const observer = new MutationObserver(() => {
+      clearTimeout(timer);
+      timer = setTimeout(fix, 30);
     });
-    document.title="PHANTASM'27";
-  }
-  function run(){fixTitle();clean();}
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true}); else run();
-  const obs=new MutationObserver(()=>{fixTitle();clean();});
-  obs.observe(document.documentElement,{subtree:true,childList:true,characterData:true});
+    observer.observe(root, { childList: true, subtree: true, characterData: true });
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
+  else start();
 })();
