@@ -1,7 +1,6 @@
-/* PHANTASM'27 — STANDARD FEE DISPLAY v7
-   Keep one authoritative visible fee per event card.
-   Gender never changes pricing. Remove stale crossed-out SOLO/TEAM variants,
-   then show the canonical fee for the selected participation mode.
+/* PHANTASM'27 — STANDARD FEE DISPLAY v8
+   One standard fee for both Male and Female participants.
+   Workshops intentionally have no fee display.
 */
 (function(){
   const isRegister=()=>/\/register\/?$/i.test(location.pathname);
@@ -11,9 +10,10 @@
     'paper presentation':200,'ansys simulation challenge':200,'ansys simulation':200,'cad modeling':200,'cad modelling':200,
     'glider competition':200,'glider':200,'line follower robot':300,'line follower':300,'technical quiz':100,
     'water rocketry':200,'water rocket':200,'free fire':100,'freefire':100,'ipl auction':100,'college ipl auction':100,
-    'carrom':100,'chess':50,'bachelor samayal':100
+    'carrom':100,'chess':50
   };
   const feeFor=name=>{const n=norm(name); const hit=Object.keys(FEES).find(k=>n===k||n.includes(k)||k.includes(n)); return hit?FEES[hit]:null;};
+  const isWorkshop=card=>/workshop|bachelor\s+samayal/i.test((card.className||'')+' '+(card.textContent||''));
   const findTitle=card=>{
     for(const el of card.querySelectorAll('h1,h2,h3,h4,h5,h6,strong,b,[class*="title" i],[class*="name" i]')){
       const t=el.textContent.trim(); if(feeFor(t)!=null) return t;
@@ -22,10 +22,16 @@
     const key=Object.keys(FEES).find(k=>text.includes(k)); return key||'';
   };
   const leafNodes=el=>[...el.querySelectorAll('*')].filter(n=>n.children.length===0 && !['SCRIPT','STYLE','OPTION'].includes(n.tagName));
+  function removeWorkshopFee(card){
+    leafNodes(card).forEach(n=>{
+      const t=n.textContent.replace(/\s+/g,' ').trim();
+      if(/^fee\s*:/i.test(t)||/^₹\s*\d/i.test(t)||/^free$/i.test(t)) n.remove();
+    });
+  }
   function cleanCard(card){
+    if(isWorkshop(card)){ removeWorkshopFee(card); return; }
     const title=findTitle(card), fee=feeFor(title); if(fee==null)return;
     const leaves=leafNodes(card);
-    // Remove stale fee text that contains crossed-out SOLO/TEAM pricing.
     leaves.forEach(n=>{
       const t=n.textContent.replace(/\s+/g,' ').trim();
       if(!t)return;
@@ -39,8 +45,6 @@
       else if(/^free$/i.test(t)) n.textContent=`₹${fee}`;
       else if(/^₹\s*0(?:\.00)?$/i.test(t)) n.textContent=`₹${fee}`;
     });
-    // Crossed-out price fragments can sit in separate leaf nodes. If a card has
-    // a fee label, replace the entire visible fee row with one canonical value.
     const feeRows=[...card.querySelectorAll('p,div,span,small,strong')].filter(el=>{
       const t=el.textContent.replace(/\s+/g,' ').trim();
       return /^(fee\s*:)/i.test(t) || (/solo/i.test(t)&&/team/i.test(t)&&/₹/.test(t));
@@ -49,7 +53,6 @@
       if(el.children.length===0) el.textContent=`Fee: ₹${fee}`;
       else if(/solo/i.test(el.textContent)&&/team/i.test(el.textContent)) el.textContent=`Fee: ₹${fee}`;
     });
-    // Never show gender-specific or duplicated fee rows.
     [...card.querySelectorAll('*')].filter(el=>el.children.length===0).forEach(el=>{
       const t=norm(el.textContent);
       if(/^(male|female)\s*(fee|price)\s*[:\-]?/.test(t)) el.remove();
@@ -73,7 +76,7 @@
   function start(){
     if(!isRegister())return; const root=document.getElementById('root'); if(!root)return;
     fix(root); [200,600,1200,2500].forEach(t=>setTimeout(()=>fix(root),t));
-    if(root.dataset.feeDisplayV7)return; root.dataset.feeDisplayV7='true'; let timer=null;
+    if(root.dataset.feeDisplayV8)return; root.dataset.feeDisplayV8='true'; let timer=null;
     new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(()=>fix(root),120)}).observe(root,{childList:true,subtree:true});
   }
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start,{once:true}):start();
