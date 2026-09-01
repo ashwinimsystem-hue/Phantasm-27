@@ -1,0 +1,150 @@
+/* PHANTASM'27 — HOME REGISTER CTA + REGISTRATION UI v1
+   Visual layer only. Fees are intentionally independent of gender.
+*/
+
+/* ================= HOME REGISTER BUTTON ================= */
+body:has(.Formcontainer) .home-register-button,
+body:not(:has(.Formcontainer)):has(a[href*="register" i]) a[href*="register" i],
+body:not(:has(.Formcontainer)):has(button) button[class*="register" i],
+body:not(:has(.Formcontainer)):has(button) button:where([data-action*="register" i]){
+  min-height:58px !important;
+  padding:15px 34px !important;
+  border-radius:12px !important;
+  border:1px solid rgba(240,207,139,.95) !important;
+  background:linear-gradient(135deg,#f4d58f 0%,#d9a441 55%,#b87b1f 100%) !important;
+  color:#241703 !important;
+  -webkit-text-fill-color:#241703 !important;
+  font-weight:900 !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase !important;
+  box-shadow:0 10px 28px rgba(217,164,65,.23),inset 0 1px 0 rgba(255,255,255,.35) !important;
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease !important;
+}
+
+body:not(:has(.Formcontainer)):has(a[href*="register" i]) a[href*="register" i]:hover,
+body:not(:has(.Formcontainer)):has(button) button[class*="register" i]:hover,
+body:not(:has(.Formcontainer)):has(button) button:where([data-action*="register" i]):hover{
+  transform:translateY(-2px) !important;
+  filter:brightness(1.06) !important;
+  box-shadow:0 15px 34px rgba(217,164,65,.34),inset 0 1px 0 rgba(255,255,255,.42) !important;
+}
+
+/* ================= REGISTRATION PAGE ================= */
+.Formcontainer{
+  width:min(1120px,calc(100% - 32px)) !important;
+  max-width:1120px !important;
+  margin:32px auto 64px !important;
+  padding:34px 38px 42px !important;
+  border:1px solid rgba(217,164,65,.22) !important;
+  border-radius:20px !important;
+  background:linear-gradient(145deg,rgba(217,164,65,.065),rgba(14,10,7,.96) 44%,rgba(7,5,4,.98)) !important;
+  box-shadow:0 28px 80px rgba(0,0,0,.38),inset 0 1px 0 rgba(240,207,139,.05) !important;
+}
+
+.Formcontainer input,
+.Formcontainer select,
+.Formcontainer textarea{
+  min-height:54px !important;
+  padding:12px 15px !important;
+  border:1px solid rgba(217,164,65,.22) !important;
+  border-radius:11px !important;
+  background:rgba(4,3,2,.78) !important;
+  color:#f3e6c8 !important;
+  outline:none !important;
+  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease !important;
+}
+.Formcontainer input:focus,
+.Formcontainer select:focus,
+.Formcontainer textarea:focus{
+  border-color:#d9a441 !important;
+  background:rgba(10,7,5,.94) !important;
+  box-shadow:0 0 0 4px rgba(217,164,65,.08) !important;
+}
+.Formcontainer label,
+.Formcontainer .form-label,
+.Formcontainer .field-label{
+  color:#e7d3ad !important;
+  font-weight:700 !important;
+}
+
+.Formcontainer .section-title,
+.Formcontainer h2,
+.Formcontainer h3{
+  color:#f0cf8b !important;
+}
+
+/* Equal fee: keep gender visible only as participant information, never as a price switch. */
+.Formcontainer [class*="gender" i] [class*="fee" i],
+.Formcontainer [class*="gender" i] [class*="price" i],
+.Formcontainer [class*="female" i] [class*="fee" i],
+.Formcontainer [class*="male" i] [class*="fee" i]{
+  display:none !important;
+}
+
+/* Fee summary/card */
+.Formcontainer :where(.price,.amount,.fee,.registration-fee,.event-price,.event-fee,.total,.total-amount){
+  color:#f0cf8b !important;
+  font-weight:800 !important;
+}
+
+.Formcontainer :where(.fee-note,.pricing-note,.payment-note){
+  color:#b8aa8d !important;
+}
+
+/* Primary registration action */
+.Formcontainer button[type='submit'],
+.Formcontainer input[type='submit'],
+.Formcontainer .submit-btn,
+.Formcontainer .register-btn,
+.Formcontainer button[class*='register']{
+  width:min(100%,460px) !important;
+  min-height:62px !important;
+  margin:28px auto 4px !important;
+  padding:16px 34px !important;
+  border:1px solid #f0cf8b !important;
+  border-radius:12px !important;
+  background:linear-gradient(135deg,#f4d58f 0%,#d9a441 52%,#b87b1f 100%) !important;
+  color:#241703 !important;
+  -webkit-text-fill-color:#241703 !important;
+  font-size:1rem !important;
+  font-weight:900 !important;
+  letter-spacing:.1em !important;
+  text-transform:uppercase !important;
+  box-shadow:0 12px 32px rgba(217,164,65,.24),inset 0 1px 0 rgba(255,255,255,.38) !important;
+}
+.Formcontainer button[type='submit']:hover,
+.Formcontainer input[type='submit']:hover,
+.Formcontainer .submit-btn:hover,
+.Formcontainer .register-btn:hover,
+.Formcontainer button[class*='register']:hover{
+  transform:translateY(-2px) !important;
+  filter:brightness(1.05) !important;
+  box-shadow:0 17px 38px rgba(217,164,65,.34),inset 0 1px 0 rgba(255,255,255,.44) !important;
+}
+
+@media(max-width:768px){
+  .Formcontainer{
+    width:calc(100% - 20px) !important;
+    margin:18px auto 36px !important;
+    padding:24px 18px 30px !important;
+    border-radius:16px !important;
+  }
+  .Formcontainer form,
+  .Formcontainer .form-grid,
+  .Formcontainer .fields,
+  .Formcontainer .row,
+  .Formcontainer .form-row,
+  .Formcontainer [class*='row']{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:16px !important;
+  }
+  .Formcontainer button[type='submit'],
+  .Formcontainer input[type='submit'],
+  .Formcontainer .submit-btn,
+  .Formcontainer .register-btn,
+  .Formcontainer button[class*='register']{
+    width:100% !important;
+    min-height:58px !important;
+  }
+}
