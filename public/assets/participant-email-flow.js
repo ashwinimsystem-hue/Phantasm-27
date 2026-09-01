@@ -1,169 +1,55 @@
-/* PHANTASM'27 — RETURNING PARTICIPANT EMAIL FLOW
-   Existing email is treated as a returning participant, not an error.
-   Shows current events and lets the participant continue with additional events.
-*/
+/* PHANTASM'27 — RETURNING PARTICIPANT FLOW v2
+   Existing email is a continuation path, not a dead end. The API currently
+   returns 409 for an already-registered email, so both 200 and 409 are handled. */
 (function () {
-  const normalize = (value) => String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
-  const isRegisterPage = () => /\/register\/?$/i.test(window.location.pathname);
+  const normalize = (v) => String(v || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  const isRegister = () => /\/register\/?$/i.test(window.location.pathname);
   let lastEmail = '';
-  let timer = null;
+  let timer;
 
-  const style = document.createElement('style');
-  style.textContent = `
-    .phantasm-returning-participant {
-      width: min(100%, 720px);
-      margin: 10px auto 18px;
-      padding: 14px 16px;
-      border: 1px solid rgba(217,164,65,.28);
-      border-radius: 12px;
-      background: linear-gradient(145deg, rgba(124,31,31,.10), rgba(20,13,9,.72));
-      color: #f3e6c8;
-      font-family: 'Source Sans 3', Arial, sans-serif;
-      box-sizing: border-box;
-    }
-    .phantasm-returning-participant .prp-title {
-      margin: 0 0 6px;
-      color: #f0cf8b;
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-    }
-    .phantasm-returning-participant .prp-meta {
-      margin: 0 0 10px;
-      font-size: .82rem;
-      color: #cdbf9e;
-    }
-    .phantasm-returning-participant .prp-events {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .phantasm-returning-participant .prp-events li {
-      padding: 6px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(217,164,65,.25);
-      background: rgba(217,164,65,.06);
-      color: #f3e6c8;
-      font-size: .76rem;
-      line-height: 1.2;
-    }
-    .phantasm-returning-participant .prp-note {
-      margin: 10px 0 0;
-      color: #cdbf9e;
-      font-size: .78rem;
-    }
-    @media (max-width: 520px) {
-      .phantasm-returning-participant { padding: 12px; }
-      .phantasm-returning-participant .prp-events { display: grid; grid-template-columns: 1fr; }
-    }
-  `;
-  document.head.appendChild(style);
+  function findInput(root) { return root.querySelector('input[type="email"],input[name*="email" i],input[placeholder*="email" i]'); }
+  function findForm(input) { return input?.closest('form,.Formcontainer,[class*="form"]') || input?.parentElement?.parentElement; }
 
-  function findEmailInput(root) {
-    return root.querySelector('input[type="email"], input[name*="email" i], input[placeholder*="email" i]');
-  }
-
-  function findForm(input) {
-    return input?.closest('form, .Formcontainer, [class*="form"]') || input?.parentElement?.parentElement || null;
-  }
-
-  function hideDuplicateWarnings(form) {
+  function panel(form, returning, data) {
     if (!form) return;
-    Array.from(form.querySelectorAll('*')).forEach((el) => {
-      const text = normalize(el.textContent);
-      if (text === 'this email is already registered.' || text === 'email is already registered.' || text.includes('this email is already registered')) {
-        el.style.display = 'none';
-      }
-    });
+    let el = form.querySelector('.phantasm-returning-participant');
+    if (!returning) { el?.remove(); return; }
+    if (!el) {
+      el = document.createElement('section');
+      el.className = 'phantasm-returning-participant';
+      el.setAttribute('aria-live', 'polite');
+      const input = findInput(form);
+      const host = input?.closest('.form-group,.field,.input-group') || input?.parentElement;
+      (host?.parentElement || form).insertBefore(el, host?.nextSibling || null);
+    }
+    el.innerHTML = `<h3 class="prp-title">Welcome back</h3><p class="prp-meta">${data?.name ? `${data.name} · ` : ''}Existing registration found</p><p class="prp-note">Continue below to add or review events. Your existing registration is kept; fees are calculated only from the selected events and never from gender.</p>`;
   }
 
-  function renderPanel(form, data) {
-    if (!form) return;
-    let panel = form.querySelector('.phantasm-returning-participant');
-    if (!data?.registered) {
-      panel?.remove();
-      return;
-    }
-    if (!panel) {
-      panel = document.createElement('section');
-      panel.className = 'phantasm-returning-participant';
-      panel.setAttribute('aria-live', 'polite');
-      const input = findEmailInput(form);
-      const host = input?.closest('.form-group, .field, .input-group') || input?.parentElement;
-      (host?.parentElement || form).insertBefore(panel, host?.nextSibling || null);
-    }
-    panel.innerHTML = '';
-
-    const title = document.createElement('h3');
-    title.className = 'prp-title';
-    title.textContent = 'Welcome back';
-
-    const meta = document.createElement('p');
-    meta.className = 'prp-meta';
-    meta.textContent = data.registrationId
-      ? `${data.name ? `${data.name} · ` : ''}Registration ${data.registrationId}`
-      : 'Your previous registration was found';
-
-    const list = document.createElement('ul');
-    list.className = 'prp-events';
-    (Array.isArray(data.events) ? data.events : []).forEach((event) => {
-      const li = document.createElement('li');
-      li.textContent = event;
-      list.appendChild(li);
-    });
-
-    const note = document.createElement('p');
-    note.className = 'prp-note';
-    note.textContent = 'You can select additional events below. Your existing registration will be kept and only new events will be added.';
-
-    panel.append(title, meta, list, note);
-    hideDuplicateWarnings(form);
-  }
-
-  async function checkEmail(input) {
+  async function check(input) {
     const email = String(input.value || '').trim().toLowerCase();
-    if (!email || email === lastEmail) return;
+    if (!email || email === lastEmail || !email.includes('@')) return;
     lastEmail = email;
-    if (!email.includes('@')) return;
     try {
-      const response = await fetch('/api/check-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      const data = await response.json();
-      renderPanel(findForm(input), data);
-    } catch (error) {
-      console.error('[participant-email-flow]', error);
-    }
+      const response = await fetch('/api/check-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+      const data = await response.json().catch(() => ({}));
+      panel(findForm(input), response.status === 409 || Boolean(data.registered), data);
+    } catch (e) { console.warn('[participant-email-flow]',e); }
   }
 
   function bind(root) {
-    if (!isRegisterPage()) return;
-    const input = findEmailInput(root);
-    if (!input || input.dataset.phantasmReturningParticipantBound === 'true') return;
-    input.dataset.phantasmReturningParticipantBound = 'true';
-
-    const run = () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => checkEmail(input), 450);
-    };
-    input.addEventListener('input', run);
-    input.addEventListener('blur', run);
-    input.addEventListener('change', run);
+    if (!isRegister()) return;
+    const input = findInput(root);
+    if (!input || input.dataset.phantasmReturningBound === 'true') return;
+    input.dataset.phantasmReturningBound = 'true';
+    const run = () => { clearTimeout(timer); timer = setTimeout(() => check(input), 350); };
+    ['input','blur','change'].forEach((event) => input.addEventListener(event, run));
   }
 
   function start() {
-    const root = document.getElementById('root');
-    if (!root || !isRegisterPage()) return;
-    bind(root);
-    const observer = new MutationObserver(() => bind(root));
-    observer.observe(root, { childList: true, subtree: true });
+    const r = document.getElementById('root');
+    if (!r || !isRegister()) return;
+    bind(r);
+    new MutationObserver(() => bind(r)).observe(r,{childList:true,subtree:true});
   }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
-  else start();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',start,{once:true}); else start();
 })();

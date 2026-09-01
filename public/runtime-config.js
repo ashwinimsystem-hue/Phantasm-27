@@ -65,7 +65,6 @@ window.__VAAGAI_API_PREFIX = "/api";
     shell.dataset.cleanHome = 'true';
     shell.setAttribute('aria-label', "Phantasm '27 homepage");
 
-    // Move the actual nodes. No cloned images, no guessed asset paths.
     institution.classList.add('phantasm-mobile-hero-institution');
     institution.querySelectorAll('.inst-logo, img').forEach((img) => {
       img.classList.add('phantasm-mobile-hero-real-logo');
@@ -105,8 +104,6 @@ window.__VAAGAI_API_PREFIX = "/api";
       shell.appendChild(countdown);
     }
 
-    // Remove the remainder of the old hero composition. Keep only the shell
-    // and the decorative particle layer, if it is a direct child.
     Array.from(wrap.children).forEach((child) => {
       if (child !== shell && !child.classList.contains('particle-vignette')) child.remove();
     });
@@ -176,4 +173,68 @@ window.__VAAGAI_API_PREFIX = "/api";
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, { once: true });
   else load();
+})();
+
+/* Disabled events: Bachelor Samayal Workshop is removed from every rendered
+   event surface (event cards, registration options, admin filters, etc.).
+   The server-side canonical pricing rules also reject unknown/disabled events. */
+(function () {
+  const DISABLED = ['bachelor samayal', 'bachelor samayal workshop'];
+  const normalize = (value) => String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  const matches = (value) => DISABLED.some((name) => normalize(value).includes(name));
+
+  function removeMatch(el) {
+    if (!el || el === document.body || el === document.documentElement) return;
+    const tag = el.tagName;
+    if (tag === 'OPTION' || tag === 'BUTTON' || tag === 'A' || tag === 'LI' || tag === 'TR') {
+      el.remove();
+      return;
+    }
+
+    let node = el;
+    for (let i = 0; i < 4 && node && node !== document.body; i += 1, node = node.parentElement) {
+      const cls = normalize(node.className);
+      if (/(^|\s)(event|event-card|workshop|card|list-item|option|filter|select)(\s|$)/.test(cls)) {
+        node.remove();
+        return;
+      }
+      if (node.tagName === 'ARTICLE' || node.tagName === 'LI' || node.tagName === 'TR') {
+        node.remove();
+        return;
+      }
+    }
+
+    const text = normalize(el.textContent);
+    if (text.length <= 220) el.remove();
+  }
+
+  function clean(root = document) {
+    const elements = Array.from(root.querySelectorAll('*'));
+    elements.sort((a, b) => normalize(a.textContent).length - normalize(b.textContent).length);
+    for (const el of elements) {
+      if (!el.isConnected) continue;
+      if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') continue;
+      const text = normalize(el.textContent);
+      if (matches(text)) removeMatch(el);
+    }
+
+    root.querySelectorAll('option').forEach((option) => {
+      if (matches(option.textContent) || matches(option.value)) option.remove();
+    });
+  }
+
+  function start() {
+    clean(document);
+    if (!document.body || window.__phantasmDisabledEventObserverBound) return;
+    window.__phantasmDisabledEventObserverBound = true;
+    let timer = null;
+    const observer = new MutationObserver(() => {
+      clearTimeout(timer);
+      timer = setTimeout(() => clean(document), 60);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
+  else start();
 })();
