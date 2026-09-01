@@ -1,0 +1,311 @@
+/* PHANTASM'27 — REGISTRATION ALIGNMENT REFRESH
+   Layout direction is inspired by the reference registration page at
+   synerix26.site/register: clear vertical sections, a predictable left content
+   rail, compact form controls, tabbed event filtering, a scrollable event list,
+   and a persistent registration summary. This file intentionally does not copy
+   the reference site's visual identity, colors, typography, or branding.
+*/
+
+:root{
+  --p27-reg-max:1180px;
+  --p27-reg-gap:22px;
+  --p27-reg-line:rgba(217,164,65,.18);
+  --p27-reg-line-strong:rgba(240,207,139,.48);
+  --p27-reg-panel:rgba(12,9,7,.94);
+  --p27-reg-panel-soft:rgba(216,173,85,.035);
+  --p27-reg-text:#f2e6cd;
+  --p27-reg-muted:#aa9b7c;
+}
+
+/* Page frame */
+body:has(.Formcontainer){
+  min-width:320px;
+  overflow-x:hidden;
+}
+body:has(.Formcontainer) .Formcontainer{
+  width:min(var(--p27-reg-max),calc(100% - 56px)) !important;
+  max-width:var(--p27-reg-max) !important;
+  margin:34px auto 72px !important;
+  padding:30px 34px 36px !important;
+  border:1px solid var(--p27-reg-line) !important;
+  border-radius:18px !important;
+  background:
+    linear-gradient(180deg,rgba(216,173,85,.035),transparent 130px),
+    var(--p27-reg-panel) !important;
+  box-shadow:0 24px 70px rgba(0,0,0,.35) !important;
+}
+
+/* Preserve the existing title/link content, but make the heading area feel like
+   a dedicated first section instead of floating in the form. */
+body:has(.Formcontainer) .Formcontainer > h1,
+body:has(.Formcontainer) .Formcontainer > h2,
+body:has(.Formcontainer) .Formcontainer > h3,
+body:has(.Formcontainer) .Registertitle,
+body:has(.Formcontainer) .register-title{
+  margin:0 0 8px !important;
+  color:var(--p27-reg-text) !important;
+  text-align:left !important;
+  line-height:1.08 !important;
+  letter-spacing:.02em !important;
+}
+body:has(.Formcontainer) .Formcontainer .already-team,
+body:has(.Formcontainer) .Formcontainer .team-link,
+body:has(.Formcontainer) .register-team-link{
+  margin:0 0 26px !important;
+  text-align:left !important;
+}
+
+/* Main fields: stable, compact rail. The markup can still decide whether a
+   specific group spans multiple columns via the existing span helpers. */
+body:has(.Formcontainer) .Formcontainer form,
+body:has(.Formcontainer) .Formcontainer .form-grid,
+body:has(.Formcontainer) .Formcontainer .fields,
+body:has(.Formcontainer) .registration-form,
+body:has(.Formcontainer) .register-form{
+  width:100% !important;
+  max-width:none !important;
+  display:grid !important;
+  grid-template-columns:repeat(12,minmax(0,1fr)) !important;
+  gap:18px 18px !important;
+  align-items:start !important;
+}
+
+body:has(.Formcontainer) .Formcontainer .field,
+body:has(.Formcontainer) .Formcontainer .form-group,
+body:has(.Formcontainer) .register-form .field,
+body:has(.Formcontainer) .register-form .form-group{
+  grid-column:span 3 !important;
+  min-width:0 !important;
+  margin:0 !important;
+}
+body:has(.Formcontainer) .Formcontainer .span-2,
+body:has(.Formcontainer) .Formcontainer .col-span-2,
+body:has(.Formcontainer) .Formcontainer [data-span='2']{
+  grid-column:span 6 !important;
+}
+body:has(.Formcontainer) .Formcontainer .full-width,
+body:has(.Formcontainer) .Formcontainer .span-full,
+body:has(.Formcontainer) .Formcontainer .col-span-full,
+body:has(.Formcontainer) .Formcontainer [data-span='3']{
+  grid-column:1 / -1 !important;
+}
+
+body:has(.Formcontainer) .Formcontainer label,
+body:has(.Formcontainer) .Formcontainer .form-label,
+body:has(.Formcontainer) .Formcontainer .field-label{
+  display:block !important;
+  margin:0 0 7px !important;
+  color:#d9c59b !important;
+  font-size:.72rem !important;
+  font-weight:800 !important;
+  line-height:1.2 !important;
+  letter-spacing:.075em !important;
+  text-transform:uppercase !important;
+}
+body:has(.Formcontainer) .Formcontainer input,
+body:has(.Formcontainer) .Formcontainer select,
+body:has(.Formcontainer) .Formcontainer textarea{
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  min-height:50px !important;
+  padding:12px 14px !important;
+  border:1px solid rgba(217,164,65,.19) !important;
+  border-radius:10px !important;
+  background:rgba(4,3,2,.86) !important;
+  color:var(--p27-reg-text) !important;
+  font-size:.9rem !important;
+  outline:none !important;
+  transition:border-color .16s ease,box-shadow .16s ease,background .16s ease !important;
+}
+body:has(.Formcontainer) .Formcontainer input::placeholder,
+body:has(.Formcontainer) .Formcontainer textarea::placeholder{
+  color:#756c5c !important;
+}
+body:has(.Formcontainer) .Formcontainer input:focus,
+body:has(.Formcontainer) .Formcontainer select:focus,
+body:has(.Formcontainer) .Formcontainer textarea:focus{
+  border-color:var(--p27-reg-line-strong) !important;
+  background:rgba(8,6,4,.96) !important;
+  box-shadow:0 0 0 3px rgba(217,164,65,.075) !important;
+}
+
+/* Event selection area: explicitly separated from personal details. */
+body:has(.Formcontainer) .Formcontainer :where(.event-filters,.event-tabs,.category-tabs,.filter-tabs){
+  grid-column:1 / -1 !important;
+  display:flex !important;
+  align-items:center !important;
+  flex-wrap:wrap !important;
+  gap:8px !important;
+  margin:6px 0 0 !important;
+  padding:0 0 2px !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(.event-filters,.event-tabs,.category-tabs,.filter-tabs) button,
+body:has(.Formcontainer) .Formcontainer :where(.event-filters,.event-tabs,.category-tabs,.filter-tabs) a{
+  min-height:38px !important;
+  padding:8px 13px !important;
+  border:1px solid rgba(217,164,65,.16) !important;
+  border-radius:9px !important;
+  background:rgba(216,173,85,.025) !important;
+  color:#cdbd99 !important;
+  font-size:.72rem !important;
+  font-weight:800 !important;
+  letter-spacing:.035em !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(.event-filters,.event-tabs,.category-tabs,.filter-tabs) button:hover,
+body:has(.Formcontainer) .Formcontainer :where(.event-filters,.event-tabs,.category-tabs,.filter-tabs) a:hover{
+  border-color:rgba(217,164,65,.34) !important;
+  color:#f0cf8b !important;
+}
+
+/* Keep the event list to one predictable region with no giant whitespace gaps. */
+body:has(.Formcontainer) .Formcontainer :where(.event-list,.events-list,.event-grid,.events-grid){
+  grid-column:1 / -1 !important;
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:12px !important;
+  min-width:0 !important;
+  max-height:468px !important;
+  overflow:auto !important;
+  padding:2px 4px 4px 2px !important;
+  scrollbar-width:thin !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(.event-list,.events-list,.event-grid,.events-grid) > *{
+  min-width:0 !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(.event-card,.event-option,.event-item){
+  min-width:0 !important;
+  min-height:118px !important;
+  padding:16px !important;
+  border:1px solid rgba(217,164,65,.15) !important;
+  border-radius:12px !important;
+  background:linear-gradient(155deg,rgba(216,173,85,.045),rgba(9,7,5,.9)) !important;
+  color:#eadfc8 !important;
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease,background .16s ease !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(.event-card:hover,.event-option:hover,.event-item:hover){
+  transform:translateY(-1px) !important;
+  border-color:rgba(217,164,65,.34) !important;
+  box-shadow:0 10px 24px rgba(0,0,0,.22) !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(.event-card.selected,.event-option.selected,.event-item.selected,[aria-selected='true'],[data-selected='true']){
+  border-color:#d0a052 !important;
+  background:linear-gradient(155deg,rgba(22,66,60,.52),rgba(6,16,14,.92)) !important;
+  box-shadow:inset 0 0 0 1px rgba(240,207,139,.08),0 10px 24px rgba(0,0,0,.22) !important;
+}
+
+/* Make event cards read in the order: title -> detail -> fee. */
+body:has(.Formcontainer) .Formcontainer :where(.event-card h3,.event-card h4,.event-option h3,.event-option h4,.event-item h3,.event-item h4){
+  margin:0 0 10px !important;
+  line-height:1.28 !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(.event-card p,.event-option p,.event-item p){
+  line-height:1.5 !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(.fee,.price,.amount,.registration-fee,.event-fee,.event-price){
+  color:#efcd88 !important;
+  font-weight:900 !important;
+}
+
+/* Selection/help/total become a compact bottom band. */
+body:has(.Formcontainer) .Formcontainer :where(.selection-summary,.selected-events,.registration-summary,.fee-summary,.price-summary,.payment-summary,.total-card){
+  grid-column:span 6 !important;
+  min-width:0 !important;
+  padding:16px 18px !important;
+  border:1px solid rgba(217,164,65,.15) !important;
+  border-radius:12px !important;
+  background:var(--p27-reg-panel-soft) !important;
+  align-self:stretch !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(.help-text,.event-help,.info-text,.fee-note,.pricing-note,.payment-note){
+  color:var(--p27-reg-muted) !important;
+  line-height:1.55 !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(.total,.total-amount){
+  color:#f1d090 !important;
+  font-size:1.05rem !important;
+  font-weight:900 !important;
+}
+
+/* Remove only empty fee fragments, never legitimate named event cards. */
+body:has(.Formcontainer) .Formcontainer :where(.event-list,.events-list,.event-grid,.events-grid) > :empty{display:none !important}
+body:has(.Formcontainer) .Formcontainer :where(.event-list,.events-list,.event-grid,.events-grid) .orphan-fee-row{display:none !important}
+body:has(.Formcontainer) .Formcontainer :where(.event-list,.events-list,.event-grid,.events-grid) > *:not(:has(*))[data-fee-only='true']{display:none !important}
+
+/* Gender selector remains visible, but no gender fee/price badges. */
+body:has(.Formcontainer) .Formcontainer :where(.gender-fee,.gender-price,.male-fee,.female-fee,.male-price,.female-price,[data-gender-fee],[data-gender-price]){display:none !important}
+
+/* Primary action is visually separated from the total band. */
+body:has(.Formcontainer) .Formcontainer :where(button[type='submit'],input[type='submit'],.submit-btn,.register-btn,button[class*='register']){
+  grid-column:1 / -1 !important;
+  justify-self:center !important;
+  width:min(100%,460px) !important;
+  min-height:58px !important;
+  margin:6px auto 0 !important;
+  padding:15px 28px !important;
+  border:1px solid #efd18e !important;
+  border-radius:10px !important;
+  background:linear-gradient(135deg,#f2d491,#d9a441 55%,#b77a22) !important;
+  color:#241703 !important;
+  -webkit-text-fill-color:#241703 !important;
+  font-size:.88rem !important;
+  font-weight:900 !important;
+  letter-spacing:.11em !important;
+  text-transform:uppercase !important;
+  box-shadow:0 12px 28px rgba(217,164,65,.2) !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(button[type='submit'],input[type='submit'],.submit-btn,.register-btn,button[class*='register']):hover:not(:disabled){
+  transform:translateY(-1px) !important;
+  filter:brightness(1.04) !important;
+}
+body:has(.Formcontainer) .Formcontainer :where(button[type='submit'],input[type='submit'],.submit-btn,.register-btn,button[class*='register']):disabled{
+  opacity:.46 !important;
+  filter:grayscale(.4) !important;
+  box-shadow:none !important;
+}
+
+/* Tablet */
+@media(max-width:950px){
+  body:has(.Formcontainer) .Formcontainer{
+    width:min(100% - 32px,var(--p27-reg-max)) !important;
+    padding:28px 24px 32px !important;
+  }
+  body:has(.Formcontainer) .Formcontainer .field,
+  body:has(.Formcontainer) .Formcontainer .form-group,
+  body:has(.Formcontainer) .register-form .field,
+  body:has(.Formcontainer) .register-form .form-group{grid-column:span 6 !important}
+  body:has(.Formcontainer) .Formcontainer :where(.event-list,.events-list,.event-grid,.events-grid){grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  body:has(.Formcontainer) .Formcontainer :where(.selection-summary,.selected-events,.registration-summary,.fee-summary,.price-summary,.payment-summary,.total-card){grid-column:1 / -1 !important}
+}
+
+/* Mobile: follow the same structural rhythm in one column. */
+@media(max-width:680px){
+  body:has(.Formcontainer) .Formcontainer{
+    width:calc(100% - 18px) !important;
+    margin:14px auto 38px !important;
+    padding:22px 15px 28px !important;
+    border-radius:15px !important;
+  }
+  body:has(.Formcontainer) .Formcontainer > h1,
+  body:has(.Formcontainer) .Formcontainer > h2,
+  body:has(.Formcontainer) .Formcontainer > h3,
+  body:has(.Formcontainer) .Registertitle,
+  body:has(.Formcontainer) .register-title{font-size:1.9rem !important}
+  body:has(.Formcontainer) .Formcontainer form,
+  body:has(.Formcontainer) .Formcontainer .form-grid,
+  body:has(.Formcontainer) .Formcontainer .fields,
+  body:has(.Formcontainer) .registration-form,
+  body:has(.Formcontainer) .register-form{grid-template-columns:1fr !important;gap:14px !important}
+  body:has(.Formcontainer) .Formcontainer .field,
+  body:has(.Formcontainer) .Formcontainer .form-group,
+  body:has(.Formcontainer) .register-form .field,
+  body:has(.Formcontainer) .register-form .form-group,
+  body:has(.Formcontainer) .Formcontainer .span-2,
+  body:has(.Formcontainer) .Formcontainer .col-span-2,
+  body:has(.Formcontainer) .Formcontainer [data-span='2']{grid-column:1 / -1 !important}
+  body:has(.Formcontainer) .Formcontainer :where(.event-filters,.event-tabs,.category-tabs,.filter-tabs){gap:7px !important}
+  body:has(.Formcontainer) .Formcontainer :where(.event-list,.events-list,.event-grid,.events-grid){grid-template-columns:1fr !important;max-height:520px !important}
+  body:has(.Formcontainer) .Formcontainer :where(.event-card,.event-option,.event-item){min-height:104px !important;padding:14px !important}
+  body:has(.Formcontainer) .Formcontainer :where(.selection-summary,.selected-events,.registration-summary,.fee-summary,.price-summary,.payment-summary,.total-card){grid-column:1 / -1 !important}
+  body:has(.Formcontainer) .Formcontainer :where(button[type='submit'],input[type='submit'],.submit-btn,.register-btn,button[class*='register']){width:100% !important;min-height:56px !important}
+}
