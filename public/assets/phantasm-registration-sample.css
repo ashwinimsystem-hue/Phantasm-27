@@ -1,0 +1,734 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ==========================================================================
+   PHANTASM'27 · VAAGAI 2K26 — REGISTRATION, SAMPLE UI
+   --------------------------------------------------------------------------
+   Single visual contract for /register, matching the approved sample
+   (index (2).html + style.css): ink ground, gold rules, parchment type,
+   Cormorant display headings, framed certificate card, pill tabs, gold CTA.
+
+   One standard fee per event for every participant — this sheet renders the
+   prices the application already computed. No "free" states, no strikethrough.
+
+   Selector strategy: every rule is rooted at #root so this layer can never be
+   out-specified by the legacy override sheets; it is also loaded last.
+   ========================================================================== */
+
+#root .register-page {
+  --p-gold: #c8922a;
+  --p-gold-mid: #d9a441;
+  --p-gold-soft: #e8c06a;
+  --p-gold-pale: #f0cf8b;
+  --p-ink: #090705;
+  --p-ink-2: #120e09;
+  --p-ink-3: #1c1408;
+  --p-maroon: #6b1a1a;
+  --p-parchment: #f0e2c4;
+  --p-parchment-dim: #c4b494;
+  --p-line: rgba(200, 146, 42, .16);
+  --p-line-strong: rgba(200, 146, 42, .35);
+  --p-radius: 14px;
+  --p-radius-sm: 10px;
+  --p-radius-lg: 22px;
+  --p-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --p-body: 'Inter', 'LEMON MILK', system-ui, sans-serif;
+  width: min(100% - 32px, 1180px) !important;
+  max-width: 1180px !important;
+  margin: 0 auto !important;
+  padding: clamp(28px, 5vw, 64px) 0 clamp(48px, 7vw, 96px) !important;
+  box-sizing: border-box !important;
+  font-family: var(--p-body) !important;
+  color: var(--p-parchment) !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-align: left !important;
+}
+
+/* legacy pseudo-headings injected by earlier override sheets must not double up */
+#root .register-page .Formcontainer::before,
+#root .register-page .Formcontainer::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* ── header ────────────────────────────────────────────────────────────── */
+#root .register-page .reg-head {
+  display: block !important;
+  text-align: center !important;
+  max-width: 760px !important;
+  margin: 0 auto clamp(26px, 4vw, 44px) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+#root .register-page .reg-kicker {
+  display: block !important;
+  text-align: center !important;
+  margin: 0 0 14px !important;
+  font-family: var(--p-body) !important;
+  font-size: .68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+  color: var(--p-gold-soft) !important;
+}
+
+#root .register-page h1.Registertitle,
+#root .register-page .reg-head h1 {
+  display: block !important;
+  visibility: visible !important;
+  font-family: var(--p-display) !important;
+  font-weight: 600 !important;
+  font-size: clamp(2.1rem, 5.4vw, 3.5rem) !important;
+  text-align: center !important;
+  line-height: 1.05 !important;
+  letter-spacing: .01em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--p-parchment) !important;
+  text-shadow: 0 0 44px rgba(200, 146, 42, .16) !important;
+}
+
+#root .register-page .reg-rule {
+  display: block !important;
+  width: 96px !important;
+  height: 1px !important;
+  margin: 18px auto 0 !important;
+  background: linear-gradient(90deg, transparent, var(--p-gold), transparent) !important;
+  border: 0 !important;
+}
+
+#root .register-page .reg-sub {
+  text-align: center !important;
+  margin: 16px auto 0 !important;
+  max-width: 620px !important;
+  font-size: .95rem !important;
+  line-height: 1.65 !important;
+  color: var(--p-parchment-dim) !important;
+}
+
+#root .register-page .already-team {
+  text-align: center !important;
+  margin: 20px 0 0 !important;
+  font-size: .88rem !important;
+  color: var(--p-parchment-dim) !important;
+}
+
+#root .register-page .reg-link {
+  padding: 0 !important;
+  background: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(232, 192, 106, .45) !important;
+  border-radius: 0 !important;
+  color: var(--p-gold-soft) !important;
+  font-family: var(--p-body) !important;
+  font-size: .88rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .02em !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  transition: color .2s ease, border-color .2s ease !important;
+}
+
+#root .register-page .reg-link:hover {
+  color: var(--p-gold-pale) !important;
+  border-color: var(--p-gold-pale) !important;
+}
+
+/* ── certificate frame / card ───────────────────────────────────────────── */
+#root .register-page .Formcontainer,
+#root .register-page .register-frame {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: clamp(22px, 3.6vw, 50px) clamp(15px, 3vw, 44px) !important;
+  box-sizing: border-box !important;
+  border: 1px solid var(--p-line-strong) !important;
+  border-radius: var(--p-radius-lg) !important;
+  background:
+    radial-gradient(ellipse at 50% 0, rgba(107, 26, 26, .22), transparent 60%),
+    linear-gradient(180deg, rgba(200, 146, 42, .045), rgba(9, 7, 5, .55) 45%, rgba(9, 7, 5, .9)) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(240, 207, 139, .06) !important;
+  color: var(--p-parchment) !important;
+  overflow: hidden !important;
+}
+
+#root .register-page .Formcontainer form,
+#root .register-page .register-frame form {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  grid-template-columns: none !important;
+}
+
+/* ── sections ───────────────────────────────────────────────────────────── */
+#root .register-page .reg-section {
+  display: block !important;
+  grid-column: auto !important;
+  margin: 0 0 clamp(26px, 3.4vw, 40px) !important;
+  padding: clamp(20px, 2.6vw, 28px) 0 0 !important;
+  border-top: 1px solid rgba(200, 146, 42, .12) !important;
+  background: none !important;
+  border-radius: 0 !important;
+}
+
+#root .register-page .reg-section:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+}
+
+#root .register-page .reg-section-title,
+#root .register-page h2.reg-section-title {
+  font-family: var(--p-display) !important;
+  font-weight: 600 !important;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem) !important;
+  line-height: 1.2 !important;
+  margin: 0 0 18px !important;
+  padding: 0 !important;
+  color: var(--p-gold-pale) !important;
+  letter-spacing: .01em !important;
+}
+
+#root .register-page .reg-events-head {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  margin: 0 0 16px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+#root .register-page .reg-events-head .reg-section-title {
+  margin: 0 !important;
+}
+
+#root .register-page .reg-count {
+  font-size: .7rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+  color: var(--p-gold-soft) !important;
+  padding: 6px 12px !important;
+  border: 1px solid var(--p-line) !important;
+  border-radius: 999px !important;
+  background: rgba(200, 146, 42, .05) !important;
+  white-space: nowrap !important;
+}
+
+/* ── labelled fields ────────────────────────────────────────────────────── */
+#root .register-page .reg-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 18px 20px !important;
+  align-items: start !important;
+}
+
+#root .register-page .reg-field {
+  display: block !important;
+  grid-column: auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+}
+
+#root .register-page .reg-field-wide {
+  grid-column: span 2 !important;
+}
+
+#root .register-page .reg-field-label {
+  display: block !important;
+  margin: 0 0 7px !important;
+  font-family: var(--p-body) !important;
+  font-size: .68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+  color: var(--p-parchment-dim) !important;
+}
+
+#root .register-page .reg-field :is(input, select, textarea),
+#root .register-page .reg-search,
+#root .register-page .reg-card-mode {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  min-height: 52px !important;
+  margin: 0 !important;
+  padding: 13px 15px !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(200, 146, 42, .2) !important;
+  border-radius: var(--p-radius-sm) !important;
+  background: rgba(4, 3, 2, .72) !important;
+  color: var(--p-parchment) !important;
+  font-family: var(--p-body) !important;
+  font-size: .92rem !important;
+  font-weight: 500 !important;
+  line-height: 1.25 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease !important;
+}
+
+#root .register-page .reg-field :is(input, select)::placeholder {
+  color: #746a56 !important;
+  opacity: 1 !important;
+}
+
+#root .register-page .reg-field :is(input, select, textarea):hover,
+#root .register-page .reg-search:hover {
+  border-color: rgba(200, 146, 42, .38) !important;
+}
+
+#root .register-page .reg-field :is(input, select, textarea):focus,
+#root .register-page .reg-search:focus,
+#root .register-page .reg-card-mode:focus {
+  outline: none !important;
+  border-color: var(--p-gold-mid) !important;
+  background: rgba(9, 7, 5, .9) !important;
+  box-shadow: 0 0 0 3px rgba(200, 146, 42, .12) !important;
+}
+
+#root .register-page .reg-field select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--p-gold-soft) 50%), linear-gradient(135deg, var(--p-gold-soft) 50%, transparent 50%) !important;
+  background-position: calc(100% - 20px) 22px, calc(100% - 14px) 22px !important;
+  background-size: 6px 6px, 6px 6px !important;
+  background-repeat: no-repeat !important;
+  padding-right: 40px !important;
+}
+
+#root .register-page .reg-field select option {
+  background: #100c08 !important;
+  color: var(--p-parchment) !important;
+}
+
+#root .register-page .reg-input-error,
+#root .register-page .reg-field :is(input, select).reg-input-error {
+  border-color: #b4483f !important;
+  box-shadow: 0 0 0 3px rgba(180, 72, 63, .12) !important;
+}
+
+#root .register-page .reg-error {
+  margin: 12px 0 0 !important;
+  font-size: .84rem !important;
+  font-weight: 600 !important;
+  color: #e39a8f !important;
+}
+
+#root .register-page .reg-hint {
+  margin: 14px 0 0 !important;
+  font-size: .82rem !important;
+  line-height: 1.6 !important;
+  color: var(--p-parchment-dim) !important;
+}
+
+#root .register-page .reg-hint b {
+  color: var(--p-gold-soft) !important;
+}
+
+/* ── search + tabs ──────────────────────────────────────────────────────── */
+#root .register-page .reg-search {
+  margin: 0 0 18px !important;
+}
+
+#root .register-page .reg-tabs {
+  margin: 0 0 22px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+}
+
+#root .register-page .reg-tabs-inner {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#root .register-page .reg-tab {
+  min-height: 40px !important;
+  padding: 10px 22px !important;
+  border: 1px solid rgba(200, 146, 42, .28) !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: var(--p-parchment-dim) !important;
+  font-family: var(--p-body) !important;
+  font-size: .84rem !important;
+  font-weight: 600 !important;
+  letter-spacing: .04em !important;
+  text-transform: none !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  transition: color .2s ease, border-color .2s ease, background .2s ease, transform .2s ease !important;
+}
+
+#root .register-page .reg-tab:hover {
+  color: var(--p-parchment) !important;
+  border-color: var(--p-gold-mid) !important;
+  transform: translateY(-1px) !important;
+}
+
+#root .register-page .reg-tab.active {
+  background: var(--p-gold-mid) !important;
+  border-color: var(--p-gold-mid) !important;
+  color: #1c0e02 !important;
+  font-weight: 700 !important;
+}
+
+/* ── category titles with hairline rules ───────────────────────────────── */
+#root .register-page .register-category-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin: 26px 0 14px !important;
+  padding: 0 !important;
+  font-family: var(--p-body) !important;
+  font-size: .7rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .2em !important;
+  text-transform: uppercase !important;
+  color: var(--p-gold-soft) !important;
+}
+
+#root .register-page .register-category-title::before,
+#root .register-page .register-category-title::after {
+  content: "" !important;
+  flex: 1 1 auto !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, rgba(200, 146, 42, .32)) !important;
+}
+
+#root .register-page .register-category-title::after {
+  background: linear-gradient(90deg, rgba(200, 146, 42, .32), transparent) !important;
+}
+
+/* ── event cards ────────────────────────────────────────────────────────── */
+#root .register-page :is(.Registercards, .Registercardsnon, .reg-cards) {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  align-items: stretch !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 2px 0 4px !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+
+#root .register-page .event-card.reg-card {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  min-height: 132px !important;
+  padding: 22px 20px !important;
+  box-sizing: border-box !important;
+  border: 1px solid var(--p-line) !important;
+  border-radius: var(--p-radius) !important;
+  background: var(--p-ink-3) !important;
+  color: var(--p-parchment) !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease, background .2s ease !important;
+}
+
+#root .register-page .event-card.reg-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 auto auto 0 !important;
+  width: 34px !important;
+  height: 1px !important;
+  background: var(--p-gold) !important;
+  opacity: .5 !important;
+}
+
+#root .register-page .event-card.reg-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(200, 146, 42, .42) !important;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .32) !important;
+}
+
+#root .register-page .event-card.reg-card:focus-visible {
+  outline: 2px solid var(--p-gold-soft) !important;
+  outline-offset: 3px !important;
+}
+
+#root .register-page .event-card.reg-card.selected {
+  border-color: var(--p-gold-mid) !important;
+  background:
+    radial-gradient(ellipse at 0 0, rgba(200, 146, 42, .12), transparent 62%),
+    #1c1408 !important;
+  box-shadow: inset 0 0 0 1px rgba(200, 146, 42, .18), 0 14px 32px rgba(0, 0, 0, .3) !important;
+}
+
+#root .register-page .reg-card-head {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+}
+
+#root .register-page .reg-card-head h4 {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: var(--p-display) !important;
+  font-weight: 600 !important;
+  font-size: 1.12rem !important;
+  line-height: 1.25 !important;
+  color: var(--p-parchment) !important;
+}
+
+#root .register-page .reg-card-state {
+  flex: 0 0 auto !important;
+  font-size: .6rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  color: rgba(196, 180, 148, .6) !important;
+  white-space: nowrap !important;
+}
+
+#root .register-page .reg-card.selected .reg-card-state {
+  color: #241703 !important;
+  background: var(--p-gold-soft) !important;
+  border-radius: 999px !important;
+  padding: 4px 9px !important;
+  letter-spacing: .1em !important;
+}
+
+#root .register-page .reg-card-fee {
+  margin: 12px 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  font-size: .84rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em !important;
+  color: var(--p-gold-soft) !important;
+}
+
+#root .register-page .reg-card-fee s,
+#root .register-page .reg-card-fee del,
+#root .register-page .reg-card-fee strike {
+  display: none !important;
+}
+
+#root .register-page .reg-card-fee span {
+  color: var(--p-gold-soft) !important;
+}
+
+#root .register-page .reg-card-mode {
+  margin: 14px 0 0 !important;
+  min-height: 44px !important;
+  padding: 9px 34px 9px 13px !important;
+  font-size: .82rem !important;
+  background-color: rgba(4, 3, 2, .6) !important;
+  background-image: linear-gradient(45deg, transparent 50%, var(--p-gold-soft) 50%), linear-gradient(135deg, var(--p-gold-soft) 50%, transparent 50%) !important;
+  background-position: calc(100% - 18px) 19px, calc(100% - 12px) 19px !important;
+  background-size: 6px 6px, 6px 6px !important;
+  background-repeat: no-repeat !important;
+}
+
+#root .register-page .reg-card-mode option {
+  background: #100c08 !important;
+  color: var(--p-parchment) !important;
+}
+
+/* ── summary / total / CTA ──────────────────────────────────────────────── */
+#root .register-page .reg-summary {
+  display: grid !important;
+  grid-template-columns: 1.5fr 1fr auto !important;
+  align-items: center !important;
+  gap: 20px 26px !important;
+  margin: clamp(22px, 3vw, 34px) 0 0 !important;
+  padding: clamp(18px, 2.4vw, 26px) clamp(18px, 2.6vw, 28px) !important;
+  border: 1px solid var(--p-line) !important;
+  border-radius: var(--p-radius) !important;
+  background:
+    radial-gradient(ellipse at 100% 0, rgba(107, 26, 26, .18), transparent 58%),
+    rgba(200, 146, 42, .045) !important;
+  text-align: left !important;
+}
+
+#root .register-page .reg-summary:first-child {
+  padding-top: clamp(18px, 2.4vw, 26px) !important;
+}
+
+#root .register-page .reg-summary-note {
+  margin: 0 !important;
+  font-size: .82rem !important;
+  line-height: 1.6 !important;
+  color: var(--p-parchment-dim) !important;
+}
+
+#root .register-page .reg-summary-note b {
+  color: var(--p-parchment) !important;
+  font-weight: 700 !important;
+}
+
+#root .register-page .reg-total {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  text-align: left !important;
+}
+
+#root .register-page .reg-total span {
+  font-size: .66rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+  color: var(--p-parchment-dim) !important;
+}
+
+#root .register-page .reg-total b {
+  font-family: var(--p-display) !important;
+  font-size: clamp(1.8rem, 3.4vw, 2.5rem) !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  color: var(--p-gold-soft) !important;
+  text-shadow: 0 0 30px rgba(200, 146, 42, .22) !important;
+}
+
+#root .register-page .reg-submit,
+#root .register-page button.reg-submit {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  grid-column: auto !important;
+  justify-self: end !important;
+  width: min(100%, 340px) !important;
+  min-height: 56px !important;
+  margin: 0 !important;
+  padding: 15px 30px !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(240, 207, 139, .55) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(160deg, var(--p-gold-soft) 0%, var(--p-gold-mid) 55%, var(--p-gold) 100%) !important;
+  color: #1c0e02 !important;
+  -webkit-text-fill-color: #1c0e02 !important;
+  font-family: var(--p-body) !important;
+  font-size: .92rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em !important;
+  text-transform: none !important;
+  text-align: center !important;
+  box-shadow: 0 8px 24px -6px rgba(200, 146, 42, .5) !important;
+  cursor: pointer !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease !important;
+}
+
+#root .register-page .reg-submit:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 14px 30px -6px rgba(200, 146, 42, .65) !important;
+}
+
+#root .register-page .reg-submit:disabled {
+  opacity: .48 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+#root .register-page .reg-submit:focus-visible {
+  outline: 2px solid var(--p-gold-pale) !important;
+  outline-offset: 3px !important;
+}
+
+/* ── responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 1020px) {
+  #root .register-page .reg-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  #root .register-page :is(.Registercards, .Registercardsnon, .reg-cards) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  #root .register-page .reg-summary {
+    grid-template-columns: 1fr auto !important;
+  }
+  #root .register-page .reg-summary-note {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+@media (max-width: 680px) {
+  #root .register-page {
+    width: calc(100% - 20px) !important;
+    padding-top: 22px !important;
+  }
+  #root .register-page .Formcontainer,
+  #root .register-page .register-frame {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 17px !important;
+    padding: 22px 15px 24px !important;
+  }
+  #root .register-page .reg-grid,
+  #root .register-page :is(.Registercards, .Registercardsnon, .reg-cards) {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  #root .register-page .reg-field-wide {
+    grid-column: 1 / -1 !important;
+  }
+  #root .register-page .event-card.reg-card {
+    min-height: 0 !important;
+    padding: 18px 16px !important;
+  }
+  #root .register-page .reg-card-head {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+  #root .register-page .reg-summary {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  #root .register-page .reg-submit {
+    width: 100% !important;
+    justify-self: stretch !important;
+    min-height: 58px !important;
+  }
+  #root .register-page .reg-tab {
+    flex: 1 1 auto !important;
+    min-height: 44px !important;
+    padding: 11px 14px !important;
+    font-size: .8rem !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #root .register-page *,
+  #root .register-page *::before,
+  #root .register-page *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}

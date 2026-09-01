@@ -20691,8 +20691,8 @@ const {
         for (const Le of O.selectedEvents) {
             const L = Fa.find(z => z.id === Le.eventId);
             if (!L) continue;
-            let U = L.fee?.[Le.mode];
-            O.gender === "Female" && Le.mode === "SOLO" && (L.category === "Technical" || L.category === "Workshop") && (U = 0), typeof U == "number" && (ue += U)
+            const U = L.fee?.[Le.mode];
+            typeof U == "number" && (ue += U)
         }
         f && v.current && (v.current.scrollIntoView({
             behavior: "smooth",
@@ -20716,28 +20716,6 @@ const {
                             title: Fa.find(U => U.id === L.eventId)?.title,
                             mode: L.mode
                         }));
-                    if (W === 0) try {
-                        const L = `FREE-${Date.now()}`,
-                            C = await Pt.post(`${on}/api/register`, {
-                                ...O,
-                                event: ue,
-                                amount: 0,
-                                utr: L,
-                                teamName: M ? O.teamName : "",
-                                eventsDetail: Le
-                            });
-                        C.data.success && w("/success", {
-                            state: {
-                                registrationId: C.data.registrationId,
-                                amount: 0,
-                                utr: L
-                            }
-                        });
-                        return
-                    } catch (L) {
-                        console.error("FREE REG ERROR:", L), alert("Registration failed. Please try again."), s(!1);
-                        return
-                    }
                     w("/payment", {
                         state: {
                             amount: W,
@@ -20778,60 +20756,34 @@ const {
         }, Ue = Z.filter(ue => ue.category === "Technical"), J = Z.filter(ue => ue.category === "Non-Technical"), ye = Z.filter(ue => ue.category === "Workshop"), Ne = ue => {
             const Le = O.selectedEvents.find(L => L.eventId === ue.id);
             return y.jsxs("div", {
+                className: `event-card reg-card${Le ? " selected" : ""}`,
+                role: "button",
+                tabIndex: 0,
+                "aria-pressed": !!Le,
                 onClick: () => ce(ue),
-                style: {
-                    padding: "1rem",
-                    cursor: "pointer",
-                    border: Le ? "2px solid var(--color-secondary)" : "1px solid var(--color-border)",
-                    background: Le ? "rgba(0,240,255,0.08)" : "rgba(255,255,255,0.03)"
+                onKeyDown: L => {
+                    (L.key === "Enter" || L.key === " ") && (L.preventDefault(), ce(ue))
                 },
-                children: [y.jsx("h4", {
-                    children: ue.title
-                }), y.jsxs("p", {
-                    style: {
-                        fontSize: "0.85rem",
-                        opacity: .75
-                    },
-                    children: ["Fee: ", ue.modes.length === 1 ? O.gender === "Female" && ue.modes[0] === "SOLO" && (ue.category === "Technical" || ue.category === "Workshop") ? y.jsxs("span", {
-                        children: [y.jsxs("s", {
-                            style: {
-                                opacity: .6
-                            },
-                            children: ["₹", ue.fee?.[ue.modes[0]] ?? 0]
-                        }), " ", y.jsx("b", {
-                            style: {
-                                color: "#00c8ffff"
-                            },
-                            children: "FREE"
-                        })]
-                    }) : y.jsxs("b", {
-                        children: ["₹", ue.fee?.[ue.modes[0]] ?? 0]
-                    }) : ue.modes.map((L, C) => {
-                        const U = O.gender === "Female" && L === "SOLO" && (ue.category === "Technical" || ue.category === "Workshop");
-                        return y.jsxs("span", {
-                            children: [L, ": ", U ? y.jsxs("span", {
-                                children: [y.jsxs("s", {
-                                    style: {
-                                        opacity: .6
-                                    },
-                                    children: ["₹", ue.fee?.[L] ?? 0]
-                                }), " ", y.jsx("b", {
-                                    style: {
-                                        color: "#00c8ffff"
-                                    },
-                                    children: "FREE"
-                                })]
-                            }) : `₹${ue.fee?.[L]??0}`, C < ue.modes.length - 1 && " | "]
-                        }, L)
+                children: [y.jsxs("div", {
+                    className: "reg-card-head",
+                    children: [y.jsx("h4", {
+                        children: ue.title
+                    }), y.jsx("span", {
+                        className: "reg-card-state",
+                        "aria-hidden": "true",
+                        children: Le ? "Selected" : "Tap to select"
                     })]
-                }), Le && ue.modes.length > 1 && y.jsx("select", {
+                }), y.jsxs("p", {
+                    className: "reg-card-fee",
+                    children: ["Fee: ", ue.modes.length === 1 ? `₹${ue.fee?.[ue.modes[0]] ?? 0}` : ue.modes.map((L, C) => y.jsxs("span", {
+                        children: [L, " ₹", ue.fee?.[L] ?? 0, C < ue.modes.length - 1 ? "  ·  " : ""]
+                    }, L))]
+                }), Le && ue.modes.length > 1 && y.jsxs("select", {
+                    className: "reg-card-mode",
+                    "aria-label": "Participation mode",
                     value: Le.mode,
                     onClick: L => L.stopPropagation(),
                     onChange: L => pe(ue.id, L.target.value),
-                    style: {
-                        ...Pe,
-                        marginTop: "0.5rem"
-                    },
                     children: ue.modes.map(L => y.jsxs("option", {
                         value: L,
                         children: [L, " – ₹", ue.fee[L]]
@@ -20839,6 +20791,13 @@ const {
                 })]
             }, ue.id)
         };
+    const rf = (ue, Le, Ce) => y.jsxs("label", {
+        className: `reg-field${Ce ? " " + Ce : ""}`,
+        children: [y.jsx("span", {
+            className: "reg-field-label",
+            children: ue
+        }), Le]
+    }, ue);
     return y.jsxs(Fs, {
         children: [h && y.jsx("div", {
             style: {
@@ -20924,264 +20883,219 @@ const {
                 })]
             })
         }), y.jsxs("div", {
-            className: "container section",
-            children: [y.jsx("h1", {
-                className: "Registertitle",
-                children: "Register"
-            }), y.jsx("div", {
-                style: {
-                    textAlign: "center",
-                    marginBottom: "2rem"
-                },
-                children: y.jsxs("p", {
-                    style: {
-                        color: "rgba(255,255,255,0.7)"
-                    },
+            className: "container section register-page",
+            children: [y.jsxs("header", {
+                className: "reg-head",
+                children: [y.jsx("span", {
+                    className: "reg-kicker",
+                    children: "PHANTASM'27  ·  வாகை  ·  Vaagai 2k26"
+                }), y.jsx("h1", {
+                    className: "Registertitle",
+                    children: "Register"
+                }), y.jsx("span", {
+                    className: "reg-rule",
+                    "aria-hidden": "true"
+                }), y.jsx("p", {
+                    className: "reg-sub",
+                    children: "Claim your place at the 13th National Level Technical Symposium — Department of Mechanical Engineering, GCE Bargur · 17 & 18 September 2026."
+                }), y.jsxs("p", {
+                    className: "already-team",
                     children: ["Already have a team?", " ", y.jsx("button", {
+                        type: "button",
+                        className: "reg-link",
                         onClick: t,
-                        style: {
-                            background: "none",
-                            border: "none",
-                            color: "var(--color-primary)",
-                            textDecoration: "underline",
-                            cursor: "pointer",
-                            fontSize: "1rem",
-                            fontWeight: "bold"
-                        },
                         children: "Join here"
                     })]
-                })
+                })]
             }), y.jsx("div", {
-                className: "Formcontainer",
+                className: "Formcontainer register-frame",
                 children: y.jsxs("form", {
                     onSubmit: ue => ue.preventDefault(),
-                    children: [y.jsx("input", {
-                        name: "name",
-                        placeholder: "Full Name",
-                        required: !0,
-                        style: Pe,
-                        value: O.name,
-                        onChange: q
-                    }), y.jsxs("div", {
-                        style: {
-                            display: "grid",
-                            gridTemplateColumns: "1fr 1fr",
-                            gap: "1rem"
-                        },
-                        children: [y.jsx("input", {
-                            ref: v,
-                            name: "email",
-                            type: "email",
-                            placeholder: "Email",
-                            required: !0,
-                            style: {
-                                ...Pe,
-                                border: f ? "1px solid #ff4d4f" : Pe.border
-                            },
-                            value: O.email,
-                            onChange: ue => {
-                                q(ue), d("")
-                            }
-                        }), f && y.jsx("small", {
-                            style: {
-                                color: "#ff4d4f",
-                                marginTop: "4px",
-                                display: "block"
-                            },
+                    children: [y.jsxs("section", {
+                        className: "reg-section",
+                        children: [y.jsx("h2", {
+                            className: "reg-section-title",
+                            children: "Participant details"
+                        }), y.jsxs("div", {
+                            className: "reg-grid",
+                            children: [rf("Full name", y.jsx("input", {
+                                name: "name",
+                                placeholder: "As printed in your college records",
+                                required: !0,
+                                value: O.name,
+                                onChange: q
+                            }), "reg-field-wide"), rf("Email", y.jsx("input", {
+                                ref: v,
+                                name: "email",
+                                type: "email",
+                                placeholder: "you@example.com",
+                                required: !0,
+                                className: f ? "reg-input-error" : "",
+                                value: O.email,
+                                onChange: ue => {
+                                    q(ue), d("")
+                                }
+                            })), rf("Phone", y.jsx("input", {
+                                name: "phone",
+                                inputMode: "numeric",
+                                placeholder: "10-digit number",
+                                required: !0,
+                                value: O.phone,
+                                onChange: q
+                            })), rf("College", y.jsx("input", {
+                                name: "college",
+                                placeholder: "College name",
+                                required: !0,
+                                value: O.college,
+                                onChange: q
+                            }), "reg-field-wide"), rf("Department", y.jsx("input", {
+                                name: "dept",
+                                placeholder: "Mechanical Engineering",
+                                required: !0,
+                                value: O.dept,
+                                onChange: q
+                            })), rf("Year of study", y.jsxs("select", {
+                                name: "year",
+                                value: O.year,
+                                onChange: q,
+                                children: [y.jsx("option", {
+                                    value: "",
+                                    children: "Select year"
+                                }), y.jsx("option", {
+                                    value: "1",
+                                    children: "I Year"
+                                }), y.jsx("option", {
+                                    value: "2",
+                                    children: "II Year"
+                                }), y.jsx("option", {
+                                    value: "3",
+                                    children: "III Year"
+                                }), y.jsx("option", {
+                                    value: "4",
+                                    children: "IV Year"
+                                })]
+                            })), rf("Gender", y.jsxs("select", {
+                                name: "gender",
+                                required: !0,
+                                value: O.gender,
+                                onChange: q,
+                                children: [y.jsx("option", {
+                                    value: "",
+                                    children: "Select gender"
+                                }), y.jsx("option", {
+                                    value: "Male",
+                                    children: "Male"
+                                }), y.jsx("option", {
+                                    value: "Female",
+                                    children: "Female"
+                                }), y.jsx("option", {
+                                    value: "Other",
+                                    children: "Other"
+                                })]
+                            }))]
+                        }), f && y.jsx("p", {
+                            className: "reg-error",
+                            role: "alert",
                             children: f
-                        }), y.jsx("input", {
-                            name: "phone",
-                            placeholder: "10-digit number",
-                            required: !0,
-                            style: Pe,
-                            value: O.phone,
-                            onChange: q
                         })]
-                    }), y.jsx("input", {
-                        name: "college",
-                        placeholder: "College Name",
-                        required: !0,
-                        style: Pe,
-                        value: O.college,
-                        onChange: q
-                    }), y.jsxs("div", {
-                        style: {
-                            display: "grid",
-                            gridTemplateColumns: "2fr 1fr",
-                            gap: "1rem"
-                        },
-                        children: [y.jsx("input", {
-                            name: "dept",
-                            placeholder: "Department",
-                            required: !0,
-                            style: Pe,
-                            value: O.dept,
-                            onChange: q
-                        }), y.jsxs("select", {
-                            name: "year",
-                            style: Pe,
-                            value: O.year,
-                            onChange: q,
-                            children: [y.jsx("option", {
-                                value: "",
-                                children: "Year"
-                            }), y.jsx("option", {
-                                value: "1",
-                                children: "I"
-                            }), y.jsx("option", {
-                                value: "2",
-                                children: "II"
-                            }), y.jsx("option", {
-                                value: "3",
-                                children: "III"
-                            }), y.jsx("option", {
-                                value: "4",
-                                children: "IV"
-                            })]
-                        })]
-                    }), y.jsx("div", {
-                        style: {
-                            marginBottom: "1rem"
-                        },
-                        children: y.jsxs("select", {
-                            name: "gender",
-                            style: Pe,
-                            value: O.gender,
-                            onChange: q,
-                            required: !0,
-                            children: [y.jsx("option", {
-                                value: "",
-                                children: "Select Gender"
-                            }), y.jsx("option", {
-                                value: "Male",
-                                children: "Male"
-                            }), y.jsx("option", {
-                                value: "Female",
-                                children: "Female"
-                            }), y.jsx("option", {
-                                value: "Other",
-                                children: "Other"
-                            })]
-                        })
-                    }), M && y.jsxs("div", {
+                    }), M && y.jsxs("section", {
+                        className: "reg-section",
                         ref: P,
-                        style: {
-                            marginBottom: "1rem"
-                        },
-                        children: [y.jsx("label", {
-                            style: {
-                                color: "#00ff88",
-                                marginBottom: "0.5rem",
-                                display: "block"
-                            },
-                            children: "Team Name (Required for Team Events)"
-                        }), y.jsx("input", {
-                            name: "teamName",
-                            placeholder: "Enter your Team Name",
-                            required: !0,
-                            style: Pe,
-                            value: O.teamName,
-                            onChange: q
+                        children: [y.jsx("h2", {
+                            className: "reg-section-title",
+                            children: "Team details"
+                        }), y.jsxs("div", {
+                            className: "reg-grid",
+                            children: [rf("Team name", y.jsx("input", {
+                                name: "teamName",
+                                placeholder: "Enter your team name",
+                                required: !0,
+                                value: O.teamName,
+                                onChange: q
+                            }), "reg-field-wide")]
                         }), y.jsxs("p", {
-                            style: {
-                                fontSize: "0.85rem",
-                                color: "rgba(255,255,255,0.7)",
-                                marginTop: "-0.5rem"
-                            },
+                            className: "reg-hint",
                             children: ["ℹ️ Your unique ", y.jsx("b", {
                                 children: "Team ID"
                             }), " for each event will be sent to your email immediately after registration."]
                         })]
-                    }), y.jsx("input", {
-                        type: "text",
-                        placeholder: "Search events...",
-                        value: x,
-                        onChange: ue => E(ue.target.value),
-                        style: {
-                            width: "100%",
-                            padding: "0.8rem",
-                            marginBottom: "1rem",
-                            background: "rgba(255,255,255,0.05)",
-                            border: "1px solid var(--color-border)",
-                            color: "#fff"
-                        }
-                    }), y.jsx("div", {
-                        className: "event-tabs-wrapper",
-                        children: y.jsx("div", {
-                            style: {
-                                display: "flex",
-                                justifyContent: "center",
-                                gap: "1rem",
-                                marginBottom: "1.5rem",
-                                flexWrap: "wrap"
-                            },
-                            children: ["All", "Technical", "Non-Technical", "Workshop"].map(ue => y.jsx("button", {
-                                type: "button",
-                                onClick: () => c(ue),
-                                style: {
-                                    padding: "0.6rem 1.5rem",
-                                    background: o === ue ? "var(--color-primary)" : "transparent",
-                                    border: "1px solid var(--color-primary)",
-                                    color: o === ue ? "#000" : "var(--color-primary)",
-                                    cursor: "pointer",
-                                    fontWeight: "bold",
-                                    transition: "all 0.3s"
-                                },
-                                children: ue
-                            }, ue))
-                        })
-                    }), y.jsx("h3", {
-                        style: {
-                            margin: "1.5rem 0"
-                        },
-                        children: "Select Events"
-                    }), Ue.length > 0 && y.jsxs(y.Fragment, {
-                        children: [y.jsx("h3", {
-                            className: "register-category-title",
-                            children: "Technical Events"
+                    }), y.jsxs("section", {
+                        className: "reg-section",
+                        children: [y.jsxs("div", {
+                            className: "reg-events-head",
+                            children: [y.jsx("h2", {
+                                className: "reg-section-title",
+                                children: "Select events"
+                            }), y.jsxs("span", {
+                                className: "reg-count",
+                                children: [O.selectedEvents.length, " selected"]
+                            })]
+                        }), y.jsx("input", {
+                            className: "reg-search",
+                            type: "text",
+                            placeholder: "Search events…",
+                            "aria-label": "Search events",
+                            value: x,
+                            onChange: ue => E(ue.target.value)
                         }), y.jsx("div", {
-                            className: "Registercards",
-                            children: Ue.map(ue => Ne(ue))
+                            className: "event-tabs-wrapper reg-tabs",
+                            children: y.jsx("div", {
+                                className: "reg-tabs-inner",
+                                children: ["All", "Technical", "Non-Technical", "Workshop"].map(ue => y.jsx("button", {
+                                    type: "button",
+                                    className: o === ue ? "reg-tab active" : "reg-tab",
+                                    onClick: () => c(ue),
+                                    children: ue
+                                }, ue))
+                            })
+                        }), Ue.length > 0 && y.jsxs(y.Fragment, {
+                            children: [y.jsx("h3", {
+                                className: "register-category-title",
+                                children: "Technical Events"
+                            }), y.jsx("div", {
+                                className: "Registercards reg-cards",
+                                children: Ue.map(ue => Ne(ue))
+                            })]
+                        }), J.length > 0 && y.jsxs(y.Fragment, {
+                            children: [y.jsx("h3", {
+                                className: "register-category-title",
+                                children: "Non-Technical Events"
+                            }), y.jsx("div", {
+                                className: "Registercardsnon reg-cards",
+                                children: J.map(ue => Ne(ue))
+                            })]
+                        }), ye.length > 0 && y.jsxs(y.Fragment, {
+                            children: [y.jsx("h3", {
+                                className: "register-category-title",
+                                children: "Workshops"
+                            }), y.jsx("div", {
+                                className: "Registercards reg-cards",
+                                children: ye.map(ue => Ne(ue))
+                            })]
+                        }), y.jsx("p", {
+                            className: "reg-hint",
+                            children: "ℹ️ Want to participate in more events later? You can add events by contacting the event coordinators."
                         })]
-                    }), J.length > 0 && y.jsxs(y.Fragment, {
-                        children: [y.jsx("h3", {
-                            className: "register-category-title",
-                            children: "Non-Technical Events"
-                        }), y.jsx("div", {
-                            className: "Registercardsnon",
-                            children: J.map(ue => Ne(ue))
-                        })]
-                    }), ye.length > 0 && y.jsxs(y.Fragment, {
-                        children: [y.jsx("h3", {
-                            className: "register-category-title",
-                            children: "Workshops"
-                        }), y.jsx("div", {
-                            className: "Registercards",
-                            children: ye.map(ue => Ne(ue))
-                        })]
-                    }), y.jsx("p", {
-                        style: {
-                            padding: "2rem"
-                        },
-                        children: "ℹ️ Want to participate in more events later? You can add events by contacting the event coordinators."
-                    }), y.jsxs("div", {
-                        style: {
-                            marginTop: "2rem",
-                            textAlign: "center"
-                        },
-                        children: [y.jsxs("h3", {
-                            children: ["Total Amount: ₹", W]
+                    }), y.jsxs("section", {
+                        className: "reg-summary",
+                        children: [y.jsxs("p", {
+                            className: "reg-summary-note",
+                            children: [y.jsx("b", {
+                                children: "One standard fee"
+                            }), " per event — identical for every participant. Payment is completed by UPI on the next step."]
+                        }), y.jsxs("p", {
+                            className: "reg-total",
+                            children: [y.jsx("span", {
+                                children: "Total amount payable"
+                            }), y.jsxs("b", {
+                                children: ["₹", W]
+                            })]
                         }), y.jsx("button", {
                             type: "button",
-                            className: "btn",
+                            className: "btn reg-submit",
                             onClick: we,
                             disabled: !oe || r,
-                            style: {
-                                width: "100%",
-                                cursor: r ? "not-allowed" : "pointer",
-                                opacity: oe && !r ? 1 : .5
-                            },
-                            children: r ? "Processing..." : W === 0 ? "Register for Free" : `Pay & Register ₹${W}`
+                            children: r ? "Processing..." : W ? `Pay & Register ₹${W}` : "Register" 
                         })]
                     })]
                 })
@@ -21284,13 +21198,7 @@ const {
                             children: "Amount"
                         }), y.jsx("span", {
                             className: "detail-value",
-                            children: f === 0 ? y.jsx("span", {
-                                style: {
-                                    color: "#00ff88",
-                                    fontWeight: "bold"
-                                },
-                                children: "FREE"
-                            }) : `₹${f}`
+                            children: `₹${f}`
                         })]
                     }), y.jsxs("div", {
                         className: "detail-row",
