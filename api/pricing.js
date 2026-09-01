@@ -19,7 +19,6 @@ const RULES = [
 
   /* Workshops */
   { key: 'advanced cnc machining and precision manufacturing', aliases: ['advanced cnc machining and precision manufacturing', 'advanced cnc machining', 'precision manufacturing'], solo: 200 },
-  { key: 'bachelor samayal', aliases: ['bachelor samayal'], solo: 100 },
 
   /* Non-technical events */
   { key: 'free fire', aliases: ['free fire', 'freefire'], solo: 100, team: 100 },
