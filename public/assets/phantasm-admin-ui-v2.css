@@ -1,0 +1,293 @@
+/* PHANTASM'27 — ADMIN UI v2
+   Focused polish for /admin/ and /admin/panel.
+   Visual-only: does not change auth, data, API, or dashboard behavior.
+*/
+
+:root{
+  --admin-v2-bg:#080604;
+  --admin-v2-surface:#100b08;
+  --admin-v2-surface-2:#17100b;
+  --admin-v2-gold:#d9a441;
+  --admin-v2-gold-soft:#f0cf8b;
+  --admin-v2-ivory:#f3e6c8;
+  --admin-v2-muted:#b8aa8d;
+  --admin-v2-line:rgba(217,164,65,.20);
+  --admin-v2-line-strong:rgba(217,164,65,.40);
+}
+
+/* --------------------------------------------------------------------------
+   ADMIN LOGIN — /admin/
+   Detects the actual login screen by its admin-email field, so public pages
+   are untouched.
+   -------------------------------------------------------------------------- */
+body:has(input[placeholder*="admin email" i]){
+  background:
+    radial-gradient(circle at 50% 12%,rgba(124,31,31,.30),transparent 38%),
+    linear-gradient(180deg,#080604 0%,#0e0906 58%,#080604 100%) !important;
+}
+
+body:has(input[placeholder*="admin email" i]) #root{
+  min-height:100vh !important;
+}
+
+body:has(input[placeholder*="admin email" i]) form{
+  width:min(620px,calc(100% - 40px)) !important;
+  margin:clamp(46px,11vh,110px) auto !important;
+  padding:34px 38px 38px !important;
+  border:1px solid var(--admin-v2-line) !important;
+  border-radius:20px !important;
+  background:
+    linear-gradient(145deg,rgba(217,164,65,.065),rgba(16,11,8,.96) 48%,rgba(8,6,4,.98)) !important;
+  box-shadow:0 28px 90px rgba(0,0,0,.48),inset 0 1px 0 rgba(240,207,139,.05) !important;
+  position:relative !important;
+}
+
+body:has(input[placeholder*="admin email" i]) form::before{
+  content:'PHANTASM\201927  ·  ADMIN ACCESS';
+  display:block !important;
+  margin-bottom:24px !important;
+  color:var(--admin-v2-gold-soft) !important;
+  font-family:Georgia,'Times New Roman',serif !important;
+  font-size:clamp(1.45rem,3vw,2rem) !important;
+  font-weight:700 !important;
+  letter-spacing:.035em !important;
+  text-align:center !important;
+}
+
+body:has(input[placeholder*="admin email" i]) form::after{
+  content:'Authorized administration portal';
+  display:block !important;
+  margin-top:-15px !important;
+  margin-bottom:22px !important;
+  color:var(--admin-v2-muted) !important;
+  font-size:.78rem !important;
+  letter-spacing:.12em !important;
+  text-align:center !important;
+  text-transform:uppercase !important;
+}
+
+body:has(input[placeholder*="admin email" i]) form input{
+  width:100% !important;
+  min-height:58px !important;
+  padding:0 17px !important;
+  margin:0 0 12px !important;
+  border:1px solid var(--admin-v2-line) !important;
+  border-radius:11px !important;
+  background:rgba(4,3,2,.72) !important;
+  color:var(--admin-v2-ivory) !important;
+  font-size:1rem !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.015) !important;
+  transition:border-color .2s ease,box-shadow .2s ease,background .2s ease !important;
+}
+
+body:has(input[placeholder*="admin email" i]) form input:focus{
+  border-color:var(--admin-v2-gold) !important;
+  background:rgba(12,8,5,.92) !important;
+  box-shadow:0 0 0 4px rgba(217,164,65,.09),0 8px 24px rgba(0,0,0,.18) !important;
+}
+
+/* Larger ENTER button, as requested */
+body:has(input[placeholder*="admin email" i]) form button{
+  width:100% !important;
+  min-height:64px !important;
+  margin-top:8px !important;
+  border:1px solid var(--admin-v2-gold-soft) !important;
+  border-radius:11px !important;
+  background:linear-gradient(180deg,#f0cf8b 0%,#d9a441 100%) !important;
+  color:#241703 !important;
+  font-size:1.02rem !important;
+  font-weight:800 !important;
+  letter-spacing:.12em !important;
+  text-transform:uppercase !important;
+  box-shadow:0 10px 28px rgba(217,164,65,.22) !important;
+  transition:transform .2s ease,box-shadow .2s ease,filter .2s ease !important;
+}
+
+body:has(input[placeholder*="admin email" i]) form button:hover{
+  transform:translateY(-2px) !important;
+  filter:brightness(1.05) !important;
+  box-shadow:0 15px 34px rgba(217,164,65,.32) !important;
+}
+
+body:has(input[placeholder*="admin email" i]) form button:active{
+  transform:translateY(0) !important;
+}
+
+/* Hide the old standalone title when the same form already supplies the
+   stronger title, but only when it is a direct heading immediately above it. */
+body:has(input[placeholder*="admin email" i]) form ~ h1,
+body:has(input[placeholder*="admin email" i]) form ~ h2{
+  display:none !important;
+}
+
+/* --------------------------------------------------------------------------
+   ADMIN PANEL — /admin/panel
+   Identified by the existing team-search field.
+   -------------------------------------------------------------------------- */
+body:has(input[placeholder*="Search Team" i]){
+  background:
+    radial-gradient(circle at 50% 0,rgba(124,31,31,.22),transparent 34%),
+    linear-gradient(180deg,#080604 0%,#0c0806 100%) !important;
+}
+
+body:has(input[placeholder*="Search Team" i]) #root{
+  min-height:100vh !important;
+}
+
+/* Main panel content rail */
+body:has(input[placeholder*="Search Team" i]) main,
+body:has(input[placeholder*="Search Team" i]) .admin-panel,
+body:has(input[placeholder*="Search Team" i]) .admin-dashboard{
+  width:min(1320px,calc(100% - 48px)) !important;
+  margin:0 auto !important;
+  padding:34px 0 70px !important;
+}
+
+body:has(input[placeholder*="Search Team" i]) h1,
+body:has(input[placeholder*="Search Team" i]) h2{
+  color:var(--admin-v2-ivory) !important;
+  font-family:Georgia,'Times New Roman',serif !important;
+  letter-spacing:.01em !important;
+}
+
+/* Dashboard title */
+body:has(input[placeholder*="Search Team" i]) h1:first-child,
+body:has(input[placeholder*="Search Team" i]) h2:first-child{
+  text-align:center !important;
+  font-size:clamp(2rem,4vw,3rem) !important;
+  margin:0 0 24px !important;
+  text-shadow:0 0 30px rgba(217,164,65,.12) !important;
+}
+
+/* Panel tabs: Registrations / Teams / Contact Details / Notifications */
+body:has(input[placeholder*="Search Team" i]) button{
+  min-height:42px !important;
+  padding:9px 16px !important;
+  border:1px solid var(--admin-v2-line-strong) !important;
+  border-radius:9px !important;
+  background:linear-gradient(180deg,rgba(217,164,65,.10),rgba(217,164,65,.035)) !important;
+  color:var(--admin-v2-ivory) !important;
+  font-weight:700 !important;
+  letter-spacing:.015em !important;
+  box-shadow:none !important;
+  transition:transform .18s ease,border-color .18s ease,background .18s ease !important;
+}
+
+body:has(input[placeholder*="Search Team" i]) button:hover{
+  transform:translateY(-1px) !important;
+  border-color:var(--admin-v2-gold) !important;
+  background:rgba(217,164,65,.10) !important;
+}
+
+/* Search / event / UTR filters */
+body:has(input[placeholder*="Search Team" i]) input,
+body:has(input[placeholder*="Search Team" i]) select{
+  min-height:52px !important;
+  padding:0 15px !important;
+  border:1px solid var(--admin-v2-line) !important;
+  border-radius:10px !important;
+  background:rgba(5,4,3,.76) !important;
+  color:var(--admin-v2-ivory) !important;
+  font-size:.94rem !important;
+  box-shadow:none !important;
+}
+
+body:has(input[placeholder*="Search Team" i]) input:focus,
+body:has(input[placeholder*="Search Team" i]) select:focus{
+  border-color:var(--admin-v2-gold) !important;
+  box-shadow:0 0 0 4px rgba(217,164,65,.07) !important;
+}
+
+/* Add breathing room around the filter controls. */
+body:has(input[placeholder*="Search Team" i]) input[placeholder*="Search Team" i],
+body:has(input[placeholder*="Search Team" i]) input[placeholder*="UTR" i],
+body:has(input[placeholder*="Search Team" i]) select{
+  margin-bottom:14px !important;
+}
+
+/* Export controls */
+body:has(input[placeholder*="Search Team" i]) button:is([class*="export" i],[title*="export" i]){
+  min-height:44px !important;
+  padding:10px 22px !important;
+  margin:6px auto 24px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+/* Summary total */
+body:has(input[placeholder*="Search Team" i]) :is([class*="total" i],[class*="count" i]){
+  color:var(--admin-v2-ivory) !important;
+}
+
+/* Make table-like data readable even when the source build renders plain
+   table elements without a dedicated wrapper. */
+body:has(input[placeholder*="Search Team" i]) table{
+  width:100% !important;
+  min-width:900px !important;
+  margin:18px 0 30px !important;
+  border-collapse:separate !important;
+  border-spacing:0 !important;
+  overflow:hidden !important;
+  border:1px solid var(--admin-v2-line) !important;
+  border-radius:13px !important;
+  background:rgba(12,8,5,.82) !important;
+}
+
+body:has(input[placeholder*="Search Team" i]) thead th{
+  padding:14px 15px !important;
+  background:#17100b !important;
+  color:var(--admin-v2-gold-soft) !important;
+  font-size:.78rem !important;
+  font-weight:800 !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase !important;
+  border-bottom:1px solid var(--admin-v2-line-strong) !important;
+  white-space:nowrap !important;
+}
+
+body:has(input[placeholder*="Search Team" i]) tbody td{
+  padding:13px 15px !important;
+  color:var(--admin-v2-muted) !important;
+  border-bottom:1px solid rgba(217,164,65,.08) !important;
+  white-space:nowrap !important;
+}
+
+body:has(input[placeholder*="Search Team" i]) tbody tr:last-child td{
+  border-bottom:0 !important;
+}
+
+body:has(input[placeholder*="Search Team" i]) tbody tr:hover td{
+  background:rgba(217,164,65,.035) !important;
+  color:var(--admin-v2-ivory) !important;
+}
+
+/* Section labels / column headings */
+body:has(input[placeholder*="Search Team" i]) :is(th,h3,h4,[class*="section-title" i]){
+  color:var(--admin-v2-gold-soft) !important;
+}
+
+/* Responsive */
+@media(max-width:900px){
+  body:has(input[placeholder*="Search Team" i]) main,
+  body:has(input[placeholder*="Search Team" i]) .admin-panel,
+  body:has(input[placeholder*="Search Team" i]) .admin-dashboard{
+    width:calc(100% - 24px) !important;
+    padding-top:24px !important;
+  }
+
+  body:has(input[placeholder*="Search Team" i]) table{
+    min-width:760px !important;
+  }
+}
+
+@media(max-width:600px){
+  body:has(input[placeholder*="admin email" i]) form{
+    width:calc(100% - 22px) !important;
+    padding:26px 20px 28px !important;
+  }
+
+  body:has(input[placeholder*="admin email" i]) form button{
+    min-height:60px !important;
+  }
+}
