@@ -1,73 +1,151 @@
-/* PHANTASM'27 — REGISTRATION PRICING UI
+/* PHANTASM'27 — REGISTRATION PRICING UI v2
    Visual layer only. Pricing values come from the application's canonical rules.
+   Gender is participant information only and never affects fees.
 */
 
 @media (min-width: 769px) {
   .Formcontainer {
-    max-width: 920px !important;
-    margin: 28px auto 56px !important;
-    padding: 32px 38px !important;
+    width: min(100% - 64px, 1180px) !important;
+    max-width: 1180px !important;
+    margin: 34px auto 72px !important;
+    padding: 38px 44px !important;
+    border: 1px solid rgba(217,164,65,.22) !important;
+    border-radius: 20px !important;
+    background: linear-gradient(145deg,rgba(217,164,65,.065),rgba(14,10,7,.96) 44%,rgba(7,5,4,.98)) !important;
+    box-shadow: 0 28px 80px rgba(0,0,0,.38), inset 0 1px 0 rgba(240,207,139,.05) !important;
+    box-sizing: border-box !important;
   }
 
-  .Formcontainer button[type='submit'],
-  .Formcontainer input[type='submit'],
-  .Formcontainer button.submit-btn,
-  .Formcontainer button.register-btn,
-  .Formcontainer button[class*='register'] {
-    width: min(100%, 420px) !important;
+  .Formcontainer form,
+  .Formcontainer .form-grid,
+  .Formcontainer .fields,
+  .registration-form,
+  .register-form {
+    width: 100% !important;
+    max-width: none !important;
+    display: grid !important;
+    grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+    column-gap: 24px !important;
+    row-gap: 22px !important;
+    align-items: start !important;
+  }
+
+  .Formcontainer .row,
+  .Formcontainer .form-row,
+  .Formcontainer [class*='row'] {
+    display: grid !important;
+    grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+    gap: 22px 24px !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .Formcontainer input,
+  .Formcontainer select,
+  .Formcontainer textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     min-height: 54px !important;
-    margin: 24px auto 8px !important;
-    padding: 14px 30px !important;
-    border: 1px solid rgba(238, 201, 125, .9) !important;
-    border-radius: 10px !important;
-    background: linear-gradient(135deg, #f4d58f 0%, #d9a441 52%, #b87b1f 100%) !important;
+    padding: 12px 15px !important;
+    box-sizing: border-box !important;
+    border: 1px solid rgba(217,164,65,.22) !important;
+    border-radius: 11px !important;
+    background: rgba(4,3,2,.78) !important;
+    color: #f3e6c8 !important;
+    outline: none !important;
+  }
+
+  .Formcontainer input:focus,
+  .Formcontainer select:focus,
+  .Formcontainer textarea:focus {
+    border-color: #d9a441 !important;
+    box-shadow: 0 0 0 4px rgba(217,164,65,.08) !important;
+  }
+
+  .Formcontainer label,
+  .Formcontainer .form-label,
+  .Formcontainer .field-label {
+    color: #e7d3ad !important;
+    font-weight: 700 !important;
+    margin-bottom: 8px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Gender is informational only. Never display a gender-specific fee. */
+  .Formcontainer :where([class*='gender' i],[name*='gender' i]) {
+    color: #e7d3ad !important;
+  }
+
+  .Formcontainer :where(.gender-fee,.gender-price,.female-fee,.male-fee,.female-price,.male-price,[data-gender-fee]) {
+    display: none !important;
+  }
+
+  .Formcontainer :where(.price,.amount,.fee,.registration-fee,.event-price,.event-fee,.total,.total-amount) {
+    color: #f0cf8b !important;
+    font-weight: 800 !important;
+  }
+
+  .Formcontainer :where(.fee-note,.pricing-note,.payment-note) {
+    color: #b8aa8d !important;
+  }
+
+  .Formcontainer :where(button[type='submit'],input[type='submit'],.submit-btn,.register-btn,button[class*='register']) {
+    grid-column: 1 / -1 !important;
+    justify-self: center !important;
+    width: min(100%,460px) !important;
+    min-height: 62px !important;
+    margin: 28px auto 4px !important;
+    padding: 16px 34px !important;
+    border: 1px solid #f0cf8b !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg,#f4d58f 0%,#d9a441 52%,#b87b1f 100%) !important;
     color: #241703 !important;
     -webkit-text-fill-color: #241703 !important;
-    font-family: var(--font-tech, Arial, sans-serif) !important;
-    font-size: .9rem !important;
-    font-weight: 800 !important;
-    letter-spacing: .09em !important;
+    font-size: 1rem !important;
+    font-weight: 900 !important;
+    letter-spacing: .1em !important;
     text-transform: uppercase !important;
-    box-shadow: 0 8px 24px rgba(217,164,65,.20), inset 0 1px 0 rgba(255,255,255,.35) !important;
-    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease !important;
-  }
-
-  .Formcontainer button[type='submit']:hover,
-  .Formcontainer input[type='submit']:hover,
-  .Formcontainer button.submit-btn:hover,
-  .Formcontainer button.register-btn:hover,
-  .Formcontainer button[class*='register']:hover {
-    transform: translateY(-2px) !important;
-    filter: brightness(1.05) !important;
-    box-shadow: 0 12px 30px rgba(217,164,65,.30), inset 0 1px 0 rgba(255,255,255,.4) !important;
-  }
-
-  .Formcontainer button[type='submit']:active,
-  .Formcontainer input[type='submit']:active,
-  .Formcontainer button.submit-btn:active,
-  .Formcontainer button.register-btn:active,
-  .Formcontainer button[class*='register']:active {
-    transform: translateY(1px) !important;
+    box-shadow: 0 12px 32px rgba(217,164,65,.24), inset 0 1px 0 rgba(255,255,255,.38) !important;
   }
 }
 
 @media (max-width: 768px) {
-  .Formcontainer button[type='submit'],
-  .Formcontainer input[type='submit'],
-  .Formcontainer button.submit-btn,
-  .Formcontainer button.register-btn,
-  .Formcontainer button[class*='register'] {
+  .Formcontainer {
+    width: calc(100% - 20px) !important;
+    margin: 18px auto 36px !important;
+    padding: 24px 18px 30px !important;
+    border: 1px solid rgba(217,164,65,.22) !important;
+    border-radius: 16px !important;
+    background: linear-gradient(145deg,rgba(217,164,65,.06),rgba(10,7,5,.97)) !important;
+    box-shadow: 0 22px 55px rgba(0,0,0,.35) !important;
+  }
+
+  .Formcontainer form,
+  .Formcontainer .form-grid,
+  .Formcontainer .fields,
+  .Formcontainer .row,
+  .Formcontainer .form-row,
+  .Formcontainer [class*='row'] {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  .Formcontainer input,
+  .Formcontainer select,
+  .Formcontainer textarea {
     width: 100% !important;
     min-height: 52px !important;
-    margin-top: 16px !important;
+    box-sizing: border-box !important;
     border-radius: 10px !important;
-    border: 1px solid rgba(238, 201, 125, .9) !important;
-    background: linear-gradient(135deg, #f4d58f, #d9a441) !important;
-    color: #241703 !important;
-    -webkit-text-fill-color: #241703 !important;
-    font-weight: 800 !important;
-    letter-spacing: .07em !important;
-    text-transform: uppercase !important;
-    box-shadow: 0 7px 20px rgba(217,164,65,.18) !important;
+  }
+
+  .Formcontainer :where(button[type='submit'],input[type='submit'],.submit-btn,.register-btn,button[class*='register']) {
+    width: 100% !important;
+    min-height: 58px !important;
+    margin-top: 18px !important;
+    border-radius: 11px !important;
   }
 }
