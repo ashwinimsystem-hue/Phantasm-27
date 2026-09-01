@@ -1,0 +1,101 @@
+/* PHANTASM'27 — ADMIN UI v3
+   Final table layout + extra-large admin Enter button.
+*/
+
+/* ---------------- LOGIN /admin/ ---------------- */
+body:has(input[placeholder*="admin email" i]) form button{
+  width:100% !important;
+  height:82px !important;
+  min-height:82px !important;
+  margin-top:12px !important;
+  border-radius:12px !important;
+  border:1px solid #f0cf8b !important;
+  background:linear-gradient(180deg,#f0cf8b,#d9a441) !important;
+  color:#241703 !important;
+  font-size:1.2rem !important;
+  font-weight:900 !important;
+  letter-spacing:.14em !important;
+  text-transform:uppercase !important;
+  box-shadow:0 12px 34px rgba(217,164,65,.28) !important;
+}
+body:has(input[placeholder*="admin email" i]) form button:hover{
+  transform:translateY(-2px) !important;
+  box-shadow:0 18px 42px rgba(217,164,65,.38) !important;
+}
+
+/* ---------------- PANEL /admin/panel ---------------- */
+body:has(input[placeholder*="Search Team" i]) table{
+  display:table !important;
+  width:100% !important;
+  min-width:1050px !important;
+  table-layout:auto !important;
+  border-collapse:separate !important;
+  border-spacing:0 !important;
+  border:1px solid rgba(217,164,65,.25) !important;
+  border-radius:14px !important;
+  overflow:hidden !important;
+  background:#0d0907 !important;
+  margin:18px 0 30px !important;
+}
+
+body:has(input[placeholder*="Search Team" i]) thead{
+  display:table-header-group !important;
+}
+body:has(input[placeholder*="Search Team" i]) tbody{
+  display:table-row-group !important;
+}
+body:has(input[placeholder*="Search Team" i]) tr{
+  display:table-row !important;
+}
+body:has(input[placeholder*="Search Team" i]) th,
+body:has(input[placeholder*="Search Team" i]) td{
+  display:table-cell !important;
+  vertical-align:middle !important;
+  box-sizing:border-box !important;
+}
+
+body:has(input[placeholder*="Search Team" i]) thead th{
+  padding:16px 18px !important;
+  background:#19110c !important;
+  color:#f0cf8b !important;
+  border-bottom:1px solid rgba(217,164,65,.42) !important;
+  font-size:.78rem !important;
+  font-weight:800 !important;
+  letter-spacing:.08em !important;
+  text-align:left !important;
+  text-transform:uppercase !important;
+  white-space:nowrap !important;
+}
+body:has(input[placeholder*="Search Team" i]) tbody td{
+  padding:15px 18px !important;
+  color:#c7b99b !important;
+  border-bottom:1px solid rgba(217,164,65,.09) !important;
+  font-size:.93rem !important;
+  white-space:nowrap !important;
+}
+body:has(input[placeholder*="Search Team" i]) tbody tr:hover td{
+  background:rgba(217,164,65,.045) !important;
+  color:#f3e6c8 !important;
+}
+body:has(input[placeholder*="Search Team" i]) tbody tr:last-child td{
+  border-bottom:0 !important;
+}
+
+/* Keep wide tables neat on desktop and scroll horizontally on mobile. */
+body:has(input[placeholder*="Search Team" i]) :is(.table-wrap,.admin-table-wrap,.data-table-wrap){
+  width:100% !important;
+  overflow-x:auto !important;
+  overflow-y:visible !important;
+  -webkit-overflow-scrolling:touch !important;
+}
+
+@media(max-width:700px){
+  body:has(input[placeholder*="admin email" i]) form button{
+    height:74px !important;
+    min-height:74px !important;
+    font-size:1.08rem !important;
+  }
+  body:has(input[placeholder*="Search Team" i]) table{
+    min-width:900px !important;
+  }
+}
