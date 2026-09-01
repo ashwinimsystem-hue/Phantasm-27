@@ -1,0 +1,158 @@
+/* PHANTASM'27 — MOBILE HOME FLOW / STEP 2A
+   Scope: CTA + countdown + Unleash Your Potential section.
+   Desktop intentionally untouched.
+*/
+@media (max-width:768px){
+  /* CTA row: centered, equal-width tiles, no accidental stretching. */
+  .phantasm-home-actions,
+  .phantasm-event-actions{
+    width:min(100% - 28px,360px)!important;
+    margin:1rem auto!important;
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:.65rem!important;
+    align-items:stretch!important;
+  }
+  .phantasm-home-actions a,
+  .phantasm-home-actions button,
+  .phantasm-event-actions a,
+  .phantasm-event-actions button{
+    min-height:46px!important;
+    width:100%!important;
+    margin:0!important;
+    padding:.72rem .7rem!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+    border-radius:8px!important;
+    font-family:'Source Sans 3',Arial,sans-serif!important;
+    font-size:.7rem!important;
+    font-weight:600!important;
+    letter-spacing:.06em!important;
+  }
+  .phantasm-home-actions a:first-child,
+  .phantasm-home-actions button:first-child{
+    background:linear-gradient(180deg,#f0cf8b,#d9a441)!important;
+    color:#241703!important;
+    border:1px solid #d9a441!important;
+  }
+  .phantasm-home-actions a:last-child,
+  .phantasm-home-actions button:last-child{
+    background:rgba(217,164,65,.04)!important;
+    color:#f0cf8b!important;
+    border:1px solid rgba(217,164,65,.45)!important;
+  }
+
+  /* Countdown: one compact editorial panel immediately after the CTAs. */
+  .phantasm-event-countdown{
+    width:min(100% - 28px,420px)!important;
+    margin:1.15rem auto .9rem!important;
+    padding:1rem .9rem 1.1rem!important;
+    border:1px solid rgba(217,164,65,.2)!important;
+    border-radius:12px!important;
+    background:linear-gradient(145deg,rgba(124,31,31,.12),rgba(20,13,9,.78))!important;
+    text-align:center!important;
+  }
+  .phantasm-event-countdown .countdown-label,
+  .phantasm-event-countdown h2,
+  .phantasm-event-countdown h3,
+  .phantasm-event-countdown p:first-child{
+    margin:0!important;
+    color:#f0cf8b!important;
+    font-family:'EB Garamond',Georgia,serif!important;
+    font-size:1.1rem!important;
+    font-weight:600!important;
+    letter-spacing:.06em!important;
+    text-transform:uppercase!important;
+  }
+  .phantasm-event-countdown .countdown-value,
+  .phantasm-event-countdown [class*='timer'],
+  .phantasm-event-countdown [class*='countdown']{
+    margin-top:.45rem!important;
+    color:#f3e6c8!important;
+    font-family:'Source Sans 3',Arial,sans-serif!important;
+    font-variant-numeric:tabular-nums!important;
+    font-size:clamp(1rem,5vw,1.35rem)!important;
+    font-weight:600!important;
+    letter-spacing:.1em!important;
+    line-height:1.25!important;
+  }
+
+  /* Unleash Your Potential: convert the text wall into a focused feature card. */
+  .phantasm-potential-block{
+    width:min(100% - 28px,520px)!important;
+    margin:1.1rem auto 1.4rem!important;
+    padding:1.35rem 1rem 1.2rem!important;
+    border:1px solid rgba(217,164,65,.18)!important;
+    border-radius:14px!important;
+    background:
+      radial-gradient(circle at 50% 0,rgba(124,31,31,.18),transparent 58%),
+      linear-gradient(145deg,rgba(217,164,65,.035),rgba(20,13,9,.92))!important;
+    box-shadow:inset 0 1px 0 rgba(243,230,200,.025)!important;
+    text-align:center!important;
+  }
+  .phantasm-potential-block .phantasm-home-potential{
+    display:block!important;
+    margin:0 0 .65rem!important;
+    color:#f0cf8b!important;
+    -webkit-text-fill-color:#f0cf8b!important;
+    font-family:'EB Garamond',Georgia,serif!important;
+    font-size:clamp(1.45rem,8vw,2rem)!important;
+    font-weight:600!important;
+    line-height:1.05!important;
+    letter-spacing:.015em!important;
+    text-shadow:none!important;
+  }
+  .phantasm-potential-block .potential-lead{
+    margin:0 auto .9rem!important;
+    max-width:42ch!important;
+    color:#cdbf9e!important;
+    font-family:'Source Sans 3',Arial,sans-serif!important;
+    font-size:.82rem!important;
+    line-height:1.55!important;
+    letter-spacing:.01em!important;
+  }
+  .phantasm-potential-points{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:.5rem!important;
+    margin:.8rem 0 0!important;
+  }
+  .phantasm-potential-points span{
+    min-width:0!important;
+    padding:.7rem .45rem!important;
+    border:1px solid rgba(217,164,65,.14)!important;
+    border-radius:8px!important;
+    color:#f3e6c8!important;
+    font-family:'Source Sans 3',Arial,sans-serif!important;
+    font-size:.68rem!important;
+    font-weight:600!important;
+    line-height:1.25!important;
+  }
+  .phantasm-potential-block .potential-link{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    margin-top:1rem!important;
+    min-height:42px!important;
+    padding:.6rem 1rem!important;
+    border:1px solid rgba(217,164,65,.42)!important;
+    border-radius:999px!important;
+    color:#f0cf8b!important;
+    font-family:'Source Sans 3',Arial,sans-serif!important;
+    font-size:.7rem!important;
+    font-weight:600!important;
+    letter-spacing:.07em!important;
+    text-transform:uppercase!important;
+  }
+}
+@media(max-width:430px){
+  .phantasm-home-actions,.phantasm-event-actions{width:calc(100% - 24px)!important;gap:.5rem!important}
+  .phantasm-event-countdown{width:calc(100% - 24px)!important}
+  .phantasm-potential-block{width:calc(100% - 24px)!important;padding-inline:.8rem!important}
+  .phantasm-potential-points{grid-template-columns:1fr!important}
+}
+@media(max-width:360px){
+  .phantasm-home-actions,.phantasm-event-actions{grid-template-columns:1fr!important}
+}

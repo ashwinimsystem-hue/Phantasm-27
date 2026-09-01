@@ -1,0 +1,88 @@
+/* PHANTASM'27 — EVENT ACTIONS / STEP 4
+   Adds a clear Register Now action to every event tile and separates
+   View Details / Rules visually. Desktop and mobile are supported.
+*/
+
+.events-page .event-card .phantasm-event-action-row {
+  width: 100% !important;
+  margin-top: .8rem !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: .55rem !important;
+  align-items: stretch !important;
+}
+
+.events-page .event-card .phantasm-event-action-row > * {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+  padding: .65rem .55rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 7px !important;
+  font-family: 'Source Sans 3', Arial, sans-serif !important;
+  font-size: .68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .05em !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease !important;
+}
+
+.events-page .event-card .phantasm-view-details {
+  background: linear-gradient(180deg, #8f4a3d 0%, #6f2f27 100%) !important;
+  border: 1px solid #a35b4c !important;
+  color: #fff1df !important;
+  -webkit-text-fill-color: #fff1df !important;
+}
+
+.events-page .event-card .phantasm-rules-action {
+  background: rgba(124, 31, 31, .22) !important;
+  border: 1px solid rgba(240, 207, 139, .58) !important;
+  color: #f0cf8b !important;
+  -webkit-text-fill-color: #f0cf8b !important;
+}
+
+.events-page .event-card .phantasm-register-now {
+  background: linear-gradient(180deg, #f0cf8b 0%, #d9a441 100%) !important;
+  border: 1px solid #d9a441 !important;
+  color: #241703 !important;
+  -webkit-text-fill-color: #241703 !important;
+  box-shadow: 0 7px 18px rgba(217, 164, 65, .16) !important;
+}
+
+.events-page .event-card .phantasm-event-action-row > *:hover,
+.events-page .event-card .phantasm-event-action-row > *:focus-visible {
+  transform: translateY(-1px) !important;
+  filter: brightness(1.06) !important;
+}
+
+@media (max-width: 768px) {
+  .events-page .event-card .phantasm-event-action-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .events-page .event-card .phantasm-event-action-row {
+    gap: .45rem !important;
+  }
+  .events-page .event-card .phantasm-event-action-row > * {
+    min-height: 42px !important;
+    padding: .55rem .35rem !important;
+    font-size: .61rem !important;
+    letter-spacing: .035em !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .events-page .event-card .phantasm-event-action-row {
+    grid-template-columns: 1fr !important;
+  }
+}

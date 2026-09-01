@@ -1,0 +1,116 @@
+@font-face {
+  font-family: 'Aesthetic Romance Local';
+  src: url('/AestheticRomance.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Main hero institution name only. */
+.phantasm-hero-college-name {
+  font-family: 'Aesthetic Romance Local', 'Aesthetic Romance', Georgia, serif !important;
+  font-weight: 400 !important;
+  font-size: clamp(1.45rem, 2.35vw, 2.2rem) !important;
+  line-height: 1.22 !important;
+  letter-spacing: .02em !important;
+  color: #e0bd70 !important;
+  -webkit-text-fill-color: #e0bd70 !important;
+  text-shadow: 0 2px 14px rgba(224,189,112,.22) !important;
+  display: block !important;
+  width: min(76%, 860px) !important;
+  max-width: 860px !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  position: relative !important;
+  z-index: 4 !important;
+}
+
+/* Footer college name: same normal text treatment as the address/contact lines. */
+.phantasm-footer-college-name {
+  font-family: 'LEMON MILK', Arial, sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  letter-spacing: .04em !important;
+  color: #e0bd70 !important;
+  -webkit-text-fill-color: #e0bd70 !important;
+  text-shadow: none !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin: 0 0 1rem 0 !important;
+  padding: 0 !important;
+  background: none !important;
+}
+
+/* No college logo in Contact Us; the hero logo remains untouched. */
+.phantasm-footer-gce-logo,
+[data-phantasm-gce-logo] {
+  display: none !important;
+}
+
+/* Supplied social-medals sprite on the existing clickable social links. */
+.footer .footer-socials {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  margin-top: 1.4rem !important;
+}
+
+.footer .footer-socials a {
+  display: block !important;
+  width: 56px !important;
+  height: 56px !important;
+  flex: 0 0 56px !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  overflow: hidden !important;
+  border-radius: 50% !important;
+  background-image: url('/social-medals.jpg') !important;
+  background-size: 224px 56px !important;
+  background-repeat: no-repeat !important;
+  background-position: 0 0 !important;
+  transition: transform .3s ease, filter .3s ease !important;
+}
+
+.footer .footer-socials a i,
+.footer .footer-socials a span {
+  display: none !important;
+}
+
+/* Keep each existing anchor's href, while mapping each anchor to one medal. */
+.footer .footer-socials a:nth-child(1) { background-position: 0 0 !important; }
+.footer .footer-socials a:nth-child(2) { background-position: -56px 0 !important; }
+.footer .footer-socials a:nth-child(3) { background-position: -112px 0 !important; }
+.footer .footer-socials a:nth-child(4) { background-position: -168px 0 !important; }
+
+.footer .footer-socials a:hover,
+.footer .footer-socials a:focus-visible,
+.footer .footer-socials a:active {
+  transform: translateY(-3px) scale(1.08) !important;
+  filter: brightness(1.18) drop-shadow(0 4px 12px rgba(217,164,65,.65)) !important;
+}
+
+@media (max-width: 700px) {
+  .phantasm-hero-college-name {
+    font-size: clamp(1.25rem, 6vw, 1.85rem) !important;
+    width: calc(100% - 170px) !important;
+    max-width: 720px !important;
+  }
+
+  .footer .footer-socials {
+    justify-content: flex-start !important;
+    gap: .8rem !important;
+  }
+
+  .footer .footer-socials a {
+    width: 48px !important;
+    height: 48px !important;
+    flex-basis: 48px !important;
+    background-size: 192px 48px !important;
+  }
+
+  .footer .footer-socials a:nth-child(1) { background-position: 0 0 !important; }
+  .footer .footer-socials a:nth-child(2) { background-position: -48px 0 !important; }
+  .footer .footer-socials a:nth-child(3) { background-position: -96px 0 !important; }
+  .footer .footer-socials a:nth-child(4) { background-position: -144px 0 !important; }
+}

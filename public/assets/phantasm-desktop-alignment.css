@@ -1,0 +1,397 @@
+/* PHANTASM'27 — DESKTOP / PC ALIGNMENT PASS
+   Desktop only. Keeps mobile layers untouched.
+   Goal: consistent content rails, vertical rhythm, centered grids,
+   predictable card heights, and cleaner navigation/footer alignment.
+*/
+
+@media (min-width: 769px) {
+  :root {
+    --p27-desktop-max: 1180px;
+    --p27-desktop-gutter: 32px;
+    --p27-desktop-section-y: clamp(4rem, 6vw, 6.5rem);
+    --p27-desktop-gap: 24px;
+  }
+
+  html, body, #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  /* One shared desktop content rail */
+  .navbar-container,
+  .site-nav .wrap,
+  .hero > .wrap,
+  .hero .wrap,
+  .hero .container,
+  .section > .wrap,
+  .section .wrap,
+  .section > .container,
+  .section .container,
+  .container,
+  .container-section > .wrap,
+  .container-section .wrap,
+  .events-page > .wrap,
+  .events-page .wrap,
+  .about-section > .wrap,
+  .about-section .wrap,
+  .footer-top,
+  .footer-grid {
+    width: min(100% - (var(--p27-desktop-gutter) * 2), var(--p27-desktop-max)) !important;
+    max-width: var(--p27-desktop-max) !important;
+    margin-inline: auto !important;
+  }
+
+  /* Navigation */
+  .navbar,
+  .site-nav {
+    min-height: 72px !important;
+  }
+
+  .navbar-container,
+  .site-nav .wrap {
+    min-height: 72px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 28px !important;
+  }
+
+  .nav-links,
+  .nav-menu {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: clamp(18px, 2.2vw, 34px) !important;
+    margin-left: auto !important;
+  }
+
+  .nav-link,
+  .nav-links a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+  }
+
+  .logo-image {
+    flex: 0 0 auto !important;
+  }
+
+  /* Section rails + heading rhythm */
+  section,
+  .section,
+  .container-section,
+  .about-section,
+  .events-page,
+  .highlight-section {
+    width: 100% !important;
+  }
+
+  section:not(.hero),
+  .section:not(.hero),
+  .container-section,
+  .about-section,
+  .events-page {
+    padding-block: var(--p27-desktop-section-y) !important;
+  }
+
+  .section-head {
+    width: min(100%, 760px) !important;
+    max-width: 760px !important;
+    margin-inline: auto !important;
+    margin-bottom: clamp(2.25rem, 4vw, 3.5rem) !important;
+    text-align: center !important;
+  }
+
+  .section-head h1,
+  .section-head h2,
+  .section-head h3,
+  .section-head p {
+    max-width: 100% !important;
+    margin-inline: auto !important;
+    text-align: center !important;
+  }
+
+  /* Hero: establish a predictable centered column */
+  .hero {
+    min-height: clamp(720px, 88vh, 900px) !important;
+    display: flex !important;
+    align-items: flex-start !important;
+  }
+
+  .hero > .wrap,
+  .hero .wrap,
+  .hero .container {
+    min-height: 100% !important;
+    padding-inline: 0 !important;
+  }
+
+  .hero-institution {
+    width: min(100%, 1080px) !important;
+    max-width: 1080px !important;
+    margin: 0 auto !important;
+    padding: 22px 0 0 !important;
+    display: grid !important;
+    grid-template-columns: 84px minmax(0, 1fr) 84px !important;
+    align-items: center !important;
+    justify-items: center !important;
+    gap: 22px !important;
+  }
+
+  .hero-institution .inst-logo,
+  .inst-logo.left,
+  .inst-logo.right {
+    position: static !important;
+    width: 72px !important;
+    height: 72px !important;
+    max-width: 72px !important;
+    max-height: 72px !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+  }
+
+  .hero-institution .inst-text {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    text-align: center !important;
+  }
+
+  .hero-institution .inst-text::before {
+    width: 100% !important;
+    margin-inline: auto !important;
+    text-align: center !important;
+  }
+
+  .hero-inner,
+  .hero-content,
+  .hero-copy {
+    width: min(100%, 920px) !important;
+    max-width: 920px !important;
+    margin-inline: auto !important;
+    padding-inline: 0 !important;
+    text-align: center !important;
+  }
+
+  .hero .logo-image-center,
+  .hero img[src*='vaagai'],
+  .hero img[alt*='vaagai' i],
+  .hero .vaagai-logo {
+    display: block !important;
+    width: min(650px, 58vw) !important;
+    max-width: 650px !important;
+    max-height: 46svh !important;
+    margin: 20px auto 0 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .hero h1,
+  .hero-title,
+  .hero-heading {
+    max-width: 1000px !important;
+    margin: 18px auto 0 !important;
+    text-align: center !important;
+    text-wrap: balance !important;
+  }
+
+  .hero-sub,
+  .hero-subtitle,
+  .hero-description,
+  .description {
+    width: min(100%, 760px) !important;
+    max-width: 760px !important;
+    margin: 14px auto 0 !important;
+    text-align: center !important;
+  }
+
+  .hero-meta,
+  .hero-details,
+  .hero-stats,
+  .meta-row {
+    width: min(100%, 760px) !important;
+    max-width: 760px !important;
+    margin: 18px auto 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+  .hero-actions,
+  .hero-cta {
+    width: min(100%, 680px) !important;
+    max-width: 680px !important;
+    margin: 24px auto 0 !important;
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 14px !important;
+  }
+
+  .hero-actions > a,
+  .hero-actions > button,
+  .hero-cta > a,
+  .hero-cta > button {
+    min-width: 190px !important;
+    min-height: 50px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .hero .hero-timer,
+  .hero-timer,
+  .hero .countdown,
+  .countdown {
+    width: min(100%, 640px) !important;
+    max-width: 640px !important;
+    margin: 20px auto 0 !important;
+    text-align: center !important;
+  }
+
+  /* Main grids: stable columns and equal alignment */
+  .event-grid,
+  .events-grid {
+    width: 100% !important;
+    max-width: var(--p27-desktop-max) !important;
+    margin-inline: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    gap: var(--p27-desktop-gap) !important;
+  }
+
+  .event-card,
+  .about-card,
+  .people-card,
+  .highlight-section,
+  .register-frame,
+  .registration-card,
+  .payment-card,
+  .success-card {
+    min-width: 0 !important;
+    height: 100% !important;
+  }
+
+  .event-card,
+  .about-card,
+  .people-card {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .event-card .btn,
+  .event-card .rules-btn,
+  .event-card .phantasm-register-now {
+    margin-top: auto !important;
+  }
+
+  /* Common content rows */
+  .about-grid,
+  .about-cards,
+  .people-grid,
+  .people-cards,
+  .highlight-grid,
+  .cards-grid,
+  .features-grid {
+    width: 100% !important;
+    max-width: var(--p27-desktop-max) !important;
+    margin-inline: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    gap: var(--p27-desktop-gap) !important;
+  }
+
+  /* Two-column layouts that should not drift on wide screens */
+  .two-column,
+  .content-grid,
+  .about-layout,
+  .register-layout,
+  .payment-layout {
+    width: 100% !important;
+    max-width: var(--p27-desktop-max) !important;
+    margin-inline: auto !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr) !important;
+    align-items: start !important;
+    gap: clamp(28px, 4vw, 56px) !important;
+  }
+
+  /* Forms: line everything up to the same left/right edge */
+  .Formcontainer,
+  .form-container,
+  .registration-form,
+  .register-form,
+  .payment-form {
+    width: 100% !important;
+    max-width: 920px !important;
+    margin-inline: auto !important;
+  }
+
+  .Formcontainer > *,
+  .form-container > *,
+  .registration-form > *,
+  .register-form > * {
+    min-width: 0 !important;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 48px !important;
+  }
+
+  /* Footer alignment */
+  .footer-top,
+  .footer-grid {
+    width: min(100% - (var(--p27-desktop-gutter) * 2), var(--p27-desktop-max)) !important;
+    max-width: var(--p27-desktop-max) !important;
+    margin-inline: auto !important;
+    display: grid !important;
+    grid-template-columns: 1.3fr 1fr .9fr !important;
+    align-items: start !important;
+    gap: clamp(28px, 4vw, 56px) !important;
+  }
+
+  .footer-col,
+  .footer-grid > * {
+    min-width: 0 !important;
+  }
+
+  .footer-title,
+  .footer-grid h4 {
+    margin-bottom: 12px !important;
+  }
+
+  .footer-socials {
+    justify-content: flex-start !important;
+    align-items: center !important;
+  }
+
+  /* Wide PC: slightly roomier rail without letting content sprawl */
+  @media (min-width: 1440px) {
+    :root {
+      --p27-desktop-gutter: 40px;
+    }
+
+    .hero .logo-image-center,
+    .hero img[src*='vaagai'],
+    .hero img[alt*='vaagai' i],
+    .hero .vaagai-logo {
+      width: 680px !important;
+      max-width: 680px !important;
+    }
+  }
+}

@@ -1,0 +1,153 @@
+/* PHANTASM'27 — REGISTRATION PC ALIGNMENT v1
+   Desktop-only registration layout cleanup.
+*/
+
+@media (min-width: 769px) {
+  /* Hide any legacy/helper text that advertises registration as free. */
+  .Formcontainer :where(*):not(input):not(select):not(textarea):not(button) {
+    /* no-op: selector kept intentionally broad only as a hook for legacy markup */
+  }
+
+  .Formcontainer {
+    width: min(100% - 64px, 1180px) !important;
+    max-width: 1180px !important;
+    margin: 34px auto 72px !important;
+    padding: 36px 42px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Keep registration heading and team link on the same left rail. */
+  .Formcontainer > h1,
+  .Formcontainer > h2,
+  .Formcontainer > h3,
+  .Formcontainer .register-title,
+  .registration-page h1,
+  .registration-page h2 {
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .Formcontainer .already-team,
+  .Formcontainer .team-link,
+  .registration-page .already-team,
+  .registration-page .team-link,
+  .register-team-link {
+    text-align: left !important;
+    margin: 8px 0 28px !important;
+  }
+
+  /* Build a stable three-column desktop form with consistent gutters. */
+  .Formcontainer form,
+  .Formcontainer .form-grid,
+  .Formcontainer .fields,
+  .registration-form,
+  .register-form {
+    width: 100% !important;
+    max-width: none !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    column-gap: 22px !important;
+    row-gap: 22px !important;
+    align-items: start !important;
+    margin: 0 !important;
+  }
+
+  .Formcontainer .row,
+  .Formcontainer .form-row,
+  .Formcontainer [class*='row'] {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    column-gap: 22px !important;
+    row-gap: 22px !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .Formcontainer .form-group,
+  .Formcontainer .field,
+  .Formcontainer .form-field,
+  .Formcontainer .input-group,
+  .Formcontainer label {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Common span helpers for fields that should occupy more space. */
+  .Formcontainer .full-width,
+  .Formcontainer .span-full,
+  .Formcontainer .col-span-full,
+  .Formcontainer [data-span='3'] {
+    grid-column: 1 / -1 !important;
+  }
+
+  .Formcontainer .span-2,
+  .Formcontainer .col-span-2,
+  .Formcontainer [data-span='2'] {
+    grid-column: span 2 !important;
+  }
+
+  .Formcontainer label,
+  .Formcontainer .form-label,
+  .Formcontainer .field-label {
+    display: block !important;
+    margin-bottom: 8px !important;
+    line-height: 1.25 !important;
+  }
+
+  .Formcontainer input,
+  .Formcontainer select,
+  .Formcontainer textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 52px !important;
+    box-sizing: border-box !important;
+  }
+
+  .Formcontainer textarea {
+    min-height: 120px !important;
+  }
+
+  /* Password row stays balanced instead of drifting. */
+  .Formcontainer [type='password'] {
+    width: 100% !important;
+  }
+
+  /* Registration action sits on the page centerline, not inside a drifting column. */
+  .Formcontainer :where(button[type='submit'], input[type='submit'], .submit-btn, .register-btn, button[class*='register']) {
+    grid-column: 1 / -1 !important;
+    justify-self: center !important;
+    width: min(100%, 420px) !important;
+    margin: 12px auto 0 !important;
+  }
+
+  /* Remove visible legacy 'free' badges/text from the registration UI. */
+  .Formcontainer :where(.free, .free-badge, .free-label, .price-free, .registration-free, [class*='free-badge'], [class*='free-label']) {
+    display: none !important;
+  }
+
+  /* Hide common explicit helper labels containing the word FREE while preserving
+     actual form controls. This only targets text/badge-like UI elements. */
+  .Formcontainer :where(.price, .amount, .fee, .registration-fee, .event-price, .event-fee) {
+    text-align: left !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Formcontainer {
+    padding: 40px 48px !important;
+  }
+
+  .Formcontainer form,
+  .Formcontainer .form-grid,
+  .Formcontainer .fields,
+  .Formcontainer .row,
+  .Formcontainer .form-row,
+  .Formcontainer [class*='row'] {
+    column-gap: 26px !important;
+    row-gap: 24px !important;
+  }
+}

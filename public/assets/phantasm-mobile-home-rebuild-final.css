@@ -1,0 +1,47 @@
+/* PHANTASM'27 — MOBILE HOME REBUILD / FINAL CASCADE
+   This is the only mobile homepage composition layer that should need editing.
+   Desktop is untouched.
+*/
+
+@media (max-width: 768px) {
+  /* Remove every legacy hero content wrapper once the new shell exists. */
+  .phantasm-mobile-rebuilt .hero > .wrap > *:not(.phantasm-mobile-hero-shell):not(.particle-vignette):not(canvas),
+  .phantasm-mobile-rebuilt .hero .wrap > *:not(.phantasm-mobile-hero-shell):not(.particle-vignette):not(canvas) {
+    display: none !important;
+  }
+
+  /* Some legacy typography added content with pseudo-elements. */
+  .phantasm-mobile-rebuilt .hero-institution .inst-text::before,
+  .phantasm-mobile-rebuilt .hero-institution .inst-text::after,
+  .phantasm-mobile-rebuilt .hero-title::before,
+  .phantasm-mobile-rebuilt .hero-title::after,
+  .phantasm-mobile-rebuilt .hero-subtitle::before,
+  .phantasm-mobile-rebuilt .hero-subtitle::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .phantasm-mobile-rebuilt .hero > .wrap,
+  .phantasm-mobile-rebuilt .hero .wrap {
+    width: 100% !important;
+    max-width: 560px !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .phantasm-mobile-hero-shell {
+    isolation: isolate;
+  }
+
+  .phantasm-mobile-hero-actions,
+  .phantasm-mobile-hero-actions * {
+    pointer-events: auto !important;
+  }
+
+  .phantasm-mobile-hero-actions .primary:active,
+  .phantasm-mobile-hero-actions .secondary:active {
+    transform: translateY(1px);
+  }
+}

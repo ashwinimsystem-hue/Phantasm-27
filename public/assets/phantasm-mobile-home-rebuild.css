@@ -1,0 +1,265 @@
+/* PHANTASM'27 — MOBILE HOME REBUILD
+   Single mobile hero system. Desktop is intentionally untouched.
+   Edit this file for mobile hero typography, spacing, sizing and colours.
+*/
+
+@media (max-width: 768px) {
+  .phantasm-mobile-hero-shell {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 18px 16px 26px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 20;
+    gap: 0;
+  }
+
+  .phantasm-mobile-hero-institution {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+  }
+
+  .phantasm-mobile-hero-institution img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .phantasm-mobile-hero-college {
+    margin: 0;
+    color: #f0cf8b;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: clamp(1.45rem, 7vw, 2rem);
+    font-weight: 700;
+    line-height: 1.03;
+    letter-spacing: .01em;
+    text-wrap: balance;
+  }
+
+  .phantasm-mobile-hero-department {
+    margin: 8px 0 0;
+    color: #cdbf9e;
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: clamp(.76rem, 3.7vw, .95rem);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .phantasm-mobile-hero-presents {
+    margin: 22px 0 4px;
+    color: #d9a441;
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: clamp(.72rem, 3.2vw, .86rem);
+    font-weight: 700;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+  }
+
+  .phantasm-mobile-hero-title {
+    margin: 0;
+    color: #f3e6c8;
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: clamp(1.65rem, 8vw, 2.3rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  .phantasm-mobile-hero-rule {
+    width: 54px;
+    height: 1px;
+    margin: 11px auto 8px;
+    background: linear-gradient(90deg, transparent, #d9a441, transparent);
+    opacity: .8;
+  }
+
+  .phantasm-mobile-hero-art {
+    width: min(96vw, 520px);
+    max-width: 100%;
+    max-height: 27svh;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 10px 22px rgba(217,164,65,.18));
+  }
+
+  .phantasm-mobile-hero-description {
+    width: min(100%, 510px);
+    margin: 12px auto 0;
+    color: #cdbf9e;
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: clamp(.82rem, 3.8vw, .98rem);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: .01em;
+    text-align: center;
+  }
+
+  .phantasm-mobile-hero-actions {
+    width: min(100%, 390px);
+    margin: 18px auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .phantasm-mobile-hero-actions a {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    border-radius: 9px;
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: .73rem;
+    font-weight: 800;
+    letter-spacing: .055em;
+    text-decoration: none;
+    text-transform: uppercase;
+    touch-action: manipulation;
+  }
+
+  .phantasm-mobile-hero-actions .primary {
+    color: #211706;
+    background: linear-gradient(180deg, #f0cf8b 0%, #d9a441 100%);
+    border: 1px solid #d9a441;
+    box-shadow: 0 8px 18px rgba(217,164,65,.14);
+  }
+
+  .phantasm-mobile-hero-actions .secondary {
+    color: #f0cf8b;
+    background: rgba(217,164,65,.03);
+    border: 1px solid rgba(217,164,65,.42);
+  }
+
+  .phantasm-mobile-hero-date {
+    margin: 7px 0 0;
+    color: #f3e6c8;
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: clamp(1rem, 5vw, 1.35rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+  }
+
+  .phantasm-mobile-hero-countdown {
+    width: min(100%, 430px);
+    margin: 48px auto 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  .phantasm-mobile-hero-countdown .countdown-label,
+  .phantasm-mobile-hero-countdown h2,
+  .phantasm-mobile-hero-countdown h3,
+  .phantasm-mobile-hero-countdown p:first-child {
+    margin: 0;
+    color: #f0cf8b;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: clamp(1.35rem, 6vw, 1.7rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: .045em;
+    text-transform: uppercase;
+  }
+
+  .phantasm-mobile-hero-countdown .countdown-value,
+  .phantasm-mobile-hero-countdown [class*='timer'],
+  .phantasm-mobile-hero-countdown [class*='countdown'] {
+    margin-top: 13px;
+    color: #f3e6c8;
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: clamp(1.05rem, 5.6vw, 1.45rem);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .08em;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  /* Old mobile hero elements are hidden once the rebuild is active. */
+  .phantasm-mobile-rebuilt .hero-institution,
+  .phantasm-mobile-rebuilt .hero-tamil,
+  .phantasm-mobile-rebuilt .hero-title,
+  .phantasm-mobile-rebuilt .hero-subtitle,
+  .phantasm-mobile-rebuilt .hero-actions {
+    display: none !important;
+  }
+
+  /* Keep the rest of the homepage readable; the feature section follows the hero. */
+  .phantasm-mobile-rebuilt .highlight-wrapper,
+  .phantasm-mobile-rebuilt .highlights-grid,
+  .phantasm-mobile-rebuilt .phantasm-potential-block {
+    width: min(calc(100% - 24px), 540px);
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .phantasm-mobile-hero-shell {
+    padding: 14px 12px 22px;
+  }
+
+  .phantasm-mobile-hero-institution {
+    grid-template-columns: 34px minmax(0, 1fr) 34px;
+    gap: 7px;
+  }
+
+  .phantasm-mobile-hero-institution img {
+    width: 31px;
+    height: 31px;
+  }
+
+  .phantasm-mobile-hero-college {
+    font-size: clamp(1.32rem, 7.1vw, 1.7rem);
+  }
+
+  .phantasm-mobile-hero-department {
+    font-size: .74rem;
+    letter-spacing: .12em;
+  }
+
+  .phantasm-mobile-hero-art {
+    width: 94vw;
+    max-height: 24svh;
+  }
+
+  .phantasm-mobile-hero-description {
+    font-size: .82rem;
+    line-height: 1.5;
+  }
+
+  .phantasm-mobile-hero-countdown {
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 360px) {
+  .phantasm-mobile-hero-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .phantasm-mobile-hero-countdown {
+    margin-top: 34px;
+  }
+}

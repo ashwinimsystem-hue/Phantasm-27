@@ -1,0 +1,23 @@
+/* PHANTASM'27 — PC POLISH
+   Desktop only: removes mobile hamburger and refines marked controls.
+*/
+@media (min-width:769px){
+  .menu-icon,.nav-toggle,.navbar .menu-icon,.navbar .nav-toggle,.site-nav .menu-icon,.site-nav .nav-toggle{display:none!important;visibility:hidden!important;pointer-events:none!important;}
+  .navbar-container,.site-nav .wrap{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:28px!important;min-height:72px!important;}
+  .nav-links,.nav-menu{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:clamp(16px,2vw,30px)!important;margin-left:auto!important;}
+  .nav-link,.nav-links a{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:44px!important;padding:8px 0!important;white-space:nowrap!important;}
+
+  .hero-actions,.hero-cta{width:min(100%,560px)!important;max-width:560px!important;margin:18px auto 0!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;align-items:stretch!important;}
+  .hero-actions>a,.hero-actions>button,.hero-cta>a,.hero-cta>button{width:100%!important;min-width:0!important;min-height:52px!important;margin:0!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;white-space:nowrap!important;border-radius:8px!important;font-size:.88rem!important;letter-spacing:.045em!important;box-shadow:0 8px 22px rgba(0,0,0,.18)!important;}
+  .hero-actions>a:hover,.hero-actions>button:hover,.hero-cta>a:hover,.hero-cta>button:hover{transform:translateY(-2px)!important;}
+
+  .hero .event-date,.hero .date,.hero .hero-date,.hero .hero-dates,.hero [class*="event-date"],.hero [class*="date-display"]{margin:10px auto 0!important;padding:0!important;text-align:center!important;}
+  .hero .hero-timer,.hero-timer,.hero .countdown,.countdown{width:min(100%,520px)!important;max-width:520px!important;margin:12px auto 0!important;padding:10px 16px!important;box-sizing:border-box!important;text-align:center!important;}
+  .hero .countdown{border:1px solid rgba(217,164,65,.18)!important;border-radius:10px!important;background:rgba(217,164,65,.025)!important;}
+  .hero .countdown span,.countdown span{text-align:center!important;}
+
+  .Formcontainer button,.form-container button,.registration-form button,.register-form button,.contact-form button,.contact-section button,[type="submit"]{min-height:46px!important;padding:10px 22px!important;border-radius:7px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;font-weight:600!important;letter-spacing:.035em!important;cursor:pointer!important;}
+  .Formcontainer,.form-container,.registration-form,.register-form,.payment-form{width:100%!important;max-width:920px!important;margin-inline:auto!important;}
+  .Formcontainer input,.Formcontainer textarea,.Formcontainer select,.form-container input,.form-container textarea,.form-container select,.contact-form input,.contact-form textarea,.contact-form select{width:100%!important;max-width:100%!important;}
+  .Formcontainer textarea,.form-container textarea,.contact-form textarea{min-height:132px!important;}
+}

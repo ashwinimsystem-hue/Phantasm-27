@@ -1,0 +1,73 @@
+/* PHANTASM'27 — REGISTRATION PRICING UI
+   Visual layer only. Pricing values come from the application's canonical rules.
+*/
+
+@media (min-width: 769px) {
+  .Formcontainer {
+    max-width: 920px !important;
+    margin: 28px auto 56px !important;
+    padding: 32px 38px !important;
+  }
+
+  .Formcontainer button[type='submit'],
+  .Formcontainer input[type='submit'],
+  .Formcontainer button.submit-btn,
+  .Formcontainer button.register-btn,
+  .Formcontainer button[class*='register'] {
+    width: min(100%, 420px) !important;
+    min-height: 54px !important;
+    margin: 24px auto 8px !important;
+    padding: 14px 30px !important;
+    border: 1px solid rgba(238, 201, 125, .9) !important;
+    border-radius: 10px !important;
+    background: linear-gradient(135deg, #f4d58f 0%, #d9a441 52%, #b87b1f 100%) !important;
+    color: #241703 !important;
+    -webkit-text-fill-color: #241703 !important;
+    font-family: var(--font-tech, Arial, sans-serif) !important;
+    font-size: .9rem !important;
+    font-weight: 800 !important;
+    letter-spacing: .09em !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 8px 24px rgba(217,164,65,.20), inset 0 1px 0 rgba(255,255,255,.35) !important;
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease !important;
+  }
+
+  .Formcontainer button[type='submit']:hover,
+  .Formcontainer input[type='submit']:hover,
+  .Formcontainer button.submit-btn:hover,
+  .Formcontainer button.register-btn:hover,
+  .Formcontainer button[class*='register']:hover {
+    transform: translateY(-2px) !important;
+    filter: brightness(1.05) !important;
+    box-shadow: 0 12px 30px rgba(217,164,65,.30), inset 0 1px 0 rgba(255,255,255,.4) !important;
+  }
+
+  .Formcontainer button[type='submit']:active,
+  .Formcontainer input[type='submit']:active,
+  .Formcontainer button.submit-btn:active,
+  .Formcontainer button.register-btn:active,
+  .Formcontainer button[class*='register']:active {
+    transform: translateY(1px) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .Formcontainer button[type='submit'],
+  .Formcontainer input[type='submit'],
+  .Formcontainer button.submit-btn,
+  .Formcontainer button.register-btn,
+  .Formcontainer button[class*='register'] {
+    width: 100% !important;
+    min-height: 52px !important;
+    margin-top: 16px !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(238, 201, 125, .9) !important;
+    background: linear-gradient(135deg, #f4d58f, #d9a441) !important;
+    color: #241703 !important;
+    -webkit-text-fill-color: #241703 !important;
+    font-weight: 800 !important;
+    letter-spacing: .07em !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 7px 20px rgba(217,164,65,.18) !important;
+  }
+}

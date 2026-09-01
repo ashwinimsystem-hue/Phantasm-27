@@ -1,0 +1,321 @@
+/* PHANTASM'27 — MOBILE EVENTS / STEP 3
+   Scope: Events route on phones.
+   Goal: one-column cards, clear filters, strong hierarchy, touch-friendly actions.
+   Desktop is intentionally untouched.
+*/
+
+@media (max-width: 768px) {
+  html, body, #root { overflow-x: hidden !important; }
+
+  .events-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 1.25rem 0 3rem !important;
+    overflow-x: clip !important;
+    box-sizing: border-box !important;
+  }
+
+  .events-page > *,
+  .events-page .wrap,
+  .events-page .container,
+  .events-page .events-container {
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .events-page .section-head {
+    width: min(calc(100% - 28px), 620px) !important;
+    max-width: 620px !important;
+    margin: 0 auto 1.1rem !important;
+    padding: 0 !important;
+    text-align: center !important;
+  }
+
+  .events-page .section-head::before {
+    margin-bottom: .55rem !important;
+    color: #d9a441 !important;
+  }
+
+  .events-page .section-head h1,
+  .events-page .section-head h2,
+  .events-page > h1,
+  .events-page > h2 {
+    margin: 0 !important;
+    color: #f3e6c8 !important;
+    font-family: 'EB Garamond', Georgia, serif !important;
+    font-size: clamp(2rem, 9vw, 2.75rem) !important;
+    font-weight: 600 !important;
+    line-height: 1.02 !important;
+    letter-spacing: .015em !important;
+    text-align: center !important;
+    text-wrap: balance !important;
+  }
+
+  .events-page .section-head p {
+    width: min(calc(100% - 8px), 48ch) !important;
+    margin: .7rem auto 0 !important;
+    color: #cdbf9e !important;
+    font-family: 'Source Sans 3', Arial, sans-serif !important;
+    font-size: .82rem !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+  }
+
+  /* Filter rows: horizontal scrolling is intentional on narrow screens. */
+  .events-page .tabs,
+  .events-page .tab-row,
+  .events-page .category-tabs,
+  .events-page .event-tabs,
+  .events-page .filter-tabs,
+  .events-page .day-tabs,
+  .events-page .filters,
+  .events-page [class*='tabs'] {
+    width: min(calc(100% - 24px), 620px) !important;
+    max-width: 620px !important;
+    margin: 0 auto 1rem !important;
+    padding: .15rem 0 .55rem !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: .5rem !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-inline: contain !important;
+  }
+
+  .events-page .tabs::-webkit-scrollbar,
+  .events-page .tab-row::-webkit-scrollbar,
+  .events-page .category-tabs::-webkit-scrollbar,
+  .events-page .event-tabs::-webkit-scrollbar,
+  .events-page .filter-tabs::-webkit-scrollbar,
+  .events-page .day-tabs::-webkit-scrollbar,
+  .events-page .filters::-webkit-scrollbar,
+  .events-page [class*='tabs']::-webkit-scrollbar { display: none !important; }
+
+  .events-page .tab-btn,
+  .events-page .day-tab,
+  .events-page .filters button,
+  .events-page [class*='tabs'] button {
+    flex: 0 0 auto !important;
+    min-height: 40px !important;
+    padding: .58rem .9rem !important;
+    border: 1px solid rgba(217,164,65,.26) !important;
+    border-radius: 999px !important;
+    background: rgba(217,164,65,.025) !important;
+    color: #cdbf9e !important;
+    font-family: 'Source Sans 3', Arial, sans-serif !important;
+    font-size: .68rem !important;
+    font-weight: 600 !important;
+    letter-spacing: .045em !important;
+    white-space: nowrap !important;
+    touch-action: manipulation !important;
+  }
+
+  .events-page .tab-btn.active,
+  .events-page .day-tab.active,
+  .events-page .filters button.active,
+  .events-page [class*='tabs'] button.active,
+  .events-page .tab-btn[aria-selected='true'],
+  .events-page .day-tab[aria-selected='true'] {
+    background: #d9a441 !important;
+    border-color: #d9a441 !important;
+    color: #241703 !important;
+  }
+
+  /* Force every mobile event collection to exactly one column. */
+  .events-page .event-grid,
+  .events-page .events-grid,
+  .events-page .event-list,
+  .events-page .events-list,
+  .events-page [class*='event-grid'],
+  .events-page [class*='events-grid'] {
+    width: min(calc(100% - 24px), 620px) !important;
+    max-width: 620px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-auto-flow: row !important;
+    gap: .9rem !important;
+    align-items: stretch !important;
+  }
+
+  .events-page .event-grid > *,
+  .events-page .events-grid > *,
+  .events-page .event-list > *,
+  .events-page .events-list > *,
+  .events-page [class*='event-grid'] > *,
+  .events-page [class*='events-grid'] > * {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    grid-column: 1 / -1 !important;
+  }
+
+  .events-page .event-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: .15rem !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(217,164,65,.20) !important;
+    border-radius: 14px !important;
+    background:
+      linear-gradient(145deg, rgba(217,164,65,.045), rgba(16,10,7,.96)) !important;
+    box-shadow: none !important;
+  }
+
+  .events-page .event-card::before,
+  .events-page .event-card::after { opacity: .35 !important; }
+
+  .events-page .event-card:hover,
+  .events-page .event-card:active {
+    transform: none !important;
+    border-color: rgba(217,164,65,.34) !important;
+    box-shadow: 0 12px 28px rgba(0,0,0,.24) !important;
+  }
+
+  .events-page .event-card h3,
+  .events-page .event-card h4 {
+    margin: .2rem 0 .5rem !important;
+    color: #f3e6c8 !important;
+    font-family: 'EB Garamond', Georgia, serif !important;
+    font-size: 1.35rem !important;
+    font-weight: 600 !important;
+    line-height: 1.1 !important;
+    letter-spacing: .005em !important;
+    text-align: left !important;
+  }
+
+  .events-page .event-card p,
+  .events-page .event-card li,
+  .events-page .event-card .meta,
+  .events-page .event-card small,
+  .events-page .event-card span {
+    color: #cdbf9e !important;
+    font-family: 'Source Sans 3', Arial, sans-serif !important;
+    font-size: .78rem !important;
+    line-height: 1.5 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .events-page .event-card .num,
+  .events-page .event-card .date,
+  .events-page .event-card .category,
+  .events-page .event-card .mode,
+  .events-page .event-card [class*='badge'],
+  .events-page .event-card [class*='tag'] {
+    color: #d9a441 !important;
+  }
+
+  /* Keep rules/register actions aligned and easy to tap. */
+  .events-page .event-card .btn-grp,
+  .events-page .event-card .event-actions,
+  .events-page .event-card .actions,
+  .events-page .event-card [class*='action'] {
+    width: 100% !important;
+    margin-top: .65rem !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: .55rem !important;
+  }
+
+  .events-page .event-card .btn,
+  .events-page .event-card .rules-btn,
+  .events-page .event-card .register-btn,
+  .events-page .event-card .phantasm-register-now,
+  .events-page .event-card [class*='register'] {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+    padding: .65rem .55rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 7px !important;
+    font-family: 'Source Sans 3', Arial, sans-serif !important;
+    font-size: .68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: .055em !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+  }
+
+  .events-page .event-card .register-btn,
+  .events-page .event-card .phantasm-register-now,
+  .events-page .event-card [class*='register'] {
+    background: linear-gradient(180deg,#f0cf8b,#d9a441) !important;
+    border: 1px solid #d9a441 !important;
+    color: #241703 !important;
+    -webkit-text-fill-color: #241703 !important;
+  }
+
+  .events-page .event-card .rules-btn,
+  .events-page .event-card [class*='rules'] {
+    background: rgba(217,164,65,.035) !important;
+    border: 1px solid rgba(217,164,65,.38) !important;
+    color: #f0cf8b !important;
+    -webkit-text-fill-color: #f0cf8b !important;
+  }
+
+  .events-page .event-card .btn-grp:has(> :only-child),
+  .events-page .event-card .event-actions:has(> :only-child),
+  .events-page .event-card .actions:has(> :only-child) {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Don't allow long event titles or metadata to create horizontal overflow. */
+  .events-page .event-card h1,
+  .events-page .event-card h2,
+  .events-page .event-card h3,
+  .events-page .event-card h4,
+  .events-page .event-card p,
+  .events-page .event-card a,
+  .events-page .event-card span,
+  .events-page .event-card small {
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .events-page { padding-top: 1rem !important; }
+  .events-page .section-head { width: calc(100% - 24px) !important; margin-bottom: .9rem !important; }
+  .events-page .section-head h1,
+  .events-page .section-head h2,
+  .events-page > h1,
+  .events-page > h2 { font-size: clamp(1.85rem, 9.5vw, 2.35rem) !important; }
+  .events-page .section-head p { font-size: .76rem !important; }
+  .events-page .event-grid,
+  .events-page .events-grid,
+  .events-page .event-list,
+  .events-page .events-list,
+  .events-page [class*='event-grid'],
+  .events-page [class*='events-grid'] { width: calc(100% - 20px) !important; gap: .75rem !important; }
+  .events-page .event-card { padding: .9rem !important; border-radius: 12px !important; }
+  .events-page .event-card h3,
+  .events-page .event-card h4 { font-size: 1.18rem !important; }
+  .events-page .event-card p,
+  .events-page .event-card li,
+  .events-page .event-card .meta,
+  .events-page .event-card small { font-size: .74rem !important; }
+}
+
+@media (max-width: 360px) {
+  .events-page .event-card .btn-grp,
+  .events-page .event-card .event-actions,
+  .events-page .event-card .actions,
+  .events-page .event-card [class*='action'] { grid-template-columns: 1fr !important; }
+}

@@ -1,0 +1,333 @@
+/* PHANTASM'27 — MOBILE CONTENT ALIGNMENT v1
+   Clean, consistent mobile rhythm for sections, cards, typography and controls.
+   Loaded after the existing mobile styles so it is intentionally self-contained.
+*/
+
+@media (max-width: 768px) {
+  :root {
+    --p27-content-gutter: 16px;
+    --p27-card-gap: 12px;
+    --p27-section-y: 42px;
+  }
+
+  html { scroll-padding-top: 76px; }
+
+  body {
+    margin: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  /* One consistent horizontal grid across the entire mobile site. */
+  main,
+  section,
+  .section,
+  .page,
+  .events-page,
+  .about-section,
+  footer,
+  .footer {
+    box-sizing: border-box !important;
+  }
+
+  section {
+    padding-top: var(--p27-section-y) !important;
+    padding-bottom: var(--p27-section-y) !important;
+  }
+
+  .wrap,
+  .container,
+  .section-container,
+  .content-container,
+  .page-container {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+    padding-left: var(--p27-content-gutter) !important;
+    padding-right: var(--p27-content-gutter) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Avoid nested containers doubling the side margins. */
+  .wrap .wrap,
+  .container .container,
+  .section-container .container,
+  .content-container .container {
+    width: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Section headings: consistent left edge and vertical rhythm. */
+  .section-head,
+  .section-header,
+  .page-header {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 0 22px !important;
+    text-align: left !important;
+  }
+
+  .section-head .label,
+  .section-header .label,
+  .label {
+    display: block !important;
+    margin: 0 0 8px !important;
+    line-height: 1.2 !important;
+  }
+
+  .section-head h1,
+  .section-head h2,
+  .section-head h3,
+  .section-header h1,
+  .section-header h2,
+  .section-header h3,
+  .page-header h1,
+  .page-header h2 {
+    margin: 0 !important;
+    max-width: 100% !important;
+    line-height: 1.12 !important;
+    text-align: left !important;
+  }
+
+  .section-head .rule,
+  .section-header .rule {
+    margin: 12px 0 14px !important;
+    width: 56px !important;
+  }
+
+  .section-head p,
+  .section-header p {
+    margin: 0 !important;
+    max-width: 100% !important;
+    line-height: 1.55 !important;
+    text-align: left !important;
+  }
+
+  /* Grid layouts become one clean column with predictable gaps. */
+  .event-grid,
+  .about-grid,
+  .people-grid,
+  .students-grid,
+  .card-grid,
+  .cards-grid,
+  .features-grid,
+  .contact-grid,
+  .stats-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: var(--p27-card-gap) !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .event-card,
+  .about-card,
+  .people-card,
+  .student-chip,
+  .feature-card,
+  .contact-card,
+  .card {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  /* Event cards: comfortable reading space and aligned controls. */
+  .event-card {
+    padding: 16px !important;
+    border-radius: 10px !important;
+  }
+
+  .event-card h2,
+  .event-card h3,
+  .event-card h4,
+  .event-card h5 {
+    margin: 5px 0 8px !important;
+    line-height: 1.2 !important;
+  }
+
+  .event-card p {
+    margin: 0 0 12px !important;
+    line-height: 1.48 !important;
+  }
+
+  .event-card .cat,
+  .event-card .category,
+  .event-card .badge {
+    display: inline-block !important;
+    margin: 0 0 3px !important;
+    line-height: 1.2 !important;
+  }
+
+  .phantasm-event-action-row,
+  .event-actions,
+  .event-card .btn-grp,
+  .event-card .actions {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 7px !important;
+    margin-top: 12px !important;
+  }
+
+  .phantasm-event-action-row > *,
+  .event-actions > *,
+  .event-card .btn-grp > *,
+  .event-card .actions > *,
+  .event-card a,
+  .event-card button {
+    width: 100% !important;
+    min-height: 42px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  /* Tabs stay inside the same gutter and don't create horizontal overflow. */
+  .tabs,
+  .day-tabs,
+  .tab-list,
+  .filter-tabs {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 18px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .tabs > *,
+  .day-tabs > *,
+  .tab-list > *,
+  .filter-tabs > * {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Schedule/timeline alignment. */
+  .timeline-item {
+    display: grid !important;
+    grid-template-columns: minmax(72px, 28%) minmax(0, 1fr) !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding: 14px 0 !important;
+  }
+
+  .timeline-time {
+    margin: 0 !important;
+    line-height: 1.25 !important;
+  }
+
+  .timeline-body {
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  .timeline-body h3,
+  .timeline-body h4,
+  .timeline-body p {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Stat strips: prevent cramped four-column layouts on narrow phones. */
+  .stat-strip,
+  .stats-strip {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 18px 0 0 !important;
+  }
+
+  .stat,
+  .stat-item {
+    min-width: 0 !important;
+    padding: 12px 8px !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+
+  /* Generic text rhythm prevents content from touching card edges. */
+  p {
+    max-width: 100% !important;
+    line-height: 1.55 !important;
+  }
+
+  .about-card,
+  .people-card,
+  .feature-card,
+  .contact-card {
+    padding: 16px !important;
+  }
+
+  .about-card h3,
+  .people-card h3,
+  .people-card h4,
+  .feature-card h3,
+  .contact-card h3 {
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+    line-height: 1.25 !important;
+  }
+
+  .about-card p:last-child,
+  .people-card p:last-child,
+  .feature-card p:last-child,
+  .contact-card p:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Forms and inputs align with the same mobile grid. */
+  form,
+  .form-grid,
+  .form-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  input,
+  select,
+  textarea,
+  form button,
+  form .btn {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Footer content should use the same left/right edge as the body. */
+  footer .wrap,
+  .footer .wrap,
+  footer .container,
+  .footer .container {
+    padding-left: var(--p27-content-gutter) !important;
+    padding-right: var(--p27-content-gutter) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  :root { --p27-content-gutter: 14px; --p27-section-y: 36px; --p27-card-gap: 10px; }
+
+  .event-card,
+  .about-card,
+  .people-card,
+  .contact-card,
+  .feature-card {
+    padding: 14px !important;
+  }
+
+  .section-head,
+  .section-header,
+  .page-header {
+    margin-bottom: 18px !important;
+  }
+
+  .timeline-item {
+    grid-template-columns: 68px minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+}

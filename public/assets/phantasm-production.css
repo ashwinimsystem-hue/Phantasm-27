@@ -1,0 +1,198 @@
+/* PHANTASM'27 — FINAL PRODUCTION THEME
+   Rebuilt from the Vaagai 2k26 visual language:
+   warm architectural darks, restrained antique gold, ivory/parchment copy,
+   serif editorial display type, clean sans-serif body type.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
+:root{
+  --ref-ink:#0a0806;
+  --ref-ink-2:#14100b;
+  --ref-surface:#17100c;
+  --ref-surface-2:#211610;
+  --ref-gold:#d9a441;
+  --ref-gold-soft:#f0cf8b;
+  --ref-bronze:#9c6b24;
+  --ref-maroon:#7c1f1f;
+  --ref-parchment:#f3e6c8;
+  --ref-muted:#cdbf9e;
+  --ref-line:rgba(217,164,65,.18);
+  --ref-line-strong:rgba(217,164,65,.34);
+  --ref-display:'EB Garamond',Georgia,serif;
+  --ref-body:'Source Sans 3','Arial',sans-serif;
+  --ref-tamil:'Noto Sans Tamil',sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--ref-ink)!important;scroll-behavior:smooth;overflow-x:hidden}
+body,#root{min-width:320px;max-width:100%;overflow-x:hidden!important}
+body{
+  margin:0!important;
+  color:var(--ref-parchment)!important;
+  background:
+    radial-gradient(circle at 50% 0,rgba(124,31,31,.25),transparent 34%),
+    linear-gradient(180deg,var(--ref-ink) 0%,#120c08 50%,#080605 100%)!important;
+  font-family:var(--ref-body)!important;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:
+    linear-gradient(90deg,transparent 49%,rgba(217,164,65,.035) 50%,transparent 51%),
+    linear-gradient(0deg,transparent 49%,rgba(217,164,65,.035) 50%,transparent 51%);
+  background-size:48px 48px;
+  opacity:.34;
+}
+
+body,button,input,textarea,select,a,p,li,label,small,strong{font-family:var(--ref-body)!important}
+h1,h2,h3,h4,h5,h6,.brand-mark,.stat b,.timeline-time{font-family:var(--ref-display)!important}
+.eyebrow,.role,.brand-tamil,.hero-tamil{font-family:var(--ref-tamil)!important}
+p,li{color:var(--ref-muted)!important;line-height:1.62}
+a{color:var(--ref-parchment);text-decoration:none}
+img,svg,video,canvas{max-width:100%;height:auto}
+button{font-family:inherit;cursor:pointer}
+:where(a,button,input,textarea,select,[tabindex]):focus-visible{outline:2px solid var(--ref-gold-soft)!important;outline-offset:4px!important}
+
+/* Navigation */
+.navbar,.site-nav{background:rgba(10,8,6,.90)!important;border-bottom:1px solid var(--ref-line)!important;backdrop-filter:blur(10px)}
+.navbar-container,.site-nav .wrap{width:min(1180px,calc(100% - 2rem))!important;margin-inline:auto!important}
+.nav-link,.nav-links a{font-family:var(--ref-body)!important;color:var(--ref-muted)!important;text-transform:uppercase;letter-spacing:.07em;transition:color .2s ease,border-color .2s ease,transform .2s ease!important}
+.nav-link:hover,.nav-link.active,.nav-link:focus-visible,.nav-links a:hover{color:var(--ref-gold-soft)!important}
+.nav-cta{border:1px solid var(--ref-gold)!important;border-radius:4px!important;color:var(--ref-gold-soft)!important}
+.menu-icon,.nav-toggle{border-color:var(--ref-gold)!important;color:var(--ref-gold-soft)!important}
+
+/* Global headings/sections */
+section,.section,.container-section,.about-section,.events-page,.highlight-section{scroll-margin-top:88px}
+.section-head{width:min(100%,680px)!important;margin:0 auto clamp(2rem,5vw,3.25rem)!important;text-align:center}
+.section-head .eyebrow,.hero-eyebrow{justify-content:center}
+.section-head::before{content:'◈';display:block;color:var(--ref-gold);font-family:var(--ref-display);font-size:.72rem;margin-bottom:6px;opacity:.8}
+.section-head::after{content:'';display:block;width:82px;height:1px;margin:18px auto 0;background:linear-gradient(90deg,transparent,var(--ref-gold),transparent)!important}
+.section-head h1,.section-head h2,.section-head h3,.events-page h1,.events-page h2,.container-section h1,.Registertitle,.success-title{color:var(--ref-parchment)!important;font-family:var(--ref-display)!important;font-weight:600!important;letter-spacing:.01em!important;text-wrap:balance}
+.section-head p{font-family:var(--ref-body)!important;color:var(--ref-muted)!important}
+
+/* Hero */
+.hero{position:relative;overflow:hidden!important;isolation:isolate;background:transparent!important}
+.hero-glow{background:radial-gradient(ellipse 60% 45% at 50% 18%,rgba(124,31,31,.34),transparent 60%),radial-gradient(ellipse 70% 50% at 80% 0,rgba(217,164,65,.12),transparent 60%)!important}
+.hero-institution{position:relative;z-index:3;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1rem;width:min(100%,1080px)!important;margin:0 auto!important;padding:1rem 1rem 0!important}
+.hero-institution .inst-text{min-width:0!important;width:100%!important;padding:0!important;text-align:center!important}
+.hero-institution .inst-logo{position:static!important;width:72px!important;height:72px!important;object-fit:contain!important}
+/* The bundled build has had the institution title disappear in some builds.
+   Replace that unstable element with an explicit, styled visual heading. */
+.hero-institution .inst-college{display:none!important}
+.hero-institution .inst-text::before{content:'Government College of Engineering, Bargur';display:block;color:var(--ref-gold-soft)!important;font-family:var(--ref-display)!important;font-size:clamp(1.45rem,3.1vw,2.35rem)!important;font-weight:600!important;line-height:1.08!important;letter-spacing:.01em!important;margin-bottom:.35rem!important;text-wrap:balance}
+.hero-institution .inst-text{color:var(--ref-muted)!important}
+.phantasm-hero-college-name{font-family:var(--ref-display)!important;color:var(--ref-gold-soft)!important}
+
+/* Hero identity */
+.hero h1{font-family:var(--ref-display)!important;color:var(--ref-parchment)!important;font-weight:600!important;text-shadow:0 0 40px rgba(217,164,65,.24)}
+.hero h1 .accent{background:linear-gradient(180deg,var(--ref-gold-soft),var(--ref-gold) 55%,var(--ref-bronze));-webkit-background-clip:text;background-clip:text;color:transparent!important}
+.hero-tamil{color:var(--ref-gold)!important;text-shadow:0 0 24px rgba(217,164,65,.18)}
+.hero-sub,.hero-description,.description{color:var(--ref-muted)!important;font-family:var(--ref-body)!important}
+.meta-pill{border-color:rgba(217,164,65,.34)!important;background:rgba(217,164,65,.05)!important;color:var(--ref-gold-soft)!important}
+
+/* Vaagai artwork */
+.hero .logo-image-center,.hero img[src*='vaagai'],.hero img[alt*='vaagai' i],.hero .vaagai-logo{display:block!important;width:min(760px,72vw)!important;max-width:92vw!important;max-height:48svh!important;height:auto!important;object-fit:contain!important;object-position:center!important;margin:1.25rem auto 0!important;filter:drop-shadow(0 14px 30px rgba(217,164,65,.14))!important;aspect-ratio:1672/941!important}
+.hero-actions,.hero-cta{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.btn{font-family:var(--ref-body)!important;border-radius:4px!important;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease!important}
+.btn-primary{background:linear-gradient(180deg,var(--ref-gold-soft),var(--ref-gold))!important;color:#241703!important;border-color:var(--ref-gold)!important;box-shadow:0 10px 28px rgba(217,164,65,.28)!important}
+.btn-ghost,.btn-secondary{border:1px solid rgba(243,230,200,.32)!important;background:transparent!important;color:var(--ref-parchment)!important}
+.btn:hover{transform:translateY(-2px)!important}
+
+/* Cards */
+.event-card,.about-card,.people-card,.highlight-section,.register-frame,.registration-card,.payment-card,.success-card{min-width:0!important;border:1px solid var(--ref-line)!important;border-radius:var(--radius,14px)!important;background:linear-gradient(145deg,rgba(217,164,65,.045),rgba(20,13,9,.82))!important;box-shadow:none!important}
+.event-card:hover,.about-card:hover,.people-card:hover,.highlight-section:hover{border-color:var(--ref-line-strong)!important;box-shadow:0 16px 40px rgba(0,0,0,.25)!important}
+.event-card h3,.event-card h4,.about-card h3,.about-card h4,.people-card h4{color:var(--ref-parchment)!important;font-family:var(--ref-display)!important}
+.event-card .num,.people-card .role{color:var(--ref-bronze)!important;font-family:var(--ref-body)!important}
+
+/* Homepage highlights: one hue, hierarchy by weight/state */
+.highlight-section,.highlight-section *{border-color:var(--ref-line)!important}
+.highlight-section .highlight-title,.highlight-section h1,.highlight-section h2,.highlight-section h3,.highlight-section h4{color:var(--ref-gold-soft)!important;-webkit-text-fill-color:var(--ref-gold-soft)!important}
+.highlight-section p,.highlight-section .highlight-description{color:var(--ref-muted)!important}
+.highlight-technical,.highlight-non-technical,.highlight-workshop{--highlight-color:var(--ref-gold)!important}
+.phantasm-home-potential,.phantasm-home-potential *{color:var(--ref-gold-soft)!important;-webkit-text-fill-color:var(--ref-gold-soft)!important;background:none!important;text-shadow:0 0 18px rgba(217,164,65,.12)!important}
+
+/* About/vision/link cleanup */
+.about-section h1,.about-section h2,.about-section h3,.about-section h4,[class*='vision'] h1,[class*='vision'] h2,[class*='vision'] h3,[class*='vision'] h4{color:var(--ref-parchment)!important}
+.about-section [class*='vision']{color:var(--ref-gold-soft)!important}
+.about-section a,.events-page a,.container-section a{color:var(--ref-gold-soft)!important;text-decoration-thickness:1px}
+.about-section a:hover,.events-page a:hover,.container-section a:hover{color:var(--ref-gold)!important}
+
+/* Tabs / categories */
+.tab-btn,.day-tab{background:transparent!important;border:1px solid rgba(217,164,65,.30)!important;color:var(--ref-muted)!important;border-radius:4px!important}
+.tab-btn.active,.day-tab.active,.events-page .tab-btn.active,.events-page .day-tab.active{background:var(--ref-gold)!important;border-color:var(--ref-gold)!important;color:#241703!important}
+
+/* Events */
+.event-grid,.events-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px!important}
+.event-card p,.event-card li,.event-card .meta,.event-card small{color:var(--ref-muted)!important}
+.event-card .btn-primary,.event-card .register-btn,.event-card [class*='register'],.event-card .rules-btn{background:linear-gradient(180deg,var(--ref-gold-soft),var(--ref-gold))!important;color:#241703!important;border-color:var(--ref-gold)!important}
+
+/* Forms */
+input,textarea,select{width:100%!important;max-width:100%!important;background:rgba(9,7,5,.82)!important;color:var(--ref-parchment)!important;border:1px solid rgba(217,164,65,.22)!important;border-radius:6px!important}
+input:focus,textarea:focus,select:focus{border-color:var(--ref-gold-soft)!important;box-shadow:0 0 0 3px rgba(217,164,65,.08)!important}
+select option{background:var(--ref-surface);color:var(--ref-parchment)}
+.Formcontainer input,.Formcontainer select,.Formcontainer textarea{background:rgba(9,7,5,.82)!important;color:var(--ref-parchment)!important;border-color:rgba(217,164,65,.22)!important}
+
+/* Rules / status */
+.rules-overlay{background:rgba(0,0,0,.74)!important;backdrop-filter:blur(8px)!important}
+.rules-modal{background:linear-gradient(145deg,rgba(217,164,65,.045),rgba(20,13,9,.97))!important;border-color:var(--ref-line-strong)!important;color:var(--ref-parchment)!important}
+.rules-modal h2,.rules-content h3{font-family:var(--ref-display)!important;color:var(--ref-gold-soft)!important}
+.rules-modal li{color:var(--ref-muted)!important}.rules-modal li::before{color:var(--ref-gold)!important}
+.success-wrapper{background:radial-gradient(circle at 50% 0,rgba(124,31,31,.18),transparent 42%),linear-gradient(180deg,var(--ref-ink),#050403)!important}
+.success-title{color:var(--ref-parchment)!important}
+.success-details,.status-box,.payment-status,.payment-loading,.payment-processing,.payment-success,.payment-failed{background:rgba(217,164,65,.025)!important}
+.payment-success{border-color:rgba(217,164,65,.34)!important}
+
+/* Footer */
+.footer,footer{background:#090604!important;border-top:1px solid var(--ref-line)!important}
+.footer-top,.footer-grid{width:min(1180px,calc(100% - 2rem))!important;margin-inline:auto!important}
+.footer-title,.footer-grid h4{font-family:var(--ref-body)!important;color:var(--ref-gold-soft)!important}
+.footer-col p,.footer-grid p,.footer-col ul li a,.footer-grid a{color:var(--ref-muted)!important}
+.footer-col ul li a:hover,.footer-grid a:hover{color:var(--ref-gold-soft)!important}
+.footer .phantasm-footer-college-name{font-family:var(--ref-body)!important;color:var(--ref-muted)!important;-webkit-text-fill-color:var(--ref-muted)!important;font-weight:400!important;text-shadow:none!important}
+.footer-socials a:hover{filter:brightness(1.08) drop-shadow(0 5px 14px rgba(217,164,65,.28))!important}
+.footer-bottom{color:#a99578!important;border-top:1px solid rgba(217,164,65,.12)!important}
+
+/* Mobile/tablet */
+@media(max-width:1024px){.event-grid,.events-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:768px){
+  section,.section,.container-section,.about-section,.events-page{padding-top:2.25rem!important;padding-bottom:2.75rem!important}
+  .navbar-container,.site-nav .wrap{width:calc(100% - 1rem)!important}
+  .nav-menu,.nav-links{top:64px!important;background:rgba(10,8,6,.97)!important;backdrop-filter:blur(12px)}
+  .hero{padding-top:0!important;padding-bottom:2rem!important}
+  .hero-institution{width:100%!important;grid-template-columns:42px minmax(0,1fr) 42px!important;gap:.5rem!important;padding:.75rem .6rem 0!important;margin-top:-.75rem!important}
+  .hero-institution .inst-logo{width:42px!important;height:42px!important}
+  .hero-institution .inst-text::before{font-size:clamp(1.15rem,6.2vw,1.75rem)!important;line-height:1.12!important;margin-bottom:.25rem!important}
+  .hero .logo-image-center,.hero img[src*='vaagai'],.hero img[alt*='vaagai' i],.hero .vaagai-logo{width:min(94vw,520px)!important;max-height:36svh!important;margin:.65rem auto 0!important}
+  .hero h1{font-size:clamp(2.9rem,15vw,5rem)!important;line-height:.92!important}
+  .hero-sub{font-size:.95rem!important;line-height:1.55!important}
+  .hero-actions,.hero-cta{gap:.7rem!important}
+  .hero-actions .btn,.hero-cta .btn,.hero-actions a,.hero-cta a{width:min(100%,320px)!important;min-height:48px!important;justify-content:center!important}
+  .section-head h1,.section-head h2,.events-page h1,.events-page h2,.container-section h1,.Registertitle,.success-title{font-size:clamp(1.85rem,9vw,2.8rem)!important}
+  .event-grid,.events-grid{grid-template-columns:1fr!important;gap:1rem!important}
+  .event-card{padding:1rem!important}
+  .tabs,.event-tabs,.filter-tabs,.category-tabs,.day-tabs{justify-content:flex-start!important;flex-wrap:nowrap!important;overflow-x:auto!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar,.event-tabs::-webkit-scrollbar,.filter-tabs::-webkit-scrollbar,.category-tabs::-webkit-scrollbar,.day-tabs::-webkit-scrollbar{display:none}
+  .tabs>*,.event-tabs>*,.filter-tabs>*,.category-tabs>*,.day-tabs>*{flex:0 0 auto!important}
+  .footer-top,.footer-grid{width:min(100%,calc(100% - 1.25rem))!important;grid-template-columns:1fr!important;text-align:center!important}
+  .footer-title::after{left:50%!important;transform:translateX(-50%)!important}
+  .footer-socials{justify-content:center!important}
+}
+@media(max-width:430px){
+  .hero-institution{grid-template-columns:36px minmax(0,1fr) 36px!important;padding-inline:.4rem!important;gap:.3rem!important;margin-top:-.55rem!important}
+  .hero-institution .inst-logo{width:36px!important;height:36px!important}
+  .hero-institution .inst-text::before{font-size:clamp(1rem,6.1vw,1.35rem)!important}
+  .hero .logo-image-center,.hero img[src*='vaagai'],.hero img[alt*='vaagai' i],.hero .vaagai-logo{width:96vw!important;max-height:31svh!important}
+  .hero-sub{font-size:.86rem!important}
+  .event-card h3,.event-card h4{font-size:1.18rem!important}
+  .event-card p{font-size:.82rem!important}
+}
+
+/* Remove legacy neon category variables entirely. */
+:root{--teal:var(--ref-gold)!important;--teal-soft:var(--ref-gold-soft)!important;--cyan:var(--ref-gold)!important;--magenta:var(--ref-gold)!important;--pink:var(--ref-gold)!important;--purple:var(--ref-gold)!important;--blue:var(--ref-gold)!important}
+
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}

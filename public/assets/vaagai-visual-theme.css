@@ -1,0 +1,88 @@
+/* PHANTASM'27 — Vaagai 2k26 visual language
+   Typography: LEMON MILK across all Latin/UI text.
+   Special main-page institution line: AESTHETIC ROMANCE.
+   Tamil glyphs retain Noto Sans Tamil for proper character coverage.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/lemon-milk');
+
+:root {
+  --font-display: 'LEMON MILK', Arial, sans-serif !important;
+  --font-body: 'LEMON MILK', Arial, sans-serif !important;
+  --font-tech: 'LEMON MILK', Arial, sans-serif !important;
+  --font-subtitle: 'LEMON MILK', Arial, sans-serif !important;
+  --font-college: 'Aesthetic Romance', Georgia, serif !important;
+  --font-tamil: 'Noto Sans Tamil', sans-serif !important;
+  --ink: #0b0806 !important; --ink-2: #14100b !important; --gold: #d9a441 !important;
+  --gold-soft: #f0cf8b !important; --bronze: #9c6b24 !important; --maroon: #7c1f1f !important;
+  --parchment: #f3e6c8 !important; --parchment-dim: #cdbf9e !important;
+  --teal: #1e5b52 !important; --teal-soft: #3c8a7c !important;
+}
+html { background: #0b0806 !important; scroll-behavior: smooth; }
+body, #root, button, input, textarea, select, option, a, p, span, div, label, li, small, strong, b, i, .navbar, .nav-link, .footer, .footer-title, .footer-col, .footer-col p, .footer-col ul li a, .hero, section, article, main, header, footer, h1, h2, h3, h4, h5, h6, .logo, .logo-highlight, .stat b, .timeline-time, .event-card h3, .event-card h4, .people-card h4, .about-card h3, .events-page h1, .hero-title, .hero-title-outline, .success-title, .rules-modal h2, .rules-content h3, .btn, .rules-btn, .success-home-btn, .tab-btn, .day-tab { font-family: 'LEMON MILK', Arial, sans-serif !important; }
+[lang='ta'], .tamil, .hero-tamil, .brand-tamil, [dir='rtl'] { font-family: 'Noto Sans Tamil', sans-serif !important; }
+.phantasm-college-name, .phantasm-college-name * { font-family: 'Aesthetic Romance', Georgia, serif !important; letter-spacing: .02em !important; font-weight: 400 !important; }
+#root .phantasm-college-name, #root .phantasm-college-name * { font-family: 'Aesthetic Romance', Georgia, serif !important; }
+.phantasm-hero-college-name, .phantasm-hero-college-name * { font-family: 'Aesthetic Romance', Georgia, serif !important; font-weight: 400 !important; font-size: clamp(1.35rem, 2.35vw, 2.2rem) !important; line-height: 1.15 !important; letter-spacing: .02em !important; color: #e0bd70 !important; -webkit-text-fill-color: #e0bd70 !important; text-shadow: 0 2px 14px rgba(224,189,112,.22) !important; display: block !important; width: min(100%, 820px) !important; max-width: 820px !important; margin: 0 auto !important; text-align: center !important; position: relative !important; z-index: 4 !important; }
+/* Keep the two hero logos outside the institution-name text area. */
+@media (min-width: 769px) {
+  .hero-institution { padding-inline: 170px !important; }
+  .inst-logo.left { left: 40px !important; }
+  .inst-logo.right { right: 40px !important; }
+  .inst-logo { width: 100px !important; height: 100px !important; }
+  .inst-text { width: 100% !important; max-width: 820px !important; margin: 0 auto !important; }
+}
+
+/* Registration email: display and submit the address in lowercase. */
+input[type='email'], input[name='email'], input[name='Email'], input[autocomplete='email'], .register-frame input[type='email'] { text-transform: lowercase !important; }
+[class*='subtitle'], [class*='sub-title'], [class*='subheading'], .hero-sub, .section-subtitle, .hero-eyebrow, .eyebrow, .role { font-family: 'LEMON MILK', Arial, sans-serif !important; letter-spacing: .08em !important; }
+body, #root { background: radial-gradient(circle at 50% 0, rgba(116,31,32,.24), transparent 34%), linear-gradient(180deg, #0b0806 0%, #120c08 48%, #080605 100%) !important; color: #f3e6c8 !important; }
+body::before { background-image: linear-gradient(90deg, transparent 49%, rgba(217,164,65,.035) 50%, transparent 51%), linear-gradient(0deg, transparent 49%, rgba(217,164,65,.035) 50%, transparent 51%) !important; background-size: 48px 48px !important; opacity: .35 !important; }
+.navbar { background: rgba(10, 8, 6, .90) !important; border-bottom: 1px solid rgba(217,164,65,.18) !important; backdrop-filter: blur(10px) !important; }
+.nav-link { color: var(--parchment-dim) !important; }
+.nav-link:hover, .nav-link:active, .nav-link.active { color: var(--gold-soft) !important; }
+.nav-link:after { background: var(--gold) !important; }
+.hero, section { border-color: rgba(217,164,65,.18) !important; }
+.hero::before, .hero::after, section::before, section::after { pointer-events: none; }
+.hero { background: radial-gradient(ellipse 60% 45% at 50% 18%, rgba(124,31,31,.35), transparent 60%), radial-gradient(ellipse 70% 50% at 80% 0%, rgba(217,164,65,.14), transparent 60%) !important; }
+.hero h1, .hero-title { text-shadow: 0 0 40px rgba(217,164,65,.22) !important; letter-spacing: .02em !important; font-weight: 700 !important; }
+.hero h1 .accent, .logo-highlight { background: linear-gradient(180deg, var(--gold-soft), var(--gold) 55%, var(--bronze)); -webkit-background-clip: text; background-clip: text; color: transparent !important; }
+.btn, .rules-btn, .success-home-btn { border-radius: 3px !important; letter-spacing: .04em !important; }
+.btn-primary { background: linear-gradient(180deg, var(--gold-soft), var(--gold)) !important; color: #241703 !important; box-shadow: 0 10px 30px -8px rgba(217,164,65,.55) !important; }
+.btn-ghost { border-color: rgba(243,230,200,.35) !important; color: var(--parchment) !important; }
+.btn-ghost:hover { border-color: var(--gold-soft) !important; color: var(--gold-soft) !important; }
+.event-card, .about-card, .people-card, .register-frame, .success-card, .rules-modal { border-color: rgba(217,164,65,.18) !important; background: linear-gradient(145deg, rgba(217,164,65,.045), rgba(20,13,9,.82)) !important; box-shadow: 0 18px 50px rgba(0,0,0,.22) !important; }
+.event-card:hover, .people-card:hover, .about-card:hover { border-color: var(--gold) !important; }
+.event-card h3, .event-card h4, .people-card h4, .about-card h3 { color: var(--parchment) !important; }
+.event-card p, .about-card p, .people-card p, .footer-col p, .section-head p, .detail-label, .detail-value { color: var(--parchment-dim) !important; }
+.event-card::before, .footer-title::after { background: linear-gradient(90deg, transparent, var(--gold)) !important; }
+.section-head::before { content: '◈' !important; color: var(--gold) !important; opacity: .8; }
+.section-head::after { display: block; width: 82px; height: 2px; margin: 18px auto 0; background: linear-gradient(90deg, transparent, var(--gold), transparent) !important; }
+.tab-btn, .day-tab { border-color: rgba(217,164,65,.30) !important; color: var(--parchment-dim) !important; border-radius: 999px !important; }
+.tab-btn.active { background: var(--gold) !important; color: #241703 !important; border-color: var(--gold) !important; }
+.day-tab.active { background: var(--maroon) !important; border-color: var(--maroon) !important; color: var(--parchment) !important; }
+.stat-strip { border-color: rgba(217,164,65,.20) !important; }
+.stat { border-color: rgba(217,164,65,.18) !important; }
+.stat b { color: var(--gold-soft) !important; }
+.rules-overlay { background: rgba(0,0,0,.75) !important; backdrop-filter: blur(8px) !important; }
+.rules-modal h2, .rules-content h3 { color: var(--gold-soft) !important; }
+.rules-modal li::before { color: var(--gold) !important; }
+.rules-btn { background: linear-gradient(180deg, var(--gold-soft), var(--gold)) !important; color: #241703 !important; box-shadow: 0 10px 30px -8px rgba(217,164,65,.35) !important; }
+.success-wrapper { background: radial-gradient(circle at 50% 0, rgba(124,31,31,.22), transparent 50%), linear-gradient(180deg, #0b0806 0%, #120c08 100%) !important; }
+.success-card::before { background: linear-gradient(90deg, transparent, var(--gold), transparent) !important; }
+.success-title { color: var(--gold-soft) !important; }
+.success-home-btn { background: linear-gradient(180deg, var(--gold-soft), var(--gold)) !important; color: #241703 !important; box-shadow: 0 10px 30px -8px rgba(217,164,65,.4) !important; }
+.footer { background: #090604 !important; border-top: 1px solid rgba(217,164,65,.18) !important; }
+.footer-title, .footer-col ul li a:hover { color: var(--gold-soft) !important; }
+.footer-socials a { color: var(--gold) !important; }
+.footer-socials a i { display: none !important; }
+.footer-socials a::before { display: block !important; width: 56px !important; height: 56px !important; background-image: url('/social-medals.jpg') !important; background-size: 224px 56px !important; background-repeat: no-repeat !important; border-radius: 50% !important; content: '' !important; }
+.footer-socials a[href*='instagram']::before { background-position: -56px 0 !important; }
+.footer-socials a[href*='linkedin']::before { background-position: -112px 0 !important; }
+.footer-socials a[href*='youtube']::before { background-position: -168px 0 !important; }
+.footer-socials a:hover::before, .footer-socials a:active::before { filter: brightness(1.2) drop-shadow(0 4px 12px rgba(217,164,65,.7)) !important; }
+.phantasm-footer-gce-logo { display: block !important; width: 78px !important; height: 78px !important; object-fit: contain !important; margin: 0 0 1rem 0 !important; }
+.phantasm-footer-college-name { font-family: 'LEMON MILK', Arial, sans-serif !important; font-size: 1rem !important; font-weight: 400 !important; line-height: 1.5 !important; letter-spacing: .04em !important; color: #e0bd70 !important; -webkit-text-fill-color: #e0bd70 !important; text-shadow: none !important; width: auto !important; max-width: 100% !important; margin: 0 0 1rem 0 !important; padding: 0 !important; background: none !important; }
+.footer-bottom { background: linear-gradient(90deg, rgba(124,31,31,.18), rgba(217,164,65,.10)) !important; color: var(--parchment-dim) !important; }
+:where(a,button,input,textarea,select):focus-visible { outline: 2px solid var(--gold-soft) !important; outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }

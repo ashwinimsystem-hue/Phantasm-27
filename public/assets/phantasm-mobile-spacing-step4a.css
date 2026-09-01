@@ -1,0 +1,95 @@
+/* PHANTASM'27 — MOBILE HOME SPACING / STEP 4A
+   Tightens the two visible transition gaps on the homepage:
+   1) date -> countdown
+   2) navbar -> college identity
+   Desktop intentionally untouched.
+*/
+
+@media (max-width: 768px) {
+  /* The large empty region below the event date is a margin/spacer issue.
+     Keep the date attached to the hero CTA area and pull the countdown up. */
+  .hero .hero-actions + .countdown,
+  .hero .hero-actions ~ .countdown,
+  .hero .countdown {
+    margin-top: 0 !important;
+  }
+
+  .hero .countdown {
+    padding-top: .7rem !important;
+    padding-bottom: .85rem !important;
+  }
+
+  /* Some builds render the date as a separate block immediately before the
+     countdown. Remove the inherited bottom gap without changing typography. */
+  .hero .event-date,
+  .hero .date,
+  .hero .hero-date,
+  .hero [class*="event-date"],
+  .hero [class*="date-display"] {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Pull the whole institution/hero identity toward the navbar on phones.
+     This is intentionally applied to the wrapper rather than only the title,
+     so the logos, department and event identity remain together. */
+  .hero > .wrap,
+  .hero .wrap,
+  .hero .container {
+    padding-top: 0 !important;
+    margin-top: -3.5rem !important;
+  }
+
+  .hero-institution {
+    margin-top: 0 !important;
+    padding-top: .45rem !important;
+    padding-bottom: .1rem !important;
+  }
+
+  .hero-tamil {
+    margin-top: .45rem !important;
+  }
+
+  .hero-title {
+    margin-top: 0 !important;
+  }
+
+  .hero .logo-image-center,
+  .hero img[src*="vaagai"],
+  .hero img[alt*="vaagai" i],
+  .hero .vaagai-logo {
+    margin-top: .35rem !important;
+  }
+
+  .hero-subtitle,
+  .hero-sub,
+  .hero-description,
+  .description {
+    margin-top: .55rem !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero > .wrap,
+  .hero .wrap,
+  .hero .container {
+    margin-top: -4rem !important;
+  }
+
+  .hero-institution {
+    padding-top: .3rem !important;
+  }
+
+  .hero .countdown {
+    padding-top: .55rem !important;
+    padding-bottom: .75rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero > .wrap,
+  .hero .wrap,
+  .hero .container {
+    margin-top: -4.25rem !important;
+  }
+}

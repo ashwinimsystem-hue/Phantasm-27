@@ -1,0 +1,18 @@
+{
+  "name": "vaagai-26-vercel",
+  "version": "1.0.0",
+  "description": "Vaagai '26 / Phantasm'27 — Vercel serverless deployment package",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "node --watch api/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.16"
+  }
+}

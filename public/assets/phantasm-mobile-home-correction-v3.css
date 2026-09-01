@@ -1,0 +1,28 @@
+/* PHANTASM'27 — MOBILE HOMEPAGE CORRECTION V3
+   Corrects the actual mobile canvas alignment and guarantees CTA visibility/navigation.
+*/
+@media (max-width:768px){
+  .hero,.hero > .wrap,.hero .wrap,.hero > div,.hero .container{width:100% !important;max-width:none !important;min-width:0 !important;margin-left:auto !important;margin-right:auto !important;box-sizing:border-box !important;}
+  .hero > .wrap,.hero .wrap,.hero .container{padding-left:12px !important;padding-right:12px !important;}
+  .hero-institution,.hero .particle-vignette,.hero .hero-tamil,.hero .hero-title,.hero .logo-image-center,.hero .hero-subtitle,.hero .hero-actions,.hero .countdown,.hero .countdown span,.hero .highlight-wrapper,.hero .highlights-grid{position:relative !important;left:auto !important;right:auto !important;margin-left:auto !important;margin-right:auto !important;}
+  .hero-institution{width:100% !important;grid-template-columns:34px minmax(0,1fr) 34px !important;gap:.5rem !important;justify-content:center !important;align-items:center !important;padding-left:0 !important;padding-right:0 !important;}
+  .hero-institution .inst-text{width:100% !important;max-width:100% !important;margin:0 auto !important;padding:0 !important;text-align:center !important;}
+  .hero-institution .inst-college,.hero-institution .inst-dept,.phantasm-hero-college-name{width:100% !important;max-width:100% !important;margin-left:auto !important;margin-right:auto !important;text-align:center !important;}
+  .hero .logo-image-center,.hero img[src*="vaagai"],.hero img[alt*="vaagai" i],.hero .vaagai-logo{width:min(92vw,430px) !important;max-width:92vw !important;max-height:28svh !important;height:auto !important;display:block !important;transform:none !important;object-fit:contain !important;object-position:center !important;}
+  .hero-tamil,.hero-title,.hero-subtitle,.hero-description,.description{width:min(calc(100% - 24px),520px) !important;max-width:520px !important;text-align:center !important;text-wrap:balance !important;}
+  .hero-actions,.hero-actions.reveal{width:min(calc(100% - 24px),390px) !important;max-width:390px !important;display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:.6rem !important;margin:1rem auto 0 !important;padding:0 !important;z-index:100 !important;opacity:1 !important;visibility:visible !important;pointer-events:auto !important;justify-content:center !important;}
+  .hero-actions a,.hero-actions button,.hero-actions [role="button"]{width:100% !important;min-width:0 !important;min-height:46px !important;margin:0 !important;display:flex !important;align-items:center !important;justify-content:center !important;text-align:center !important;white-space:nowrap !important;pointer-events:auto !important;position:relative !important;z-index:101 !important;cursor:pointer !important;opacity:1 !important;visibility:visible !important;}
+  .hero-actions a[href*="/register"],.hero-actions button[data-action*="register" i],.hero-actions .phantasm-mobile-register-cta{background:linear-gradient(180deg,#f0cf8b 0%,#d9a441 100%) !important;color:#211706 !important;-webkit-text-fill-color:#211706 !important;border:1px solid #d9a441 !important;box-shadow:0 8px 20px rgba(216,173,85,.16) !important;}
+  .hero-actions a[href*="/events"],.hero-actions .phantasm-mobile-events-cta{background:rgba(217,164,65,.045) !important;color:var(--p27-gold-bright) !important;-webkit-text-fill-color:var(--p27-gold-bright) !important;border:1px solid rgba(217,164,65,.42) !important;}
+  .hero .countdown{width:min(calc(100% - 24px),420px) !important;max-width:420px !important;margin:1rem auto 0 !important;padding:.9rem .7rem !important;text-align:center !important;box-sizing:border-box !important;}
+  .hero .countdown span{width:100% !important;max-width:100% !important;margin:0 auto !important;display:block !important;text-align:center !important;overflow-wrap:anywhere !important;white-space:normal !important;}
+  .phantasm-potential-block{width:100% !important;max-width:none !important;margin:0 !important;padding:0 !important;border:0 !important;border-radius:0 !important;background:transparent !important;box-shadow:none !important;}
+  .phantasm-home-potential{width:min(calc(100% - 24px),520px) !important;max-width:520px !important;margin:1.35rem auto .65rem !important;text-align:center !important;}
+  .phantasm-potential-lead{width:min(calc(100% - 32px),520px) !important;max-width:520px !important;margin:0 auto !important;text-align:center !important;}
+  .phantasm-potential-points{width:min(calc(100% - 24px),520px) !important;max-width:520px !important;margin:.85rem auto 0 !important;}
+  .phantasm-potential-link{margin-left:auto !important;margin-right:auto !important;}
+  /* Homepage event title: PHANTASM'27 below PRESENTS. */
+  .hero .phantasm-home-event-title{font-weight:900 !important;font-family:inherit !important;text-align:center !important;letter-spacing:.025em !important;-webkit-font-smoothing:antialiased !important;}
+}
+@media (max-width:430px){.hero > .wrap,.hero .wrap,.hero .container{padding-left:10px !important;padding-right:10px !important}.hero-institution{grid-template-columns:30px minmax(0,1fr) 30px !important}.hero-institution .inst-logo,.inst-logo.left,.inst-logo.right{width:28px !important;height:28px !important}.hero-actions{width:calc(100% - 20px) !important}.hero .logo-image-center,.hero img[src*="vaagai"],.hero img[alt*="vaagai" i],.hero .vaagai-logo{width:90vw !important;max-width:90vw !important;max-height:24svh !important}}
+@media (max-width:360px){.hero-actions{grid-template-columns:1fr !important}}

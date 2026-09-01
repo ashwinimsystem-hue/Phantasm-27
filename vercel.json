@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.js": { "memory": 1024, "maxDuration": 20 },
+    "api/register.js": { "memory": 1024, "maxDuration": 20 },
+    "api/check-email.js": { "memory": 512, "maxDuration": 10 },
+    "api/health.js": { "memory": 512, "maxDuration": 10 }
+  },
+  "rewrites": [
+    { "source": "/api/register", "destination": "/api/register.js" },
+    { "source": "/api/check-email", "destination": "/api/check-email.js" },
+    { "source": "/api/health", "destination": "/api/health.js" },
+    { "source": "/api/admin/:path*", "destination": "/api/index.js" },
+    { "source": "/api/contact", "destination": "/api/index.js" },
+    { "source": "/api/join-team", "destination": "/api/index.js" },
+    { "source": "/api/:path*", "destination": "/api/index.js" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}

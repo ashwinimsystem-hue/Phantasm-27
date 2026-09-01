@@ -1,0 +1,208 @@
+/* PHANTASM'27 — MOBILE REDESIGN / STEP 2
+   Scope: homepage hero composition.
+   Goal: compact, intentional first viewport; college identity first,
+   event identity second, Vaagai artwork as the visual anchor.
+   Desktop is intentionally untouched.
+*/
+
+@media (max-width:768px){
+  .hero{
+    min-height:0!important;
+    padding:0 0 1.5rem!important;
+    overflow:hidden!important;
+    background:
+      radial-gradient(circle at 50% 34%,rgba(124,31,31,.18),transparent 40%),
+      linear-gradient(180deg,#0b0705 0%,#140b08 62%,#0a0605 100%)!important;
+  }
+
+  /* Remove the historical spacer introduced by previous mobile hero fixes. */
+  .hero > .wrap{
+    margin-top:0!important;
+    padding:0!important;
+    transform:none!important;
+  }
+
+  .hero-institution{
+    width:100%!important;
+    margin:0!important;
+    padding:1rem .75rem .15rem!important;
+    grid-template-columns:36px minmax(0,1fr) 36px!important;
+    gap:.55rem!important;
+    align-items:center!important;
+  }
+
+  .hero-institution .inst-logo,
+  .inst-logo.left,
+  .inst-logo.right{
+    position:static!important;
+    width:34px!important;
+    height:34px!important;
+    margin:0!important;
+    transform:none!important;
+  }
+
+  .hero-institution .inst-text{padding:0!important;margin:0!important;text-align:center!important}
+  .hero-institution .inst-text::before{
+    content:'Government College of Engineering, Bargur'!important;
+    display:block!important;
+    width:100%!important;
+    margin:0 auto .32rem!important;
+    color:#f0cf8b!important;
+    -webkit-text-fill-color:#f0cf8b!important;
+    font-family:'EB Garamond',Georgia,serif!important;
+    font-size:clamp(1.18rem,6vw,1.65rem)!important;
+    font-weight:600!important;
+    line-height:1.08!important;
+    letter-spacing:.005em!important;
+    text-align:center!important;
+    text-wrap:balance!important;
+    text-shadow:0 2px 16px rgba(217,164,65,.14)!important;
+  }
+
+  .hero-institution .inst-dept{
+    margin:.05rem auto 0!important;
+    color:#cdbf9e!important;
+    font-family:'Source Sans 3',Arial,sans-serif!important;
+    font-size:clamp(.68rem,3.2vw,.82rem)!important;
+    font-weight:600!important;
+    line-height:1.35!important;
+    letter-spacing:.16em!important;
+    text-align:center!important;
+  }
+
+  /* Event identity */
+  .hero-tamil{
+    margin:.85rem auto .2rem!important;
+    color:#d9a441!important;
+    font-family:'Noto Sans Tamil',sans-serif!important;
+    font-size:clamp(1rem,5.5vw,1.35rem)!important;
+    line-height:1!important;
+    text-align:center!important;
+  }
+
+  .hero-title{
+    margin:0!important;
+    color:#f3e6c8!important;
+    font-family:'EB Garamond',Georgia,serif!important;
+    font-size:clamp(1.5rem,7vw,2.15rem)!important;
+    font-weight:600!important;
+    line-height:1!important;
+    letter-spacing:.02em!important;
+    text-align:center!important;
+  }
+
+  .hero-title::after{
+    display:block!important;
+    position:static!important;
+    width:48px!important;
+    height:1px!important;
+    margin:.55rem auto 0!important;
+    transform:none!important;
+    background:linear-gradient(90deg,transparent,#d9a441,transparent)!important;
+  }
+
+  /* Vaagai: make the artwork the central focal point without letting it push
+     the heading or description below the fold. */
+  .hero .logo-image-center,
+  .hero img[src*='vaagai'],
+  .hero img[alt*='vaagai' i],
+  .hero .vaagai-logo{
+    display:block!important;
+    width:min(94vw,520px)!important;
+    max-width:94vw!important;
+    max-height:27svh!important;
+    height:auto!important;
+    margin:.55rem auto 0!important;
+    object-fit:contain!important;
+    object-position:center!important;
+    transform:none!important;
+    filter:drop-shadow(0 9px 22px rgba(217,164,65,.16))!important;
+  }
+
+  .hero-subtitle,
+  .hero-sub,
+  .hero-description,
+  .description{
+    width:min(100% - 28px,520px)!important;
+    margin:.7rem auto 0!important;
+    padding:0!important;
+    color:#cdbf9e!important;
+    font-family:'Source Sans 3',Arial,sans-serif!important;
+    font-size:clamp(.76rem,3.3vw,.9rem)!important;
+    font-weight:400!important;
+    line-height:1.5!important;
+    letter-spacing:.025em!important;
+    text-align:center!important;
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:4!important;
+    overflow:hidden!important;
+  }
+
+  .hero-actions,
+  .hero-cta{
+    width:min(100% - 28px,360px)!important;
+    margin:.85rem auto 0!important;
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:.6rem!important;
+  }
+
+  .hero-actions .btn,
+  .hero-cta .btn,
+  .hero-actions a,
+  .hero-cta a{
+    width:100%!important;
+    min-height:44px!important;
+    padding:.65rem .75rem!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    font-size:.68rem!important;
+  }
+
+  /* Keep the section below the hero visually distinct without a hard band. */
+  .highlight-wrapper{
+    padding:1.3rem 0 1.2rem!important;
+    border-top:1px solid rgba(217,164,65,.10)!important;
+    background:linear-gradient(180deg,rgba(124,31,31,.07),transparent)!important;
+  }
+
+  .highlights-grid{
+    width:min(100% - 24px,520px)!important;
+    margin:0 auto!important;
+    grid-template-columns:1fr!important;
+    gap:.65rem!important;
+  }
+
+  .highlight-section{
+    min-height:72px!important;
+    padding:1rem!important;
+    border-radius:10px!important;
+  }
+
+  .highlight-section h1,
+  .highlight-section h2,
+  .highlight-section h3,
+  .highlight-section h4,
+  .highlight-title{
+    font-size:clamp(.78rem,3.8vw,.95rem)!important;
+    letter-spacing:.08em!important;
+  }
+}
+
+@media(max-width:430px){
+  .hero-institution{grid-template-columns:32px minmax(0,1fr) 32px!important;padding-top:.8rem!important}
+  .hero-institution .inst-logo,.inst-logo.left,.inst-logo.right{width:30px!important;height:30px!important}
+  .hero-institution .inst-text::before{font-size:clamp(1.08rem,6.1vw,1.4rem)!important}
+  .hero .logo-image-center,.hero img[src*='vaagai'],.hero img[alt*='vaagai' i],.hero .vaagai-logo{max-height:24svh!important;margin-top:.45rem!important}
+  .hero-subtitle,.hero-sub,.hero-description,.description{-webkit-line-clamp:3!important;font-size:.76rem!important}
+}
+
+@media(max-width:360px){
+  .hero-institution{padding-top:.7rem!important}
+  .hero-tamil{margin-top:.7rem!important}
+  .hero-title{font-size:1.45rem!important}
+  .hero .logo-image-center,.hero img[src*='vaagai'],.hero img[alt*='vaagai' i],.hero .vaagai-logo{max-height:22svh!important}
+  .hero-actions,.hero-cta{grid-template-columns:1fr!important}
+}

@@ -1,0 +1,85 @@
+/* PHANTASM'27 — FINAL THEME
+   Single production visual contract. Supersedes the stepped override cascade.
+   NOTE: --p27-* tokens are aliased to the canonical --gold/--ink/--teal/--maroon
+   set defined in index-DOqZU2RE.css so the two theme layers can never drift
+   into two different shades of "gold" again. Change a color in ONE place
+   (the canonical set) and both layers update together.
+*/
+:root{--p27-bg-0:var(--ink);--p27-bg-1:var(--ink-2);--p27-bg-2:#130d09;--p27-surface:var(--ink-2);--p27-surface-2:#17100c;--p27-gold:var(--gold);--p27-gold-bright:var(--gold-soft);--p27-gold-soft:var(--gold-soft);--p27-ivory:var(--parchment);--p27-muted:var(--parchment-dim);--p27-line:rgba(217,164,65,.20);--p27-line-soft:rgba(217,164,65,.10);--p27-maroon:var(--maroon);--p27-control-h:48px;--p27-content-max:1180px}
+*,*::before,*::after{box-sizing:border-box}
+html,body,#root{width:100%;max-width:100%;min-width:320px;overflow-x:hidden!important}
+html{background:var(--p27-bg-0)!important;scroll-behavior:smooth}
+body{margin:0;color:var(--p27-ivory)!important;background:radial-gradient(circle at 50% -5%,rgba(101,28,28,.18),transparent 35%),linear-gradient(180deg,var(--p27-bg-0) 0%,var(--p27-bg-1) 48%,#050403 100%)!important}
+img,svg,video,canvas{max-width:100%;height:auto}
+body,button,input,textarea,select,a,p,li,label,small,strong,h1,h2,h3,h4,h5,h6,.nav-link,.btn,.tab-btn,.day-tab,.footer,.footer-col{font-family:'LEMON MILK',Arial,sans-serif!important}
+.phantasm-hero-college-name{font-family:'Aesthetic Romance','LEMON MILK',sans-serif!important;color:var(--p27-gold-bright)!important;font-weight:400!important}
+.phantasm-footer-college-name{font-family:'LEMON MILK',Arial,sans-serif!important;color:var(--p27-gold-bright)!important;-webkit-text-fill-color:var(--p27-gold-bright)!important;font-weight:500!important;letter-spacing:.055em!important;line-height:1.5!important;text-shadow:none!important;background:none!important}
+.navbar{min-height:68px!important;background:rgba(10,8,6,.90)!important;border-bottom:1px solid var(--p27-line)!important;box-shadow:0 8px 28px rgba(0,0,0,.16)!important}
+.navbar-container,.footer-top,.container,.events-grid{width:min(100%,var(--p27-content-max))!important;max-width:var(--p27-content-max)!important;margin-inline:auto!important}
+.logo-image{max-height:46px!important;width:auto!important;margin-left:0!important}
+.menu-icon{width:48px!important;height:48px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important}
+.nav-link{transition:color .2s ease,background-color .2s ease,border-color .2s ease,transform .2s ease!important}
+.nav-link:hover,.nav-link.active,.nav-link:focus-visible{color:var(--p27-gold-bright)!important}
+section,.section,.container-section,.about-section,.events-page,.highlight-section{scroll-margin-top:88px}
+.section-head{width:min(100%,820px);margin-inline:auto;margin-bottom:clamp(1.15rem,3vw,1.9rem)!important}
+.section-head h1,.section-head h2,.section-head h3,.events-page h1,.events-page h2,.container-section h1,.Registertitle,.success-title{color:var(--p27-ivory)!important;text-wrap:balance;font-size:clamp(1.65rem,4.2vw,3.2rem)!important;line-height:1.08!important;letter-spacing:.04em!important}
+.section-head p,p,li,.event-card p,.about-card p,.people-card p,.footer-col p,.footer-col ul li a{color:var(--p27-muted)!important;line-height:1.55!important;overflow-wrap:anywhere}
+.event-card,.about-card,.people-card,.highlight-section,.register-frame,.registration-card,.payment-card,.success-card{min-width:0;overflow:hidden;background:linear-gradient(145deg,rgba(216,173,85,.045),rgba(12,8,6,.95))!important;border:1px solid var(--p27-line)!important;border-radius:16px!important}
+.event-card:hover,.about-card:hover,.people-card:hover,.highlight-section:hover{border-color:rgba(216,173,85,.38)!important;box-shadow:0 18px 44px rgba(0,0,0,.28),0 0 20px rgba(216,173,85,.07)!important}
+.btn-primary,.rules-btn,.success-home-btn,.events-page .tab-btn.active,.events-page .day-tab.active{background:linear-gradient(180deg,var(--p27-gold-bright),var(--p27-gold))!important;color:#211706!important;border-color:var(--p27-gold)!important;box-shadow:0 10px 24px rgba(216,173,85,.18)!important}
+.btn-ghost,.events-page .tab-btn,.events-page .day-tab{border-color:rgba(216,173,85,.30)!important;color:var(--p27-ivory)!important}
+.btn,.rules-btn,.success-home-btn,.tab-btn,.day-tab{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+input,textarea,select{background:rgba(8,6,4,.84)!important;color:var(--p27-ivory)!important;border-color:rgba(216,173,85,.22)!important;font-size:16px!important;max-width:100%}
+input:focus,textarea:focus,select:focus{border-color:rgba(240,207,139,.72)!important;box-shadow:0 0 0 3px rgba(216,173,85,.08)!important}
+input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill{-webkit-text-fill-color:var(--p27-ivory)!important;transition:background-color 9999s ease-out 0s}
+select option{background:var(--p27-surface);color:var(--p27-ivory)}
+.hero{min-height:min(860px,100svh)!important}
+.hero .logo-image-center{display:block!important;object-fit:contain!important;width:min(600px,66vw)!important;max-height:44svh!important;margin-inline:auto!important}
+.hero-institution{position:relative;isolation:isolate}
+.hero-institution .inst-logo{object-fit:contain!important}
+.hero-actions{width:min(100%,680px)!important;margin-inline:auto!important;display:flex;align-items:center;justify-content:center;gap:.75rem!important}
+.hero-actions .btn,.hero-actions a,.hero-actions button{min-height:var(--p27-control-h)!important}
+.footer{overflow:hidden!important;background:linear-gradient(180deg,#0b0806 0%,#070504 100%)!important;border-top:1px solid var(--p27-line)!important}
+.footer-top{padding:clamp(2.4rem,5vw,4rem) 0!important;display:grid!important;grid-template-columns:1.35fr 1fr .9fr!important;gap:clamp(1.5rem,4vw,3rem)!important}
+.footer-title{color:var(--p27-gold-bright)!important;font-size:.70rem!important;letter-spacing:.12em!important}
+.footer-socials{display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:.75rem!important}
+.footer-socials a,.footer-socials a::before{flex:0 0 auto!important}
+.footer-socials a{width:52px!important;height:52px!important}
+.footer-socials a::before{display:block!important;width:52px!important;height:52px!important;background-image:url('/social-medals.jpg')!important;background-size:208px 52px!important;background-repeat:no-repeat!important;border-radius:50%!important;content:''!important}
+.footer-socials a[href*='instagram']::before{background-position:-52px 0!important}.footer-socials a[href*='linkedin']::before{background-position:-104px 0!important}.footer-socials a[href*='youtube']::before{background-position:-156px 0!important}
+.footer-socials a:hover,.footer-socials a:focus-visible{filter:brightness(1.08) drop-shadow(0 5px 14px rgba(216,173,85,.28))!important}
+.rules-overlay{background:rgba(0,0,0,.75)!important;backdrop-filter:blur(8px)!important}
+.rules-modal{width:min(92vw,560px)!important;max-height:min(86svh,760px)!important;background:linear-gradient(145deg,rgba(216,173,85,.045),rgba(12,8,6,.97))!important;border:1px solid var(--p27-line)!important;box-shadow:0 24px 70px rgba(0,0,0,.46),0 0 24px rgba(216,173,85,.06)!important;color:var(--p27-ivory)!important}
+.rules-modal h2,.rules-content h3{color:var(--p27-gold-bright)!important;font-family:'LEMON MILK',Arial,sans-serif!important;letter-spacing:.055em!important}
+.rules-modal li{color:var(--p27-muted)!important;line-height:1.6!important}.rules-modal li::before{color:var(--p27-gold)!important}.rules-close{color:var(--p27-muted)!important}
+.success-wrapper{background:radial-gradient(circle at 50% 0,rgba(101,28,28,.18),transparent 42%),linear-gradient(180deg,var(--p27-bg-0),#050403)!important;color:var(--p27-ivory)!important}
+.success-card{box-shadow:0 22px 70px rgba(0,0,0,.38)!important}.success-card::before{background:linear-gradient(90deg,transparent,var(--p27-gold),transparent)!important}.success-title{color:var(--p27-ivory)!important}
+.success-details,.status-box,.payment-status,.payment-loading,.payment-processing,.payment-success,.payment-failed{background:rgba(216,173,85,.025)!important}.success-details,.payment-summary,.registration-summary,.payment-info,.payment-notice{border-color:var(--p27-line-soft)!important}.payment-success{border-color:rgba(216,173,85,.34)!important}.payment-failed{border-color:rgba(162,83,65,.45)!important}
+:where(a,button,input,textarea,select,[tabindex]):focus-visible{outline:2px solid var(--p27-gold-bright)!important;outline-offset:3px!important}
+.nav-link,.menu-icon,.btn,.rules-btn,.tab-btn,.day-tab{user-select:none;-webkit-user-select:none}
+@media (max-width:900px){.footer-top{grid-template-columns:1fr 1fr!important}.footer-top .footer-col:first-child{grid-column:1/-1!important}}
+@media (max-width:768px){
+ .navbar{min-height:64px!important}.logo-image{max-height:40px!important}.navbar-container{width:calc(100% - 1rem)!important}
+ .nav-menu{top:64px!important;height:calc(100dvh - 64px)!important;background:rgba(7,5,4,.97)!important;backdrop-filter:blur(14px)!important}
+ section,.section,.container-section,.about-section,.events-page{padding-top:2.1rem!important;padding-bottom:2.8rem!important}
+ .hero{min-height:auto!important;padding-bottom:2.4rem!important}.hero-institution{padding-top:4.2rem!important}
+ .hero-institution .inst-logo{width:48px!important;height:48px!important}.hero-institution .inst-text{width:min(100%,31rem)!important;padding-inline:3.1rem!important}
+ .phantasm-hero-college-name{font-size:clamp(.88rem,5vw,1.2rem)!important;line-height:1.15!important;max-width:100%!important}
+ .hero .logo-image-center{width:min(92vw,430px)!important;max-height:38svh!important}
+ .hero-actions{width:min(100%,340px)!important;display:grid!important;grid-template-columns:1fr!important}.hero-actions .btn,.hero-actions a,.hero-actions button{width:100%!important;min-height:48px!important}
+ .section-head{padding-inline:.35rem!important}.section-head h1,.section-head h2,.events-page .section-head h1,.events-page .section-head h2,.container-section h1,.Registertitle,.success-title{font-size:clamp(1.55rem,8vw,2.35rem)!important;letter-spacing:.03em!important}
+ .section-head p,.about-card p,.people-card p,.event-card p{font-size:.78rem!important;line-height:1.55!important}
+ .event-card,.about-card,.people-card,.highlight-section,.register-frame,.registration-card,.payment-card,.success-card{border-radius:14px!important}
+ .event-card{padding:.9rem!important}.about-card,.people-card,.highlight-section{padding:.95rem!important}
+ .footer-top{width:min(100%,calc(100% - 1.25rem))!important;grid-template-columns:1fr!important;gap:1.65rem!important;padding:2.25rem 0 2rem!important;text-align:center!important}.footer .phantasm-footer-college-name{font-size:.70rem!important;letter-spacing:.05em!important}.footer-socials{justify-content:center!important}
+ .rules-header,.rules-content,.rules-footer{padding-inline:1rem!important}.rules-modal h2{font-size:1.15rem!important}.rules-content h3{font-size:.88rem!important}.rules-modal li{font-size:.76rem!important}
+ .success-card{padding:1.1rem!important}.detail-value{font-size:.80rem!important;overflow-wrap:anywhere!important}
+}
+@media (max-width:430px){
+ .navbar-container{width:calc(100% - .75rem)!important}.logo-image{max-height:36px!important}.hero-institution .inst-logo{width:42px!important;height:42px!important}.hero-institution .inst-text{padding-inline:2.65rem!important}
+ .phantasm-hero-college-name{font-size:clamp(.82rem,5vw,1.08rem)!important}.hero .logo-image-center{width:94vw!important;max-height:34svh!important}.hero .hero-sub,.hero .hero-description,.hero .description{font-size:.72rem!important;line-height:1.48!important}
+ .event-card .btn,.event-card .rules-btn,.event-card .phantasm-register-now{min-height:44px!important}.footer-socials{gap:.65rem!important}.footer-socials a,.footer-socials a::before{width:46px!important;height:46px!important}.footer-socials a::before{background-size:184px 46px!important}.footer-socials a[href*='instagram']::before{background-position:-46px 0!important}.footer-socials a[href*='linkedin']::before{background-position:-92px 0!important}.footer-socials a[href*='youtube']::before{background-position:-138px 0!important}
+ .rules-modal{width:94vw!important;max-height:84svh!important}.rules-modal li{font-size:.73rem!important;line-height:1.5!important}
+}
+@media (min-width:1200px){.hero .logo-image-center{width:min(610px,58vw)!important}.hero-institution .inst-logo{width:74px!important;height:74px!important}.event-card{padding:1.05rem!important}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}

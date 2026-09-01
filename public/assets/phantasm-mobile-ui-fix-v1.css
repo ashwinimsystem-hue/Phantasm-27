@@ -1,0 +1,247 @@
+/* PHANTASM'27 — MOBILE UI FIX v2
+   Fixes the mobile navigation so it is hidden by default, opens only when
+   the React/app navigation state adds .open, and never blocks page content
+   while closed.
+*/
+
+@media (max-width: 768px) {
+  :root {
+    --p27-mobile-bg: #090705;
+    --p27-mobile-surface: rgba(14, 9, 7, .985);
+    --p27-mobile-gold: #d9a441;
+    --p27-mobile-ivory: #f3e6c8;
+    --p27-mobile-muted: #cdbf9e;
+    --p27-mobile-line: rgba(217, 164, 65, .18);
+  }
+
+  body {
+    overflow-x: hidden !important;
+  }
+
+  .navbar,
+  .site-nav {
+    height: 72px !important;
+    min-height: 72px !important;
+    background: rgba(9, 7, 5, .97) !important;
+  }
+
+  .navbar-container,
+  .site-nav .wrap {
+    height: 72px !important;
+    min-height: 72px !important;
+    width: calc(100% - 20px) !important;
+    margin: 0 auto !important;
+  }
+
+  .logo-image {
+    width: 72px !important;
+    max-width: 72px !important;
+    margin: 0 !important;
+  }
+
+  .menu-icon,
+  .nav-toggle {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+    border: 1px solid rgba(217, 164, 65, .55) !important;
+    border-radius: 10px !important;
+    background: rgba(217, 164, 65, .045) !important;
+    color: #f0cf8b !important;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18) !important;
+  }
+
+  /* Closed state: remove the menu from hit-testing and layout entirely. */
+  .nav-menu,
+  .nav-links {
+    display: none !important;
+    position: fixed !important;
+    top: 72px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    height: auto !important;
+    max-height: calc(100svh - 72px) !important;
+    min-height: 0 !important;
+    padding: 24px 20px 28px !important;
+    margin: 0 !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    background: var(--p27-mobile-surface) !important;
+    border-top: 1px solid rgba(217,164,65,.10) !important;
+    border-bottom: 1px solid var(--p27-mobile-line) !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,.42) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    backdrop-filter: blur(16px) !important;
+  }
+
+  /* Open state: the existing app toggles .open on the mobile menu. */
+  .nav-menu.open,
+  .nav-links.open {
+    display: flex !important;
+  }
+
+  .nav-menu::before,
+  .nav-links::before {
+    content: '' !important;
+    width: 54px !important;
+    height: 1px !important;
+    margin: 0 auto 10px !important;
+    background: linear-gradient(90deg, transparent, var(--p27-mobile-gold), transparent) !important;
+    opacity: .72 !important;
+  }
+
+  .nav-link,
+  .nav-links a {
+    position: relative !important;
+    width: min(100%, 420px) !important;
+    min-height: 52px !important;
+    height: 52px !important;
+    flex: 0 0 52px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 18px !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(217,164,65,.08) !important;
+    color: var(--p27-mobile-ivory) !important;
+    font-size: .92rem !important;
+    font-weight: 650 !important;
+    letter-spacing: .08em !important;
+    text-transform: uppercase !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-link:last-child,
+  .nav-links a:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .nav-link::after,
+  .nav-links a::after {
+    content: '' !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 7px !important;
+    width: 0 !important;
+    height: 1px !important;
+    transform: translateX(-50%) !important;
+    background: var(--p27-mobile-gold) !important;
+    opacity: 0 !important;
+    transition: width .18s ease, opacity .18s ease !important;
+  }
+
+  .nav-link.active::after,
+  .nav-links a.active::after,
+  .nav-link[aria-current='page']::after,
+  .nav-links a[aria-current='page']::after {
+    width: 44px !important;
+    opacity: 1 !important;
+  }
+
+  .nav-cta,
+  .nav-menu .nav-cta,
+  .nav-links .nav-cta {
+    width: min(100%, 420px) !important;
+    min-height: 46px !important;
+    height: 46px !important;
+    margin: 12px 0 0 !important;
+    padding: 0 16px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(217,164,65,.44) !important;
+    color: #f0cf8b !important;
+    background: rgba(217,164,65,.045) !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-menu .join-team,
+  .nav-links .join-team,
+  .nav-menu [href*='join-team'],
+  .nav-links [href*='join-team'] {
+    margin-top: 12px !important;
+    padding: 14px 16px 4px !important;
+    min-height: 64px !important;
+    height: auto !important;
+    border-top: 1px solid rgba(217,164,65,.08) !important;
+    border-bottom: 0 !important;
+    line-height: 1.4 !important;
+    text-transform: none !important;
+    white-space: normal !important;
+  }
+
+  main,
+  .page,
+  .hero,
+  .hero-section {
+    position: relative !important;
+    z-index: 0 !important;
+  }
+
+  body.menu-open::before,
+  body.nav-open::before,
+  .menu-open::before {
+    opacity: .22 !important;
+  }
+
+  .hero,
+  .hero-section,
+  section,
+  .section,
+  .events-page,
+  .about-section,
+  footer,
+  .footer {
+    max-width: 100vw !important;
+    overflow-x: clip !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .navbar,
+  .site-nav,
+  .navbar-container,
+  .site-nav .wrap {
+    height: 68px !important;
+    min-height: 68px !important;
+  }
+
+  .nav-menu,
+  .nav-links {
+    top: 68px !important;
+    max-height: calc(100svh - 68px) !important;
+    padding: 18px 14px 22px !important;
+  }
+
+  .nav-link,
+  .nav-links a {
+    min-height: 48px !important;
+    height: 48px !important;
+    flex-basis: 48px !important;
+    font-size: .86rem !important;
+  }
+}
+
+@media (min-width: 769px) {
+  /* Never let the mobile drawer rules affect desktop navigation. */
+  .nav-menu,
+  .nav-links {
+    display: revert !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link::after,
+  .nav-links a::after {
+    transition: none !important;
+  }
+}

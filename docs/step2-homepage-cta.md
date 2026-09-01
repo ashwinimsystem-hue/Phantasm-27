@@ -1,0 +1,1 @@
+Step 2 homepage CTA/navigation repair is prepared for review. Keep this work off production until explicitly approved.

@@ -1,0 +1,66 @@
+/* PHANTASM'27 — FINAL MOBILE HERO COMPOSITION
+   Fixes the persistent blank band between the navbar and institution identity.
+   Desktop is intentionally untouched.
+*/
+@media (max-width:768px){
+  .hero{
+    padding-top:0!important;
+    margin-top:0!important;
+    overflow-x:hidden!important;
+  }
+
+  /* The actual blank region is inherited by the hero content wrapper on mobile.
+     Pull the whole hero content block upward so the institution identity begins
+     immediately below the navigation instead of leaving a large empty band. */
+  .hero > .wrap{
+    margin-top:-11rem!important;
+    padding-top:0!important;
+  }
+
+  .hero-institution{
+    margin-top:0!important;
+    padding-top:.35rem!important;
+    padding-bottom:0!important;
+  }
+
+  .hero-institution .inst-text::before{
+    margin-bottom:.2rem!important;
+  }
+
+  .hero-institution .inst-logo{
+    align-self:center!important;
+  }
+
+  .hero-institution + .hero-inner,
+  .hero-institution + *{
+    margin-top:0!important;
+  }
+
+  .hero .logo-image-center,
+  .hero img[src*='vaagai'],
+  .hero img[alt*='vaagai' i],
+  .hero .vaagai-logo{
+    margin-top:.35rem!important;
+  }
+}
+
+@media (max-width:430px){
+  .hero > .wrap{
+    margin-top:-10rem!important;
+  }
+
+  .hero-institution{
+    margin-top:0!important;
+    padding-top:.25rem!important;
+  }
+
+  .hero-institution .inst-text::before{
+    font-size:clamp(1rem,6.1vw,1.35rem)!important;
+  }
+}
+
+@media (max-width:360px){
+  .hero > .wrap{
+    margin-top:-9rem!important;
+  }
+}

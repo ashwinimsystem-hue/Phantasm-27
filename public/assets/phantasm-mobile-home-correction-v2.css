@@ -1,0 +1,304 @@
+/* PHANTASM'27 — MOBILE HOME CORRECTION V2
+   Targets the real compiled homepage classes.
+   Fixes the broad inferred wrapper, CTA alignment, countdown, Vaagai overflow,
+   and the mobile Potential section without changing desktop presentation.
+*/
+
+@media (max-width: 768px) {
+  /* Remove the accidental page-sized frame created by the previous heuristic. */
+  .phantasm-potential-block {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-align: inherit !important;
+  }
+
+  /* Establish a true mobile canvas. */
+  .hero,
+  .hero > *,
+  .hero-institution,
+  .hero-institution .inst-text,
+  .hero-actions {
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .hero {
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+    padding-bottom: 1.4rem !important;
+  }
+
+  /* Institution strip */
+  .hero-institution {
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: .75rem .7rem .15rem !important;
+    display: grid !important;
+    grid-template-columns: 38px minmax(0, 1fr) 38px !important;
+    gap: .55rem !important;
+    align-items: center !important;
+  }
+
+  .hero-institution .inst-logo,
+  .inst-logo.left,
+  .inst-logo.right {
+    position: static !important;
+    width: 34px !important;
+    height: 34px !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  .hero-institution .inst-text {
+    width: 100% !important;
+    padding: 0 !important;
+    text-align: center !important;
+  }
+
+  /* Event identity */
+  .hero-tamil,
+  .hero-title {
+    position: relative !important;
+    max-width: calc(100% - 24px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+
+  .hero-tamil {
+    margin-top: .65rem !important;
+    margin-bottom: .18rem !important;
+    color: var(--p27-gold-bright) !important;
+  }
+
+  .hero-title {
+    font-size: clamp(1.45rem, 7vw, 2rem) !important;
+    line-height: 1.02 !important;
+    letter-spacing: .02em !important;
+  }
+
+  .hero-title::after {
+    position: static !important;
+    display: block !important;
+    width: 46px !important;
+    height: 1px !important;
+    margin: .5rem auto 0 !important;
+    transform: none !important;
+  }
+
+  /* The source image has a desktop rotation that causes mobile clipping. */
+  .hero .logo-image-center,
+  .hero img[src*="vaagai"],
+  .hero img[alt*="vaagai" i],
+  .hero .vaagai-logo {
+    display: block !important;
+    width: min(90vw, 430px) !important;
+    max-width: 90vw !important;
+    height: auto !important;
+    max-height: 28svh !important;
+    margin: .55rem auto 0 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+    filter: drop-shadow(0 10px 22px rgba(217,164,65,.16)) !important;
+  }
+
+  .hero-subtitle,
+  .hero-sub,
+  .hero-description,
+  .description {
+    width: min(calc(100% - 28px), 520px) !important;
+    margin: .65rem auto 0 !important;
+    padding: 0 !important;
+    font-size: .78rem !important;
+    line-height: 1.52 !important;
+    text-align: center !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* CTA: two equal actions on normal phones, one column only on very narrow screens. */
+  .hero-actions,
+  .hero-actions.reveal {
+    position: relative !important;
+    z-index: 50 !important;
+    width: min(calc(100% - 24px), 390px) !important;
+    margin: .9rem auto 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: .55rem !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  .hero-actions a,
+  .hero-actions button {
+    position: relative !important;
+    z-index: 51 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 46px !important;
+    margin: 0 !important;
+    padding: .65rem .55rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    border-radius: 9px !important;
+    font-family: 'LEMON MILK', Arial, sans-serif !important;
+    font-size: .66rem !important;
+    font-weight: 700 !important;
+    letter-spacing: .055em !important;
+    text-decoration: none !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+  .hero-actions a[href*="/register"] {
+    color: #211706 !important;
+    -webkit-text-fill-color: #211706 !important;
+    background: linear-gradient(180deg, #f0cf8b 0%, #d9a441 100%) !important;
+    border: 1px solid #d9a441 !important;
+    box-shadow: 0 7px 18px rgba(216,173,85,.16) !important;
+  }
+
+  .hero-actions a[href*="/events"] {
+    color: var(--p27-gold-bright) !important;
+    -webkit-text-fill-color: var(--p27-gold-bright) !important;
+    background: rgba(217,164,65,.045) !important;
+    border: 1px solid rgba(217,164,65,.42) !important;
+    box-shadow: none !important;
+  }
+
+  /* Countdown: the heading and timer form one compact block. */
+  h2:has(+ .countdown),
+  h3:has(+ .countdown),
+  p:has(+ .countdown) {
+    width: min(calc(100% - 24px), 420px) !important;
+    margin: 1.15rem auto .25rem !important;
+    padding: 0 !important;
+    color: var(--p27-gold-bright) !important;
+    font-family: 'LEMON MILK', Arial, sans-serif !important;
+    font-size: .9rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: .10em !important;
+    text-align: center !important;
+  }
+
+  .countdown {
+    width: min(calc(100% - 24px), 420px) !important;
+    margin: 0 auto 1rem !important;
+    padding: .95rem .7rem 1rem !important;
+    color: var(--p27-ivory) !important;
+    background: linear-gradient(145deg, rgba(124,31,31,.10), rgba(18,11,8,.88)) !important;
+    border: 1px solid rgba(217,164,65,.20) !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+    font-family: 'LEMON MILK', Arial, sans-serif !important;
+    box-shadow: 0 10px 28px rgba(0,0,0,.14) !important;
+  }
+
+  .countdown span {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    color: var(--p27-ivory) !important;
+    font-size: clamp(.92rem, 4.7vw, 1.25rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: .075em !important;
+    font-variant-numeric: tabular-nums !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* Potential section: no giant wrapper, no page-sized card. */
+  .phantasm-home-potential {
+    display: block !important;
+    width: min(calc(100% - 24px), 520px) !important;
+    margin: 1.3rem auto .6rem !important;
+    color: var(--p27-gold-bright) !important;
+    -webkit-text-fill-color: var(--p27-gold-bright) !important;
+    font-family: 'LEMON MILK', Arial, sans-serif !important;
+    font-size: clamp(1.3rem, 7vw, 1.8rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.08 !important;
+    letter-spacing: .035em !important;
+    text-align: center !important;
+  }
+
+  .phantasm-potential-lead {
+    display: block !important;
+    width: min(calc(100% - 32px), 520px) !important;
+    margin: 0 auto !important;
+    color: var(--p27-muted) !important;
+    font-family: 'LEMON MILK', Arial, sans-serif !important;
+    font-size: .8rem !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+  }
+
+  .phantasm-potential-points {
+    width: min(calc(100% - 24px), 520px) !important;
+    margin: .85rem auto 0 !important;
+    display:grid !important;
+    grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+    gap: .45rem !important;
+  }
+
+  .phantasm-potential-points span {
+    min-width: 0 !important;
+    padding: .65rem .4rem !important;
+    border: 1px solid rgba(217,164,65,.16) !important;
+    border-radius: 8px !important;
+    color: var(--p27-ivory) !important;
+    text-align: center !important;
+    font-size: .62rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .phantasm-potential-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: .9rem auto 0 !important;
+    min-height: 40px !important;
+    padding: .55rem .95rem !important;
+    border: 1px solid rgba(217,164,65,.36) !important;
+    border-radius: 999px !important;
+    color: var(--p27-gold-bright) !important;
+    font-size: .67rem !important;
+    font-weight: 700 !important;
+    letter-spacing: .06em !important;
+    text-decoration: none !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-institution { grid-template-columns: 32px minmax(0,1fr) 32px !important; }
+  .hero-institution .inst-logo,
+  .inst-logo.left,
+  .inst-logo.right { width: 29px !important; height: 29px !important; }
+  .hero .logo-image-center,
+  .hero img[src*="vaagai"],
+  .hero img[alt*="vaagai" i],
+  .hero .vaagai-logo { width: 91vw !important; max-width: 91vw !important; max-height: 25svh !important; }
+  .hero-actions { width: calc(100% - 24px) !important; }
+  .phantasm-potential-points { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 360px) {
+  .hero-actions { grid-template-columns: 1fr !important; }
+  .hero-actions a,
+  .hero-actions button { min-height: 44px !important; }
+}

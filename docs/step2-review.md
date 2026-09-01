@@ -1,0 +1,1 @@
+Step 2 homepage CTA/navigation repair should be reviewed before any production deployment.
