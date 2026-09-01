@@ -1,54 +1,80 @@
-/* PHANTASM'27 — STANDARD EVENT FEE DISPLAY v6
-   Gender is participant information only. Male and female registrations use
-   the same canonical standard event fee. This script only repairs stale
-   presentation labels; payment totals remain governed by /api/pricing.js.
+/* PHANTASM'27 — STANDARD FEE DISPLAY v7
+   Keep one authoritative visible fee per event card.
+   Gender never changes pricing. Remove stale crossed-out SOLO/TEAM variants,
+   then show the canonical fee for the selected participation mode.
 */
 (function(){
   const isRegister=()=>/\/register\/?$/i.test(location.pathname);
   const norm=v=>String(v||'').replace(/\s+/g,' ').trim().toLowerCase();
-  const amount=v=>{const m=String(v||'').match(/(?:₹|rs\.?|inr\s*)\s*([0-9][0-9,]*(?:\.\d+)?)/i);return m?m[1].replace(/,/g,''):null};
-  const FEES=[
-    ['advanced cnc machining and precision manufacturing',200],['advanced cnc machining',200],['precision manufacturing',200],
-    ['paper presentation',200],['ansys simulation challenge',200],['ansys simulation',200],['cad modeling',200],['cad modelling',200],
-    ['glider competition',200],['glider',200],['line follower robot',300],['line follower',300],['technical quiz',100],
-    ['water rocketry',200],['water rocket',200],['free fire',100],['freefire',100],['ipl auction',100],['college ipl auction',100],
-    ['carrom',100],['chess',50],['bachelor samayal',100]
-  ];
-  const feeFor=name=>{const n=norm(name);const hit=FEES.find(([k])=>n===k||n.includes(k)||k.includes(n));return hit?hit[1]:null};
-  const titleFor=card=>{for(const n of card.querySelectorAll('h1,h2,h3,h4,h5,h6,strong,b,[class*="title" i],[class*="name" i]')){const t=n.textContent.trim();if(feeFor(t)!=null)return t}return ''};
-  function repairOrphanFees(root){
-    for(const el of root.querySelectorAll('*')){
-      if(!el.isConnected||el.children.length||el.tagName==='SCRIPT'||el.tagName==='STYLE')continue;
-      const t=el.textContent.replace(/\s+/g,' ').trim();
-      if(!/^fee\s*:\s*₹?\s*100$/i.test(t))continue;
-      const parent=el.parentElement;
-      const parentText=norm(parent?.textContent||'');
-      if(!titleFor(parent) && !/advanced cnc|paper presentation|ansys|cad modeling|glider|line follower|technical quiz|water rocketry|free fire|carrom|chess|ipl auction|bachelor samayal/.test(parentText)){
-        (parent?.children?.length===1?parent:el).remove();
-      }
+  const FEES={
+    'advanced cnc machining and precision manufacturing':200,'advanced cnc machining':200,'precision manufacturing':200,
+    'paper presentation':200,'ansys simulation challenge':200,'ansys simulation':200,'cad modeling':200,'cad modelling':200,
+    'glider competition':200,'glider':200,'line follower robot':300,'line follower':300,'technical quiz':100,
+    'water rocketry':200,'water rocket':200,'free fire':100,'freefire':100,'ipl auction':100,'college ipl auction':100,
+    'carrom':100,'chess':50,'bachelor samayal':100
+  };
+  const feeFor=name=>{const n=norm(name); const hit=Object.keys(FEES).find(k=>n===k||n.includes(k)||k.includes(n)); return hit?FEES[hit]:null;};
+  const findTitle=card=>{
+    for(const el of card.querySelectorAll('h1,h2,h3,h4,h5,h6,strong,b,[class*="title" i],[class*="name" i]')){
+      const t=el.textContent.trim(); if(feeFor(t)!=null) return t;
     }
-  }
+    const text=norm(card.textContent||'');
+    const key=Object.keys(FEES).find(k=>text.includes(k)); return key||'';
+  };
+  const leafNodes=el=>[...el.querySelectorAll('*')].filter(n=>n.children.length===0 && !['SCRIPT','STYLE','OPTION'].includes(n.tagName));
   function cleanCard(card){
-    const title=titleFor(card), fee=feeFor(title); if(fee==null)return;
-    for(const n of card.querySelectorAll('*')){
-      if(n.children.length)continue;
-      const t=n.textContent.replace(/\s+/g,' ').trim();if(!t)continue;
-      if(/^free$/i.test(t)||/^(?:₹|rs\.?|inr)\s*0(?:\.00)?$/i.test(t)){n.textContent=`₹${fee}`;continue}
-      if(/^fee\s*:/i.test(t)&&/\bfree\b/i.test(t)){const a=amount(t);n.textContent=a?`Fee: ₹${a}`:`Fee: ₹${fee}`;continue}
-      if(/^fee\s*:\s*₹?\s*$/i.test(t)||/^₹\s*$/.test(t))n.remove();
-    }
+    const title=findTitle(card), fee=feeFor(title); if(fee==null)return;
+    const leaves=leafNodes(card);
+    // Remove stale fee text that contains crossed-out SOLO/TEAM pricing.
+    leaves.forEach(n=>{
+      const t=n.textContent.replace(/\s+/g,' ').trim();
+      if(!t)return;
+      if(/^(?:fee\s*:\s*)?solo\s*[-–—:]?\s*₹?\s*\d+\s*\|\s*team\s*[-–—:]?\s*₹?\s*\d+$/i.test(t)){
+        n.textContent=`Fee: ₹${fee}`; return;
+      }
+      if(/^fee\s*:\s*₹?\s*\d+(?:\.\d+)?(?:\s*[|,].*)?$/i.test(t) && /\bsolo\b|\bteam\b/i.test(t)){
+        n.textContent=`Fee: ₹${fee}`; return;
+      }
+      if(/^fee\s*:/i.test(t) && /\bfree\b/i.test(t)) n.textContent=`Fee: ₹${fee}`;
+      else if(/^free$/i.test(t)) n.textContent=`₹${fee}`;
+      else if(/^₹\s*0(?:\.00)?$/i.test(t)) n.textContent=`₹${fee}`;
+    });
+    // Crossed-out price fragments can sit in separate leaf nodes. If a card has
+    // a fee label, replace the entire visible fee row with one canonical value.
+    const feeRows=[...card.querySelectorAll('p,div,span,small,strong')].filter(el=>{
+      const t=el.textContent.replace(/\s+/g,' ').trim();
+      return /^(fee\s*:)/i.test(t) || (/solo/i.test(t)&&/team/i.test(t)&&/₹/.test(t));
+    });
+    feeRows.forEach(el=>{
+      if(el.children.length===0) el.textContent=`Fee: ₹${fee}`;
+      else if(/solo/i.test(el.textContent)&&/team/i.test(el.textContent)) el.textContent=`Fee: ₹${fee}`;
+    });
+    // Never show gender-specific or duplicated fee rows.
+    [...card.querySelectorAll('*')].filter(el=>el.children.length===0).forEach(el=>{
+      const t=norm(el.textContent);
+      if(/^(male|female)\s*(fee|price)\s*[:\-]?/.test(t)) el.remove();
+    });
+  }
+  function cleanTotal(root){
+    const candidates=[...root.querySelectorAll('*')].filter(el=>el.children.length===0);
+    candidates.forEach(el=>{
+      const t=el.textContent.replace(/\s+/g,' ').trim();
+      if(/^total\s*[:\-]/i.test(t) || /^(grand\s+)?total\s+amount/i.test(t)){
+        const m=t.match(/(?:₹|rs\.?|inr)\s*([0-9][0-9,]*(?:\.\d+)?)/i);
+        if(m) el.textContent=`Total: ₹${m[1].replace(/,/g,'')}`;
+      }
+    });
   }
   function fix(root){
     if(!root||!isRegister())return;
-    repairOrphanFees(root);
-    root.querySelectorAll('article,li,section,[class*="event-card" i],[class*="eventCard" i],[class*="event-item" i],[class*="workshop" i]').forEach(cleanCard);
-    repairOrphanFees(root);
+    root.querySelectorAll('article,li,section,[class*="event-card" i],[class*="eventCard" i],[class*="event-item" i],[class*="eventoption" i],[class*="workshop" i]').forEach(cleanCard);
+    cleanTotal(root);
   }
   function start(){
-    if(!isRegister())return;const root=document.getElementById('root');if(!root)return;
-    fix(root);[300,800,1600,3000].forEach(t=>setTimeout(()=>fix(root),t));
-    if(root.dataset.standardFeeObserver)return;root.dataset.standardFeeObserver='true';let timer;
-    new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(()=>fix(root),80)}).observe(root,{childList:true,subtree:true});
+    if(!isRegister())return; const root=document.getElementById('root'); if(!root)return;
+    fix(root); [200,600,1200,2500].forEach(t=>setTimeout(()=>fix(root),t));
+    if(root.dataset.feeDisplayV7)return; root.dataset.feeDisplayV7='true'; let timer=null;
+    new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(()=>fix(root),120)}).observe(root,{childList:true,subtree:true});
   }
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start,{once:true}):start();
 })();
