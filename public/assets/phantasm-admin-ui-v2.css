@@ -1,48 +1,147 @@
-/* PHANTASM'27 — ADMIN UI v2 */
-:root{--admin-v2-bg:#080604;--admin-v2-surface:#100b08;--admin-v2-surface-2:#17100b;--admin-v2-gold:#d9a441;--admin-v2-gold-soft:#f0cf8b;--admin-v2-ivory:#f3e6c8;--admin-v2-muted:#b8aa8d;--admin-v2-line:rgba(217,164,65,.20);--admin-v2-line-strong:rgba(217,164,65,.40)}
+/* PHANTASM'27 — ADMIN UI POLISH */
+:root{--p27-admin-bg:#080604;--p27-admin-panel:#100b08;--p27-admin-panel-2:#17100b;--p27-admin-gold:#d9a441;--p27-admin-gold-soft:#f0cf8b;--p27-admin-text:#f3e6c8;--p27-admin-muted:#b8aa8d;--p27-admin-line:rgba(217,164,65,.18);--p27-admin-line-strong:rgba(217,164,65,.38);--p27-admin-danger:#c65b5b;--p27-admin-success:#80b996}
 
-/* LOGIN */
-body:has(input[placeholder*="admin email" i]){background:radial-gradient(circle at 50% 12%,rgba(124,31,31,.30),transparent 38%),linear-gradient(180deg,#080604 0%,#0e0906 58%,#080604 100%)!important}
-body:has(input[placeholder*="admin email" i]) #root{min-height:100vh!important}
-body:has(input[placeholder*="admin email" i]) form{width:min(620px,calc(100% - 40px))!important;margin:clamp(46px,11vh,110px) auto!important;padding:34px 38px 38px!important;border:1px solid var(--admin-v2-line)!important;border-radius:20px!important;background:linear-gradient(145deg,rgba(217,164,65,.065),rgba(16,11,8,.96) 48%,rgba(8,6,4,.98))!important;box-shadow:0 28px 90px rgba(0,0,0,.48),inset 0 1px 0 rgba(240,207,139,.05)!important;position:relative!important}
-body:has(input[placeholder*="admin email" i]) form::before{content:'PHANTASM\201927  ·  ADMIN ACCESS';display:block!important;margin-bottom:24px!important;color:var(--admin-v2-gold-soft)!important;font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(1.45rem,3vw,2rem)!important;font-weight:700!important;letter-spacing:.035em!important;text-align:center!important}
-body:has(input[placeholder*="admin email" i]) form::after{content:'Authorized administration portal';display:block!important;margin-top:-15px!important;margin-bottom:22px!important;color:var(--admin-v2-muted)!important;font-size:.78rem!important;letter-spacing:.12em!important;text-align:center!important;text-transform:uppercase!important}
-body:has(input[placeholder*="admin email" i]) form input{width:100%!important;min-height:58px!important;padding:0 17px!important;margin:0 0 12px!important;border:1px solid var(--admin-v2-line)!important;border-radius:11px!important;background:rgba(4,3,2,.72)!important;color:var(--admin-v2-ivory)!important;font-size:1rem!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.015)!important;transition:border-color .2s,box-shadow .2s,background .2s!important}
-body:has(input[placeholder*="admin email" i]) form input:focus{border-color:var(--admin-v2-gold)!important;background:rgba(12,8,5,.92)!important;box-shadow:0 0 0 4px rgba(217,164,65,.09),0 8px 24px rgba(0,0,0,.18)!important}
-/* LARGE ENTER BUTTON */
-body:has(input[placeholder*="admin email" i]) form button{width:100%!important;min-height:68px!important;margin-top:10px!important;border:1px solid var(--admin-v2-gold-soft)!important;border-radius:11px!important;background:linear-gradient(180deg,#f0cf8b 0%,#d9a441 100%)!important;color:#241703!important;font-size:1.08rem!important;font-weight:800!important;letter-spacing:.14em!important;text-transform:uppercase!important;box-shadow:0 12px 32px rgba(217,164,65,.25)!important;transition:transform .2s,box-shadow .2s,filter .2s!important}
-body:has(input[placeholder*="admin email" i]) form button:hover{transform:translateY(-2px)!important;filter:brightness(1.05)!important;box-shadow:0 17px 38px rgba(217,164,65,.34)!important}
+/* --------------------------------------------------------------------------
+   ADMIN LOGIN
+   -------------------------------------------------------------------------- */
+body:has(input[placeholder*="admin email" i]){
+  background:radial-gradient(circle at 50% 10%,rgba(117,28,28,.30),transparent 36%),linear-gradient(180deg,#070503 0%,#100a07 58%,#070503 100%)!important;
+}
+body:has(input[placeholder*="admin email" i]) #root{min-height:100vh!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:36px 20px!important}
+body:has(input[placeholder*="admin email" i]) form{
+  width:min(600px,100%)!important;margin:0!important;padding:38px 40px 40px!important;
+  border:1px solid var(--p27-admin-line)!important;border-radius:20px!important;
+  background:linear-gradient(145deg,rgba(217,164,65,.065),rgba(16,11,8,.965) 48%,rgba(8,6,4,.99))!important;
+  box-shadow:0 30px 100px rgba(0,0,0,.50),inset 0 1px 0 rgba(240,207,139,.05)!important;
+  position:relative!important;
+}
+body:has(input[placeholder*="admin email" i]) form::before{
+  content:"PHANTASM'27";display:block!important;text-align:center!important;
+  color:var(--p27-admin-text)!important;font:700 clamp(2rem,5vw,3rem)/1 Georgia,'Times New Roman',serif!important;
+  letter-spacing:.03em!important;margin:0 0 8px!important;
+}
+body:has(input[placeholder*="admin email" i]) form::after{
+  content:'ADMIN ACCESS';display:block!important;text-align:center!important;
+  color:var(--p27-admin-gold-soft)!important;font:800 .72rem/1 Inter,system-ui,sans-serif!important;
+  letter-spacing:.24em!important;margin:0 0 28px!important;
+}
+body:has(input[placeholder*="admin email" i]) form input{
+  width:100%!important;min-height:58px!important;padding:0 17px!important;margin:0 0 13px!important;
+  border:1px solid var(--p27-admin-line)!important;border-radius:11px!important;
+  background:rgba(4,3,2,.78)!important;color:var(--p27-admin-text)!important;font-size:1rem!important;
+  box-shadow:none!important;outline:none!important;transition:border-color .18s,box-shadow .18s,background .18s!important;
+}
+body:has(input[placeholder*="admin email" i]) form input:focus{
+  border-color:var(--p27-admin-gold)!important;background:#0d0906!important;
+  box-shadow:0 0 0 4px rgba(217,164,65,.08)!important;
+}
+body:has(input[placeholder*="admin email" i]) form button{
+  width:100%!important;min-height:82px!important;margin-top:10px!important;
+  border:1px solid var(--p27-admin-gold-soft)!important;border-radius:12px!important;
+  background:linear-gradient(180deg,#f1d18f 0%,#d9a441 100%)!important;color:#241703!important;
+  font:900 1.16rem/1 Inter,system-ui,sans-serif!important;letter-spacing:.14em!important;
+  text-transform:uppercase!important;box-shadow:0 14px 34px rgba(217,164,65,.27)!important;
+  transition:transform .18s,box-shadow .18s,filter .18s!important;
+}
+body:has(input[placeholder*="admin email" i]) form button:hover{transform:translateY(-2px)!important;filter:brightness(1.04)!important;box-shadow:0 19px 44px rgba(217,164,65,.37)!important}
+body:has(input[placeholder*="admin email" i]) form button:active{transform:translateY(0)!important}
 
-/* ADMIN PANEL */
-body:has(input[placeholder*="Search Team" i]){background:radial-gradient(circle at 50% 0,rgba(124,31,31,.22),transparent 34%),linear-gradient(180deg,#080604 0%,#0c0806 100%)!important}
+/* --------------------------------------------------------------------------
+   ADMIN PANEL
+   -------------------------------------------------------------------------- */
+body:has(input[placeholder*="Search Team" i]){
+  background:radial-gradient(circle at 50% 0,rgba(117,28,28,.18),transparent 34%),linear-gradient(180deg,#080604,#0b0705 100%)!important;
+}
 body:has(input[placeholder*="Search Team" i]) #root{min-height:100vh!important}
-body:has(input[placeholder*="Search Team" i]) main,body:has(input[placeholder*="Search Team" i]) .admin-panel,body:has(input[placeholder*="Search Team" i]) .admin-dashboard{width:min(1320px,calc(100% - 48px))!important;margin:0 auto!important;padding:34px 0 70px!important}
-body:has(input[placeholder*="Search Team" i]) h1,body:has(input[placeholder*="Search Team" i]) h2{color:var(--admin-v2-ivory)!important;font-family:Georgia,'Times New Roman',serif!important;letter-spacing:.01em!important}
-body:has(input[placeholder*="Search Team" i]) h1:first-child,body:has(input[placeholder*="Search Team" i]) h2:first-child{text-align:center!important;font-size:clamp(2rem,4vw,3rem)!important;margin:0 0 24px!important;text-shadow:0 0 30px rgba(217,164,65,.12)!important}
+body:has(input[placeholder*="Search Team" i]) main,
+body:has(input[placeholder*="Search Team" i]) .admin-panel,
+body:has(input[placeholder*="Search Team" i]) .admin-dashboard{
+  width:min(1380px,calc(100% - 44px))!important;margin:0 auto!important;padding:30px 0 72px!important;
+}
+body:has(input[placeholder*="Search Team" i]) h1,
+body:has(input[placeholder*="Search Team" i]) h2{
+  color:var(--p27-admin-text)!important;font-family:Georgia,'Times New Roman',serif!important;letter-spacing:.01em!important;
+}
+body:has(input[placeholder*="Search Team" i]) h1:first-child,
+body:has(input[placeholder*="Search Team" i]) h2:first-child{
+  font-size:clamp(2.1rem,4vw,3.25rem)!important;text-align:center!important;margin:0 0 26px!important;
+  text-shadow:0 0 30px rgba(217,164,65,.12)!important;
+}
 
-/* Top navigation buttons */
-body:has(input[placeholder*="Search Team" i]) button{min-height:44px!important;padding:9px 17px!important;border:1px solid var(--admin-v2-line-strong)!important;border-radius:9px!important;background:linear-gradient(180deg,rgba(217,164,65,.10),rgba(217,164,65,.035))!important;color:var(--admin-v2-ivory)!important;font-weight:700!important;letter-spacing:.015em!important;box-shadow:none!important;transition:transform .18s,border-color .18s,background .18s!important}
-body:has(input[placeholder*="Search Team" i]) button:hover{transform:translateY(-1px)!important;border-color:var(--admin-v2-gold)!important;background:rgba(217,164,65,.10)!important}
+/* Top navigation / section switcher */
+body:has(input[placeholder*="Search Team" i]) :is(button,a[role='button']){
+  border-radius:10px!important;
+}
+body:has(input[placeholder*="Search Team" i]) button{
+  min-height:44px!important;padding:10px 17px!important;border:1px solid var(--p27-admin-line-strong)!important;
+  background:linear-gradient(180deg,rgba(217,164,65,.09),rgba(217,164,65,.025))!important;
+  color:var(--p27-admin-text)!important;font-weight:700!important;letter-spacing:.015em!important;
+  box-shadow:none!important;transition:transform .18s,border-color .18s,background .18s,box-shadow .18s!important;
+}
+body:has(input[placeholder*="Search Team" i]) button:hover{transform:translateY(-1px)!important;border-color:var(--p27-admin-gold)!important;background:rgba(217,164,65,.10)!important;box-shadow:0 7px 18px rgba(0,0,0,.18)!important}
 
-/* Filter controls */
-body:has(input[placeholder*="Search Team" i]) input,body:has(input[placeholder*="Search Team" i]) select{min-height:54px!important;padding:0 15px!important;border:1px solid var(--admin-v2-line)!important;border-radius:10px!important;background:rgba(5,4,3,.76)!important;color:var(--admin-v2-ivory)!important;font-size:.94rem!important;box-shadow:none!important}
-body:has(input[placeholder*="Search Team" i]) input:focus,body:has(input[placeholder*="Search Team" i]) select:focus{border-color:var(--admin-v2-gold)!important;box-shadow:0 0 0 4px rgba(217,164,65,.07)!important}
-body:has(input[placeholder*="Search Team" i]) input[placeholder*="Search Team" i],body:has(input[placeholder*="Search Team" i]) input[placeholder*="UTR" i],body:has(input[placeholder*="Search Team" i]) select{margin-bottom:14px!important}
+/* Filter toolbar */
+body:has(input[placeholder*="Search Team" i]) input,
+body:has(input[placeholder*="Search Team" i]) select{
+  min-height:54px!important;padding:0 15px!important;border:1px solid var(--p27-admin-line)!important;
+  border-radius:11px!important;background:rgba(5,4,3,.80)!important;color:var(--p27-admin-text)!important;
+  font-size:.94rem!important;outline:none!important;box-shadow:none!important;transition:border-color .18s,box-shadow .18s!important;
+}
+body:has(input[placeholder*="Search Team" i]) input:focus,
+body:has(input[placeholder*="Search Team" i]) select:focus{border-color:var(--p27-admin-gold)!important;box-shadow:0 0 0 4px rgba(217,164,65,.07)!important}
+body:has(input[placeholder*="Search Team" i]) input::placeholder{color:#756c5b!important}
 
-/* Tables — fix collapsed/stacked admin columns */
-body:has(input[placeholder*="Search Team" i]) table{display:table!important;width:100%!important;min-width:900px!important;margin:18px 0 30px!important;border-collapse:separate!important;border-spacing:0!important;border:1px solid var(--admin-v2-line)!important;border-radius:13px!important;background:rgba(12,8,5,.82)!important;overflow:hidden!important}
+/* Summary cards */
+body:has(input[placeholder*="Search Team" i]) :is([class*="total" i],[class*="summary" i],[class*="stat" i],[class*="count" i]){
+  border:1px solid rgba(217,164,65,.12)!important;border-radius:13px!important;background:rgba(217,164,65,.028)!important;
+}
+
+/* Tables — explicit horizontal table model, never stacked columns. */
+body:has(input[placeholder*="Search Team" i]) table{
+  display:table!important;width:100%!important;min-width:980px!important;table-layout:auto!important;
+  margin:18px 0 32px!important;border-collapse:separate!important;border-spacing:0!important;
+  border:1px solid var(--p27-admin-line)!important;border-radius:14px!important;background:rgba(10,7,5,.88)!important;overflow:hidden!important;
+}
 body:has(input[placeholder*="Search Team" i]) thead{display:table-header-group!important}
 body:has(input[placeholder*="Search Team" i]) tbody{display:table-row-group!important}
 body:has(input[placeholder*="Search Team" i]) tr{display:table-row!important}
-body:has(input[placeholder*="Search Team" i]) th,body:has(input[placeholder*="Search Team" i]) td{display:table-cell!important}
-body:has(input[placeholder*="Search Team" i]) thead th{padding:14px 15px!important;background:#17100b!important;color:var(--admin-v2-gold-soft)!important;font-size:.78rem!important;font-weight:800!important;letter-spacing:.08em!important;text-transform:uppercase!important;border-bottom:1px solid var(--admin-v2-line-strong)!important;white-space:nowrap!important}
-body:has(input[placeholder*="Search Team" i]) tbody td{padding:13px 15px!important;color:var(--admin-v2-muted)!important;border-bottom:1px solid rgba(217,164,65,.08)!important;vertical-align:middle!important;white-space:nowrap!important}
+body:has(input[placeholder*="Search Team" i]) th,
+body:has(input[placeholder*="Search Team" i]) td{display:table-cell!important;vertical-align:middle!important}
+body:has(input[placeholder*="Search Team" i]) thead th{
+  padding:15px 16px!important;background:linear-gradient(180deg,#19110c,#15100c)!important;
+  color:var(--p27-admin-gold-soft)!important;font-size:.74rem!important;font-weight:800!important;
+  letter-spacing:.085em!important;text-transform:uppercase!important;text-align:left!important;
+  border-bottom:1px solid var(--p27-admin-line-strong)!important;white-space:nowrap!important;
+}
+body:has(input[placeholder*="Search Team" i]) tbody td{
+  padding:14px 16px!important;color:var(--p27-admin-muted)!important;font-size:.9rem!important;
+  border-bottom:1px solid rgba(217,164,65,.075)!important;white-space:nowrap!important;
+}
+body:has(input[placeholder*="Search Team" i]) tbody tr:hover td{background:rgba(217,164,65,.035)!important;color:var(--p27-admin-text)!important}
 body:has(input[placeholder*="Search Team" i]) tbody tr:last-child td{border-bottom:0!important}
-body:has(input[placeholder*="Search Team" i]) tbody tr:hover td{background:rgba(217,164,65,.035)!important;color:var(--admin-v2-ivory)!important}
+body:has(input[placeholder*="Search Team" i]) table a{color:var(--p27-admin-gold-soft)!important}
 
-/* Keep tab controls in a clean horizontal group when their parent is flex/grid */
-body:has(input[placeholder*="Search Team" i]) button + button{margin-left:8px!important}
-body:has(input[placeholder*="Search Team" i]) :is(h3,h4,[class*="section-title" i]){color:var(--admin-v2-gold-soft)!important}
+/* Make all data-table wrappers horizontally scrollable. */
+body:has(input[placeholder*="Search Team" i]) :is(.table-wrap,.admin-table-wrap,.data-table-wrap,[class*="table-container" i]){width:100%!important;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch!important}
 
-@media(max-width:900px){body:has(input[placeholder*="Search Team" i]) main,body:has(input[placeholder*="Search Team" i]) .admin-panel,body:has(input[placeholder*="Search Team" i]) .admin-dashboard{width:calc(100% - 24px)!important;padding-top:24px!important}body:has(input[placeholder*="Search Team" i]) table{min-width:760px!important}}
-@media(max-width:600px){body:has(input[placeholder*="admin email" i]) form{width:calc(100% - 22px)!important;padding:26px 20px 28px!important}body:has(input[placeholder*="admin email" i]) form button{min-height:62px!important}}
+/* Empty state / notices */
+body:has(input[placeholder*="Search Team" i]) :is(.empty-state,[class*="empty" i]){padding:34px 20px!important;color:var(--p27-admin-muted)!important;text-align:center!important}
+
+/* Spacing between sequential controls */
+body:has(input[placeholder*="Search Team" i]) button + button{margin-left:7px!important}
+body:has(input[placeholder*="Search Team" i]) :is(h3,h4,[class*="section-title" i]){color:var(--p27-admin-gold-soft)!important}
+
+@media(max-width:900px){
+  body:has(input[placeholder*="Search Team" i]) main,
+  body:has(input[placeholder*="Search Team" i]) .admin-panel,
+  body:has(input[placeholder*="Search Team" i]) .admin-dashboard{width:calc(100% - 24px)!important;padding-top:22px!important}
+  body:has(input[placeholder*="Search Team" i]) table{min-width:820px!important}
+}
+@media(max-width:640px){
+  body:has(input[placeholder*="admin email" i]) #root{padding:18px 10px!important}
+  body:has(input[placeholder*="admin email" i]) form{padding:28px 20px 30px!important}
+  body:has(input[placeholder*="admin email" i]) form button{min-height:70px!important;font-size:1.02rem!important}
+  body:has(input[placeholder*="Search Team" i]) main,
+  body:has(input[placeholder*="Search Team" i]) .admin-panel,
+  body:has(input[placeholder*="Search Team" i]) .admin-dashboard{width:calc(100% - 16px)!important}
+}
