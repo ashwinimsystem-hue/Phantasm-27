@@ -175,11 +175,21 @@ window.__VAAGAI_API_PREFIX = "/api";
   else load();
 })();
 
-/* Disabled events: Bachelor Samayal Workshop is removed from every rendered
+/* Disabled events: ALL Workshops are removed from every rendered
    event surface (event cards, registration options, admin filters, etc.).
-   The server-side canonical pricing rules also reject unknown/disabled events. */
+   The server-side canonical pricing rules also reject unknown/disabled events.
+   Workshops were cancelled — remove w1, w2, and any workshop-related content. */
 (function () {
-  const DISABLED = ['bachelor samayal', 'bachelor samayal workshop'];
+  const DISABLED = [
+    'bachelor samayal',
+    'bachelor samayal workshop',
+    'advanced cnc machining',
+    'advanced cnc machining and precision manufacturing',
+    'precision manufacturing',
+    'w1',
+    'w2',
+    'workshop',       // catches any generic "Workshop" category label rendered as event
+  ];
   const normalize = (value) => String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
   const matches = (value) => DISABLED.some((name) => normalize(value).includes(name));
 

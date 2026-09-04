@@ -17,9 +17,6 @@ const RULES = [
   { key: 'ansys simulation challenge', aliases: ['ansys simulation challenge', 'ansys simulation'], solo: 200 },
   { key: 'line follower', aliases: ['line follower', 'line follower robot'], solo: 300, team: 300 },
 
-  /* Workshops */
-  { key: 'advanced cnc machining and precision manufacturing', aliases: ['advanced cnc machining and precision manufacturing', 'advanced cnc machining', 'precision manufacturing'], solo: 200 },
-
   /* Non-technical events */
   { key: 'free fire', aliases: ['free fire', 'freefire'], solo: 100, team: 100 },
   { key: 'carrom', aliases: ['carrom', 'carrom tournament'], solo: 100, team: 100 },

@@ -18206,9 +18206,6 @@ const T5 = t => {
                 }, {
                     title: "Non-Technical",
                     color: "var(--color-secondary)"
-                }, {
-                    title: "Workshop",
-                    color: "#d946ef"
                 }].map(o => y.jsx("div", {
                     className: `highlight-section highlight-${o.title.toLowerCase().replace(" ","-")}`,
                     onClick: () => e(`/events?category=${o.title}`),
@@ -18240,7 +18237,7 @@ const T5 = t => {
                         color: "var(--color-text-muted)",
                         lineHeight: "1.8"
                     },
-                    children: "VAAGAI 2K26 is a national-level technical symposium by the Department of Mechanical Engineering, inspired by the rich heritage and engineering brilliance of ancient Tamil civilisation. VAAGAI serves as a convergence point for students, academicians, and industry enthusiasts to explore real-world engineering challenges. It unites tradition, innovation, and engineering excellence, providing a platform for students to showcase creativity and technical skills through workshops, technical events, design challenges, and hands-on competitions.Rooted in the core principles of Mechanical Engineering."
+                    children: "VAAGAI 2K26 is a national-level technical symposium by the Department of Mechanical Engineering, inspired by the rich heritage and engineering brilliance of ancient Tamil civilisation. VAAGAI serves as a convergence point for students, academicians, and industry enthusiasts to explore real-world engineering challenges. It unites tradition, innovation, and engineering excellence, providing a platform for students to showcase creativity and technical skills through technical events, design challenges, and hands-on competitions.Rooted in the core principles of Mechanical Engineering."
                 }), y.jsx("h2", {
                     style: {
                         color: "var(--color-secondary)",
@@ -18318,9 +18315,6 @@ wy = {
     "mehandi": "Decorate a hand with the most creative Mehandi design within the time limit. Judged on intricacy, symmetry and overall presentation.", /* NEW — ASSUME */
     "treasure-hunt": "Follow the clues, solve the puzzles and race to the final marker. Teams navigate a campus-wide hunt where speed, logic and teamwork decide the winners.", /* NEW — ASSUME */
 
-    /* ---------------- Workshop ---------------- */
-    "w1": "Advanced CNC Machining and Precision Manufacturing",
-    "w2": "A hands-on cooking workshop for bachelors — quick, budget-friendly meals with the minimum of equipment and cleanup." /* ASSUME — no PDF abstract */
 },
 
 Fa = [
@@ -18610,35 +18604,6 @@ Fa = [
         prize: { first: 300, second: 200 }                                 /* ASSUME — not in PDF */
     },
 
-    /* ---------------- Workshops ----------------
-       NOT in the PDF either — but kept, because they carry real details you
-       supplied (named resource person, company, fee). Delete this whole block
-       if VAAGAI is not running workshops.
-    */
-    {
-        id: "w1",
-        title: "Advanced CNC Machining and Precision Manufacturing",
-        category: "Workshop",
-        venue: "Seminar Hall",
-        date: "17-09-2026",                                                /* FIX: was 19 Feb 2026 */
-        time: "Full Day – Hands-on Training",
-        duration: 5,
-        modes: ["SOLO"],
-        fee: { SOLO: 200 },
-        resourcePerson: { name: "Mr. S. Rajeev", role: "Founder and Managing Director", company: "Tata Axis" }
-    },
-    {
-        id: "w2",
-        title: "Bachelor Samayal",
-        category: "Workshop",
-        venue: "Seminar Hall",
-        date: "18-09-2026",                                                /* FIX: was 20 Feb 2026 */
-        time: "1:30 PM – 4:30 PM",
-        duration: 3,
-        modes: ["SOLO"],
-        fee: { SOLO: 100 },
-        resourcePerson: { name: "Gokul Raj" }
-    }
 ],
 
     N5 = ({
@@ -18801,7 +18766,7 @@ Fa = [
                         marginBottom: "3rem",
                         flexWrap: "wrap"
                     },
-                    children: ["All", "Technical", "Non-Technical", "Workshop"].map(S => y.jsx("button", {
+                    children: ["All", "Technical", "Non-Technical"].map(S => y.jsx("button", {
                         onClick: () => {
                             k(S)
                         },
@@ -20753,7 +20718,7 @@ const {
             border: "1px solid var(--color-border)",
             color: "#fff",
             marginBottom: "1rem"
-        }, Ue = Z.filter(ue => ue.category === "Technical"), J = Z.filter(ue => ue.category === "Non-Technical"), ye = Z.filter(ue => ue.category === "Workshop"), Ne = ue => {
+        }, Ue = Z.filter(ue => ue.category === "Technical"), J = Z.filter(ue => ue.category === "Non-Technical"), Ne = ue => {
             const Le = O.selectedEvents.find(L => L.eventId === ue.id);
             return y.jsxs("div", {
                 className: `event-card reg-card${Le ? " selected" : ""}`,
@@ -21041,7 +21006,7 @@ const {
                             className: "event-tabs-wrapper reg-tabs",
                             children: y.jsx("div", {
                                 className: "reg-tabs-inner",
-                                children: ["All", "Technical", "Non-Technical", "Workshop"].map(ue => y.jsx("button", {
+                                children: ["All", "Technical", "Non-Technical"].map(ue => y.jsx("button", {
                                     type: "button",
                                     className: o === ue ? "reg-tab active" : "reg-tab",
                                     onClick: () => c(ue),
@@ -21063,14 +21028,6 @@ const {
                             }), y.jsx("div", {
                                 className: "Registercardsnon reg-cards",
                                 children: J.map(ue => Ne(ue))
-                            })]
-                        }), ye.length > 0 && y.jsxs(y.Fragment, {
-                            children: [y.jsx("h3", {
-                                className: "register-category-title",
-                                children: "Workshops"
-                            }), y.jsx("div", {
-                                className: "Registercards reg-cards",
-                                children: ye.map(ue => Ne(ue))
                             })]
                         }), y.jsx("p", {
                             className: "reg-hint",
