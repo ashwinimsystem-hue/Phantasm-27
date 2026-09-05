@@ -18488,13 +18488,12 @@ Fa = [
     },
 
     /* =====================================================================
-       NON-TECHNICAL — Page 8  Tagline: Play ✦ Connect ✦ Unwind ✦ Belong
+       NON-TECHNICAL — Page 8
        ===================================================================== */
     {
         id: "ipl-auction",
         title: "IPL Auction",
         category: "Non-Technical",
-        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "Seminar Hall",
         date: "18-09-2026",
         modes: ["TEAM"],
@@ -18506,7 +18505,6 @@ Fa = [
         id: "carrom",
         title: "Carrom",
         category: "Non-Technical",
-        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "Drawing Hall",
         date: "18-09-2026",
         modes: ["TEAM"],
@@ -18518,7 +18516,6 @@ Fa = [
         id: "chess",
         title: "Chess",
         category: "Non-Technical",
-        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "Mech Dept",
         date: "18-09-2026",
         modes: ["SOLO"],
@@ -18530,7 +18527,6 @@ Fa = [
         id: "free-fire",
         title: "Free Fire",
         category: "Non-Technical",
-        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "3rd Year Classroom",
         date: "18-09-2026",
         modes: ["TEAM"],
@@ -18542,7 +18538,6 @@ Fa = [
         id: "mehandi",
         title: "Mehendi",
         category: "Non-Technical",
-        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "Drawing Hall",
         date: "18-09-2026",
         time: "10:00 AM – 11:00 AM",
@@ -18567,7 +18562,6 @@ Fa = [
         id: "treasure-hunt",
         title: "Treasure Hunt",
         category: "Non-Technical",
-        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "Campus Wide",
         date: "18-09-2026",
         time: "11:30 AM – 01:00 PM",
