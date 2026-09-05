@@ -1,0 +1,144 @@
+/* ============================================================
+   Phantasm'27 — Event details & rules modal upgrade (step 5)
+   Adds:
+   • rules modal: date / venue / time meta strip + judging
+     criteria + labelled prize chips
+   • event card "View Details": meta rows + prize row
+   ============================================================ */
+
+/* ---- Rules modal: date / venue / time strip ---- */
+.rules-modal .rules-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem .6rem;
+    margin: .2rem 0 .4rem;
+    padding: 0;
+    list-style: none
+}
+
+.rules-modal .rules-meta p {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    margin: 0;
+    padding: .35rem .7rem;
+    font-size: .78rem;
+    letter-spacing: .02em;
+    color: var(--p27-ivory, #f4ead8);
+    background: rgba(217, 164, 65, .07);
+    border: 1px solid rgba(217, 164, 65, .22);
+    border-radius: 999px
+}
+
+/* ---- Prize chips (rules modal) ---- */
+.rules-modal .prize-breakdown {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin: .2rem 0 .6rem
+}
+
+.prize-chip {
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+    min-width: 104px;
+    padding: .6rem .9rem;
+    border-radius: 12px;
+    border: 1px solid rgba(217, 164, 65, .25);
+    background: rgba(217, 164, 65, .06)
+}
+
+.prize-chip .prize-label {
+    font-size: .68rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--p27-muted, #c9bda6)
+}
+
+.prize-chip .prize-amount {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--p27-gold-bright, #e8c887)
+}
+
+.prize-chip.prize-first {
+    border-color: rgba(217, 164, 65, .55);
+    background: rgba(217, 164, 65, .13)
+}
+
+.prize-chip.prize-first .prize-amount {
+    color: #ffd97a
+}
+
+/* ---- Event card: expanded "View Details" panel ---- */
+.event-details {
+    border-top: 1px dashed rgba(217, 164, 65, .25);
+    padding-top: .9rem
+}
+
+.event-details p {
+    margin: 0 0 .45rem;
+    font-size: .86rem;
+    line-height: 1.5;
+    color: var(--p27-muted, #c9bda6)
+}
+
+/* ---- Event card: compact prize row ---- */
+.prize-breakdown.prize-breakdown-card {
+    align-items: center;
+    gap: .45rem;
+    margin-top: .7rem
+}
+
+.prize-breakdown-card .prize-title {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--p27-gold-bright, #e8c887)
+}
+
+.prize-breakdown-card .prize-item {
+    display: inline-flex;
+    align-items: center;
+    padding: .28rem .65rem;
+    font-size: .78rem;
+    font-weight: 700;
+    border-radius: 999px;
+    border: 1px solid rgba(217, 164, 65, .28);
+    color: var(--p27-ivory, #f4ead8);
+    background: rgba(217, 164, 65, .08)
+}
+
+.prize-breakdown-card .prize-item.prize-first {
+    border-color: rgba(217, 164, 65, .6);
+    background: rgba(217, 164, 65, .16);
+    color: #ffd97a
+}
+
+/* ---- Mobile ---- */
+@media (max-width:480px) {
+    .rules-modal .rules-meta p {
+        font-size: .7rem;
+        padding: .3rem .55rem
+    }
+
+    .prize-chip {
+        min-width: 88px;
+        padding: .5rem .7rem
+    }
+
+    .prize-chip .prize-amount {
+        font-size: .95rem
+    }
+
+    .event-details p {
+        font-size: .8rem
+    }
+
+    .prize-breakdown-card .prize-item {
+        font-size: .72rem;
+        padding: .24rem .55rem
+    }
+}

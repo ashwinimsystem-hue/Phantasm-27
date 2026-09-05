@@ -18325,7 +18325,7 @@ Fa = [
         id: "paper-presentation",
         title: "Paper Presentation",
         category: "Technical",
-        venue: "3rd Year Classroom",                                     /* PDF: "3rd year classroom" */
+        venue: "3rd Year Classroom, Mech Block",                                     /* PDF: "3rd year classroom" */
         date: "17-09-2026",                                              /* PDF */
         modes: ["SOLO", "TEAM"],
         fee: { SOLO: 200, TEAM: 400 },                                   /* PDF */
@@ -18352,7 +18352,7 @@ Fa = [
         id: "ANSYS Simulation Challenge",
         title: "ANSYS Simulation Challenge",
         category: "Technical",
-        venue: "CAD Lab",
+        venue: "CAD Lab, Mech Block",
         date: "17-09-2026",
         modes: ["SOLO"],
         fee: { SOLO: 200 },
@@ -18375,7 +18375,7 @@ Fa = [
         id: "CAD Modeling",
         title: "CAD Modeling",
         category: "Technical",
-        venue: "CAD Lab",
+        venue: "CAD Lab, Mech Block",
         date: "17-09-2026",
         duration: 1.5,                                                     /* PDF: 90 minutes */
         time: "90 minutes",
@@ -18429,7 +18429,7 @@ Fa = [
         id: "Line Follower",
         title: "Line Follower",
         category: "Technical",
-        venue: "3rd Year Classroom",
+        venue: "3rd Year Classroom, Mech Block",
         date: "18-09-2026",
         modes: ["TEAM"],
         fee: { TEAM: 300 },                                                /* PDF: flat 300 */
@@ -18456,7 +18456,7 @@ Fa = [
         id: "Technical Quiz",
         title: "Technical Quiz",
         category: "Technical",
-        venue: "Smart Class",                                              /* PDF */
+        venue: "Smart Classroom",                                              /* PDF */
         date: "18-09-2026",
         modes: ["TEAM"],
         fee: { TEAM: 100 },                                                /* PDF: 100 */
@@ -18479,7 +18479,7 @@ Fa = [
         id: "Water Rocketry",
         title: "Water Rocketry",
         category: "Technical",
-        venue: "Ground",                                                   /* PDF */
+        venue: "Main Ground",                                                   /* PDF */
         date: "18-09-2026",
         modes: ["SOLO", "TEAM"],
         fee: { SOLO: 200, TEAM: 250 },                                     /* PDF */
@@ -18511,6 +18511,23 @@ Fa = [
         modes: ["TEAM"],
         fee: { TEAM: 100 },                                                /* FIX: PDF says 100 per team of 4, you had 150 */
         maxMembers: 4,                                                     /* PDF */
+        rules: [
+            "Team of up to 4 members; individual entries are not allowed.",
+            "Each team gets a fixed virtual purse — the amount is announced at the venue.",
+            "A player list with base prices is displayed; bidding starts from the base price.",
+            "Bids must rise in the increments announced by the auctioneer.",
+            "Once the hammer falls, the sale is final — no re-bidding or player trades.",
+            "Squads must satisfy the squad rules announced before the auction (minimum squad size, role coverage).",
+            "Teams that exhaust their purse cannot bid further.",
+            "Unsporting behaviour or arguing with the auctioneer leads to disqualification.",
+            "The auctioneer's decision is final."
+        ],
+        judgingCriteria: [
+            "Squad balance: coverage of every required role.",
+            "Purse management: value secured per rupee spent.",
+            "Bidding strategy: punts, timely exits from bidding wars and smart steals.",
+            "Compliance with the squad rules and auction etiquette."
+        ],
         prize: { first: 500 }                                              /* PDF total prize 500 */
     },
     {
@@ -18522,28 +18539,76 @@ Fa = [
         modes: ["TEAM"],
         fee: { TEAM: 100 },                                                /* PDF: 100 per team of 2 */
         maxMembers: 2,                                                     /* PDF */
+        rules: [
+            "Team of 2 members; players of a team strike alternately.",
+            "Knockout format — the draw and board count are announced at the venue.",
+            "Standard carrom rules apply for fouls, due coins and the queen.",
+            "The queen must be covered in the next stroke; an uncovered queen returns to the centre.",
+            "The striker must be flicked with one hand only.",
+            "Intentionally disturbing the board or coins is a foul.",
+            "Each board is time-capped; the team leading on coins when time expires takes the board.",
+            "The referee's decision is final."
+        ],
+        judgingCriteria: [
+            "Boards won: first team to clear its coins wins the board.",
+            "Queen cover: successful queen covers earn the board bonus.",
+            "Discipline: fewer fouls and penalties across the match.",
+            "Total points across boards in case of a tie."
+        ],
         prize: { first: 400 }
     },
     {
         id: "chess",
         title: "Chess",
         category: "Non-Technical",
-        venue: "Mech Dept",
+        venue: "Mechanical Department Block",
         date: "18-09-2026",
         modes: ["SOLO"],
         fee: { SOLO: 50 },                                                 /* PDF: 50 per head */
         maxMembers: 1,
+        rules: [
+            "Individual event — one participant per board.",
+            "Format (Swiss or knockout) and the time control are announced at the venue.",
+            "Touch-move rule applies: a touched piece must be moved if it has a legal move.",
+            "Players must press the clock after every move.",
+            "Electronic gadgets and outside assistance are strictly prohibited.",
+            "Reporting late by more than 15 minutes forfeits the game.",
+            "Standard FIDE rules apply for three-fold repetition, stalemate and draws.",
+            "The arbiter's decision is final."
+        ],
+        judgingCriteria: [
+            "Game results: standard scoring — win 1, draw ½, loss 0.",
+            "Progression through the rounds / points table.",
+            "Tie-breaks: Buchholz, then head-to-head result.",
+            "Clock discipline and sportsmanship."
+        ],
         prize: { first: 300 }
     },
     {
         id: "free-fire",
         title: "Free Fire",
         category: "Non-Technical",
-        venue: "3rd Year Classroom",
+        venue: "3rd Year Classroom, Mech Block",
         date: "18-09-2026",
         modes: ["TEAM"],
         fee: { TEAM: 100 },                                                /* PDF: 100 per squad */
         maxMembers: 4,                                                     /* KEEP: squad size not stated in PDF */
+        rules: [
+            "Squad event — team of up to 4 members.",
+            "Bring your own device, account and network; connectivity is your responsibility.",
+            "Mobile devices only — emulators are prohibited.",
+            "No hacks, panels or third-party apps; any modification leads to immediate disqualification.",
+            "Teaming with rival squads disqualifies every squad involved.",
+            "Character skills and pets follow the default tournament settings announced at the venue.",
+            "Room ID and password are shared 10 minutes before the match; late entries are forfeited.",
+            "The coordinator's decision is final."
+        ],
+        judgingCriteria: [
+            "Placement points in each match.",
+            "Total kills across all matches.",
+            "Overall points tally (placement + kills).",
+            "Fair play record — free of warnings and penalties."
+        ],
         prize: { first: 500 }
     },
     {
@@ -18627,15 +18692,68 @@ Fa = [
                 children: [y.jsx("div", {
                     className: "rules-header",
                     children: y.jsxs("h2", {
-                        children: [n.title, " – Rules"]
+                        children: [n.title, " – Rules & Details"]
                     })
                 }), y.jsxs("div", {
                     className: "rules-content",
-                    children: [y.jsx("ul", {
+                    children: [y.jsxs("div", {
+                        className: "rules-meta",
+                        children: [y.jsxs("p", {
+                            children: ["📅 ", n.date]
+                        }), y.jsxs("p", {
+                            children: ["📍 ", n.venue]
+                        }), n.time && y.jsxs("p", {
+                            children: ["🕒 ", n.time]
+                        })]
+                    }), y.jsx("h3", {
+                        children: "Rules"
+                    }), y.jsx("ul", {
                         children: n.rules?.map((s, o) => y.jsx("li", {
                             children: s
                         }, o))
-                    }), n.judgingCriteria && n.judgingCriteria.length > 0 && y.jsx(y.Fragment, {})]
+                    }), n.judgingCriteria && n.judgingCriteria.length > 0 && y.jsxs(y.Fragment, {
+                        children: [y.jsx("h3", {
+                            children: "Judging Criteria"
+                        }), y.jsx("ul", {
+                            children: n.judgingCriteria.map((s, o) => y.jsx("li", {
+                                children: s
+                            }, o))
+                        })]
+                    }), n.prize && y.jsxs(y.Fragment, {
+                        children: [y.jsx("h3", {
+                            children: "Prize Amount"
+                        }), y.jsxs("div", {
+                            className: "prize-breakdown",
+                            children: [n.prize.first && y.jsxs("div", {
+                                className: "prize-chip prize-first",
+                                children: [y.jsx("span", {
+                                    className: "prize-label",
+                                    children: "🥇 1st"
+                                }), y.jsx("span", {
+                                    className: "prize-amount",
+                                    children: ["₹", n.prize.first]
+                                })]
+                            }), n.prize.second && y.jsxs("div", {
+                                className: "prize-chip prize-second",
+                                children: [y.jsx("span", {
+                                    className: "prize-label",
+                                    children: "🥈 2nd"
+                                }), y.jsx("span", {
+                                    className: "prize-amount",
+                                    children: ["₹", n.prize.second]
+                                })]
+                            }), n.prize.third && y.jsxs("div", {
+                                className: "prize-chip prize-third",
+                                children: [y.jsx("span", {
+                                    className: "prize-label",
+                                    children: "🥉 3rd"
+                                }), y.jsx("span", {
+                                    className: "prize-amount",
+                                    children: ["₹", n.prize.third]
+                                })]
+                            })]
+                        })]
+                    })]
                 }), y.jsx("div", {
                     className: "rules-footer",
                     children: y.jsx("button", {
@@ -18704,12 +18822,31 @@ Fa = [
                 style: {
                     marginTop: "1rem"
                 },
-                children: [t.time && y.jsxs("p", {
-                    children: ["Time: ", t.time]
+                children: [y.jsxs("p", {
+                    children: ["📅 Date: ", t.date]
+                }), y.jsxs("p", {
+                    children: ["📍 Venue: ", t.venue]
+                }), t.time && y.jsxs("p", {
+                    children: ["🕒 Time: ", t.time]
+                }), t.modes?.length > 0 && y.jsxs("p", {
+                    children: ["Participation: ", t.modes.map(f => f === "SOLO" ? "Individual" : "Team").join(" or ")]
                 }), t.maxMembers && y.jsxs("p", {
-                    children: ["Team size: up to ", t.maxMembers]
-                }), t.prize && y.jsxs("p", {
-                    children: ["Prize: ₹", t.prize.first || 0, t.prize.second ? ` / ₹${t.prize.second}` : ""]
+                    children: ["Team size: up to ", t.maxMembers, t.minMembers ? " (min " + t.minMembers + ")" : ""]
+                }), t.prize && y.jsxs("div", {
+                    className: "prize-breakdown prize-breakdown-card",
+                    children: [y.jsx("span", {
+                        className: "prize-title",
+                        children: "🏆 Prizes:"
+                    }), t.prize.first && y.jsxs("span", {
+                        className: "prize-item prize-first",
+                        children: ["1st ₹", t.prize.first]
+                    }), t.prize.second && y.jsxs("span", {
+                        className: "prize-item prize-second",
+                        children: ["2nd ₹", t.prize.second]
+                    }), t.prize.third && y.jsxs("span", {
+                        className: "prize-item prize-third",
+                        children: ["3rd ₹", t.prize.third]
+                    })]
                 })]
             })]
         })
