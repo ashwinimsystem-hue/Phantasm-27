@@ -37510,6 +37510,32 @@ Thank you for your patience and continued support.
                             onClick: () => Se(X.id),
                             children: "Undo"
                         }), y.jsx("button", {
+                            className: "screenshot-btn",
+                            title: "Open the transaction screenshot uploaded for this registration",
+                            onClick: async () => {
+                                try {
+                                    const ot = window.open("about:blank", "_blank");
+                                    if (!ot) {
+                                        alert("Please allow pop-ups to view the transaction screenshot.");
+                                        return
+                                    }
+                                    const je = await fetch(`${on}/api/admin/screenshot/${X.id}`, {
+                                        headers: VaagaiAdminHeaders()
+                                    });
+                                    if (!je.ok) {
+                                        const Xe = await je.json().catch(() => ({}));
+                                        ot.close(), alert(Xe.message || "Transaction screenshot is not available.");
+                                        return
+                                    }
+                                    const Xe = await je.blob(), Ie = URL.createObjectURL(Xe);
+                                    ot.location.href = Ie;
+                                    setTimeout(() => URL.revokeObjectURL(Ie), 60000)
+                                } catch (je) {
+                                    console.error("SCREENSHOT VIEW ERROR", je), alert("Unable to load the transaction screenshot.")
+                                }
+                            },
+                            children: "🖼 View Screenshot"
+                        }), y.jsx("button", {
                             className: "verify-btn",
                             onClick: () => {
                                 q(X.id), Le(X)
