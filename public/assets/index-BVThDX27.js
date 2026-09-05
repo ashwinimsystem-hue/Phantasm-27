@@ -18295,243 +18295,234 @@ const T5 = t => {
 
 wy = {
     /* ---------------- Technical ---------------- */
-    "paper-presentation": "A platform for students to present innovative ideas, research insights, and real-world engineering applications.",
-    "ANSYS Simulation Challenge": "Solve a given engineering problem using ANSYS, testing modelling, meshing, boundary conditions and result interpretation skills.",
-    "CAD Modeling": "Showcase your CAD modelling skills in this individual design challenge. Participants will be provided with a mechanical component/drawing and must recreate it accurately using CAD software within the given time. The event tests precision, modelling skills, design understanding, and time management.",
-    "Glider Competition": "Ready to take your creativity to new heights? Glider competition challenges participants to build a glider from limited materials, focusing on stability and distance. It tests crafting skills, flight principles, creativity, strategy, and teamwork to turn simple materials into high-performing designs.",
-    "Line Follower": "Teams build an autonomous robot that follows a black line track, competing for the fastest completion time.",
-    "Technical Quiz": "A quiz designed to test participants knowledge in mechanical engineering disciplines. It confronts the level of your understanding of the key principles, technologies and applications of the Mechanical Field.",
-    "Water Rocketry": "Design and build a rocket powered by pressurised water using bottles or plastic containers, testing creativity and hydrodynamic design skills.",
+    "paper-presentation": "Platform for students to present innovative ideas, research insights, and real-world engineering applications.",
+    "ANSYS Simulation Challenge": "Individual problem-solving challenge testing modeling, meshing, boundary conditions, and result interpretation skills.",
+    "CAD Modeling": "Individual challenge to recreate a mechanical component/drawing accurately using CAD software within the time limit.",
+    "Glider Competition": "Challenge to build a glider focusing on flight principles, stability, and range performance.",
+    "Line Follower": "Build an autonomous robot to navigate a black line track with curves, zig-zags, and 90° turns for the fastest time.",
+    "Technical Quiz": "Tests core mechanical engineering knowledge, principles, technologies, and applications.",
+    "Water Rocketry": "Design and build a water-pressurized rocket using plastic bottles, testing creativity and hydrodynamic design.",
 
     /* ---------------- Non-Technical ---------------- */
-    /* The PDF lists these four by fee and prize only — no abstract. The four
-       descriptions below are MINE, written to match the tone of the others.
-       Rewrite freely; nothing in the PDF constrains them. */
+    /* The PDF lists these four by fee and prize only — no abstract. */
 
     "ipl-auction": "Bid for players against rival teams with a limited purse. Value assessment, negotiation and a bit of nerve decide your squad.",
     "carrom": "A classic strike-and-pocket showdown. Cue control, angle reading and a steady hand under knockout pressure.",
     "chess": "Slow-thinking tactics over a fixed time control. Opening preparation, calculation and composure in time trouble.",
     "free-fire": "Squad-based battle royale on mobile. Rotate, loot and place your team — last circle standing takes it.",
-    "mehandi": "Decorate a hand with the most creative Mehandi design within the time limit. Judged on intricacy, symmetry and overall presentation.", /* NEW — ASSUME */
-    "treasure-hunt": "Follow the clues, solve the puzzles and race to the final marker. Teams navigate a campus-wide hunt where speed, logic and teamwork decide the winners.", /* NEW — ASSUME */
+    "mehandi": "Decorate a hand with the most creative Mehandi design within the time limit. Judged on intricacy, symmetry and overall presentation.",
+    "treasure-hunt": "Follow the clues, solve the puzzles and race to the final marker. Teams navigate a campus-wide hunt where speed, logic and teamwork decide the winners.",
 
 },
 
 Fa = [
     /* =====================================================================
-       TECHNICAL — all seven fully specified by the PDF
+       TECHNICAL — updated per user spec 05-Sep-2026
        ===================================================================== */
     {
         id: "paper-presentation",
         title: "Paper Presentation",
         category: "Technical",
-        venue: "3rd Year Classroom",                                     /* PDF: "3rd year classroom" */
-        date: "17-09-2026",                                              /* PDF */
-        modes: ["SOLO", "TEAM"],
-        fee: { SOLO: 200, TEAM: 400 },                                   /* PDF */
-        maxMembers: 4,                                                   /* PDF */
-        rules: [
-            "Topics must be related to engineering, technology, or innovation.",
-            "Max of 4 participants per team.",
-            "Max slides up to 8 – 10 (excluding topic and thank you slides).",
-            "Presentation time: 10 minutes for presentation + 5 minutes for Q&A.",
-            "Use of IEEE format is recommended.",
-            "Only original work is allowed — plagiarism leads to disqualification.",
-            "Papers must be submitted by the specified deadline.",
-            "All team members should contribute to the presentation.",      /* PDF, was missing */
-            "Participants must carry their college ID card."
-        ],
-        judgingCriteria: [
-            "Originality, technical depth, and relevance.",
-            "Clarity, visuals, and delivery.",
-            "Q&A performance."
-        ],
-        prize: { first: 2000, second: 1500, third: 1000 }                 /* PDF */
-    },
-    {
-        id: "ANSYS Simulation Challenge",
-        title: "ANSYS Simulation Challenge",
-        category: "Technical",
-        venue: "CAD Lab",
+        tagline: "Ideas • Research • Impact • Beyond",
+        venue: "3rd Year Classroom",
         date: "17-09-2026",
-        modes: ["SOLO"],
-        fee: { SOLO: 200 },
-        maxMembers: 1,                                                     /* FIX: was absent; individual-only per PDF */
+        modes: ["SOLO", "TEAM"],
+        fee: { SOLO: 200, TEAM: 400 },
+        maxMembers: 4,
         rules: [
-            "Individual participation only.",
-            "ANSYS Workbench / Fluent will be provided at the venue.",
-            "Problem statement given on the spot; pre-prepared files not allowed.",
-            "Must be completed and submitted within the given time.",
-            "Participants must work independently — no unauthorized assistance."
+            "Topics must relate to engineering, technology, or innovation.",
+            "Maximum 4 participants per team.",
+            "Maximum 12 slides (excluding title and thank you slides).",
+            "Time: 10 minutes presentation + 5 minutes Q&A.",
+            "IEEE format recommended; original work only (plagiarism = disqualification)."
         ],
         judgingCriteria: [
-            "Simulation setup: geometry, material properties, mesh, boundary conditions.",
-            "Technical accuracy and result interpretation.",
-            "Problem-solving approach and time management."
+            "Originality & technical depth",
+            "Clarity & delivery",
+            "Q&A performance"
         ],
-        prize: { first: 1500, second: 1000, third: 500 }
+        prize: { first: 5000, second: 3000, third: 2000 }
     },
     {
         id: "CAD Modeling",
         title: "CAD Modeling",
         category: "Technical",
-        venue: "CAD Lab",
+        tagline: "Design • Model • Innovate",
+        venue: "Cad lab",
         date: "17-09-2026",
-        duration: 1.5,                                                     /* PDF: 90 minutes */
+        duration: 1.5,
         time: "90 minutes",
         modes: ["SOLO"],
         fee: { SOLO: 200 },
         maxMembers: 1,
         rules: [
-            "Individual participation only.",
-            "The total event duration is 1 hour 30 minutes (90 minutes).",
-            "Participants must model the given component/design within the allotted time.",
-            "CATIA and SOLIDWORKS are the permitted software.",
-            "To use any other software, inform the coordinators before the event so arrangements can be made.",
-            "Electronic gadgets are strictly prohibited during the event.",
-            "Any form of malpractice or unfair assistance will lead to disqualification.",
-            "If the model is not completed in time, whatever is finished at the cutoff is what gets evaluated."
+            "Duration: 1 hour 30 minutes (90 minutes).",
+            "Software permitted: CATIA and SOLIDWORKS (other software requires prior coordinator approval).",
+            "Electronic gadgets strictly prohibited.",
+            "Partial models evaluated if not finished in time."
         ],
         judgingCriteria: [
-            "Mass properties: accuracy of computed volume, mass and centre of gravity versus the reference.",
-            "Dimensional accuracy: how closely modelled dimensions match the given drawing.",
-            "Model geometry: correctness of overall shape and form as per the design.",
-            "Feature accuracy: proper use of features (extrudes, fillets, patterns) to match design intent.",
-            "Model completion: percentage of the model finished within the given time."
+            "Mass properties (volume, mass, CG)",
+            "Dimensional accuracy",
+            "Model geometry",
+            "Feature accuracy",
+            "Percentage of completion"
         ],
-        prize: { first: 1500, second: 1000, third: 500 }
+        prize: { first: 3000, second: 2000, third: 1000 }
     },
     {
-        id: "Glider Competition",
-        title: "Glider Competition",
+        id: "ANSYS Simulation Challenge",
+        title: "ANSYS Simulation Challenge",
         category: "Technical",
-        venue: "Indoor Stadium",                                           /* PDF — was "Mech-dept"-style guesses before */
-        date: "18-09-2026",                                                /* PDF */
-        modes: ["SOLO", "TEAM"],
-        fee: { SOLO: 200, TEAM: 250 },                                     /* PDF: 200 single / 250 doubles */
-        maxMembers: 2,                                                     /* PDF */
+        tagline: "Model • Analyze • Solve • Innovate",
+        venue: "Cad lab",
+        date: "17-09-2026",
+        modes: ["SOLO"],
+        fee: { SOLO: 200 },
+        maxMembers: 1,
         rules: [
-            "Open to all engineering students.",
-            "Each team may have up to 2 members.",
-            "Prefabricated gliders only — on-spot fabrication is not allowed.",
-            "Specifications (mandatory): wingspan max 600 mm, length max 450 mm, weight max 200 g.",
-            "Allowed materials: any wood, foam board / depron, cardboard, thermocol.",
-            "Any other material needs the event coordinators' approval."
+            "Individual participation only — teams not allowed. Max 1 participant.",
+            "Software provided: ANSYS Workbench / Fluent.",
+            "Problem statement given on the spot; no pre-prepared files allowed.",
+            "Must work independently within allotted time."
         ],
         judgingCriteria: [
-            "Range: maximum valid horizontal distance wins; only stable, controlled flights count (stall, dive, loop or crash = disqualified).",
-            "Design: stability, aerodynamic efficiency, structural strength, CG placement and safety.",
-            "Optimisation & presentation: efficient material use, lightweight design, structural optimisation, clear technical explanation."
+            "Simulation setup (geometry, mesh, boundary conditions)",
+            "Technical accuracy & result interpretation",
+            "Problem-solving approach"
         ],
-        prize: { first: 1500, second: 1000, third: 500 }
-    },
-    {
-        id: "Line Follower",
-        title: "Line Follower",
-        category: "Technical",
-        venue: "3rd Year Classroom",
-        date: "18-09-2026",
-        modes: ["TEAM"],
-        fee: { TEAM: 300 },                                                /* PDF: flat 300 */
-        maxMembers: 3,                                                     /* PDF: 2–3 members */
-        minMembers: 2,
-        rules: [
-            "Team of 2–3 members; inter-department and inter-college teams allowed.",
-            "Robot must fit within 20 × 20 × 20 cm and weigh ≤ 2 kg.",
-            "Onboard power only (12–15 V); strictly autonomous — no remote, Bluetooth or Wi-Fi control.",
-            "Track: black line on white background with curves, zig-zags and 90° turns.",
-            "Maximum 2 minutes calibration; up to 3 restarts allowed (stopwatch keeps running).",
-            "Touching the robot during a run adds a +5 second penalty.",
-            "Ready-made kits (e.g. Lego Mindstorms) are prohibited — build from basic components.",
-            "Causing damage to the arena leads to disqualification."
-        ],
-        judgingCriteria: [
-            "Completion time: fastest run wins.",
-            "Accuracy: staying on track with minimal deviation.",
-            "Penalties: restarts and touch penalties factored into the final time."
-        ],
-        prize: { first: 2000, second: 1500, third: 1000 }
+        prize: { first: 3000, second: 2000, third: 1000 }
     },
     {
         id: "Technical Quiz",
         title: "Technical Quiz",
         category: "Technical",
-        venue: "Smart Class",                                              /* PDF */
+        tagline: "Know ✦ Analyze ✦ Apply ✦ Excel",
+        venue: "Smart class",
         date: "18-09-2026",
         modes: ["TEAM"],
-        fee: { TEAM: 100 },                                                /* PDF: 100 */
-        maxMembers: 3,                                                     /* PDF */
+        fee: { TEAM: 100 },
+        maxMembers: 4,
         rules: [
-            "Maximum of 3 participants per team.",
-            "Multiple rounds of MCQs in physical mode.",
-            "Questions cover general mechanical engineering topics, technical trivia and current trends.",
-            "Electronic gadgets are prohibited.",
-            "Scoring is based on correct answers."
+            "Time-limited questions covering mechanical engineering topics, technical trivia, and current trends.",
+            "Electronic gadgets prohibited."
         ],
         judgingCriteria: [
-            "Accuracy: number of correct answers.",
-            "Speed: quickness in responding within time limits.",
-            "Consistency: performance across all rounds."
+            "Accuracy (correct answers)",
+            "Speed (response time)",
+            "Consistency across rounds"
         ],
-        prize: { first: 1000, second: 750, third: 500 }
+        prize: { first: 2000, second: 1500, third: 1000 }
     },
     {
         id: "Water Rocketry",
         title: "Water Rocketry",
         category: "Technical",
-        venue: "Ground",                                                   /* PDF */
+        tagline: "Pressure • Launch • Reach • Explore",
+        venue: "Ground",
         date: "18-09-2026",
         modes: ["SOLO", "TEAM"],
-        fee: { SOLO: 200, TEAM: 250 },                                     /* PDF */
+        fee: { SOLO: 200, TEAM: 250 },
         maxMembers: 2,
         rules: [
             "Team size: up to 2 members.",
-            "Only water is allowed as fuel — no additives or propellants.",
-            "Rocket capacity: 1 litre or less.",
-            "Rockets must be fully student-built; pre-made ones are prohibited.",
-            "Teams may bring their own launcher (it will be inspected) or use the one provided."
+            "Fuel: Water only (no additives/propellants). Rocket capacity ≤ 1 Liter.",
+            "Fully student-built (pre-made rockets prohibited).",
+            "Teams may use provided launcher or bring their own (subject to inspection)."
         ],
         judgingCriteria: [
-            "Design: structural quality, creativity, stability.",
-            "Distance: maximum horizontal distance achieved.",
-            "Accuracy: closeness to the designated target."
+            "Design (structure & stability)",
+            "Distance (max horizontal range)",
+            "Accuracy (closeness to target)"
         ],
-        prize: { first: 1000, second: 750, third: 500 }
+        prize: { first: 2500, second: 1500, third: 1000 }
+    },
+    {
+        id: "Glider Competition",
+        title: "Glider Competition",
+        category: "Technical",
+        tagline: "Design • Build • Test • Fly • Excel",
+        venue: "Indoor Stadium",
+        date: "18-09-2026",
+        modes: ["SOLO", "TEAM"],
+        fee: { SOLO: 200, TEAM: 250 },
+        maxMembers: 2,
+        rules: [
+            "Open to all engineering students; max 2 members per team.",
+            "Prefabricated gliders allowed; no on-spot fabrication.",
+            "Mandatory Specs: Wingspan ≤ 600 mm, Length ≤ 450 mm, Weight ≤ 200 g.",
+            "Allowed materials: Wood, foam board/depron, cardboard, thermocol (others require approval)."
+        ],
+        judgingCriteria: [
+            "Range performance (valid horizontal flight; stall/crash = DQ)",
+            "Design evaluation (aerodynamics, CG placement)",
+            "Technical presentation & optimization"
+        ],
+        prize: { first: 3000, second: 2000, third: 1000 }
+    },
+    {
+        id: "Line Follower",
+        title: "Line Follower",
+        category: "Technical",
+        tagline: "Track ✦ Think ✦ Build ✦ Race",
+        venue: "3rd year classroom",
+        date: "18-09-2026",
+        modes: ["TEAM"],
+        fee: { TEAM: 300 },
+        maxMembers: 3,
+        minMembers: 2,
+        rules: [
+            "Team size: 2–3 members (inter-department / inter-college allowed).",
+            "Robot Specs: Fits within 20×20×20 cm, weight ≤ 2 kg.",
+            "Onboard power only (12–15V); strictly autonomous (no remote/Bluetooth/Wi-Fi).",
+            "Max 2 mins calibration time; up to 3 restarts allowed (timer runs continuously).",
+            "Touching robot during run = +5 second penalty.",
+            "Ready-made kits (e.g., Lego Mindstorms) prohibited."
+        ],
+        judgingCriteria: [
+            "Completion time",
+            "Track accuracy",
+            "Penalty adjustments"
+        ],
+        prize: { first: 4000, second: 3000, third: 2000 }
     },
 
     /* =====================================================================
-       NON-TECHNICAL — the four the PDF prices, plus your two additions
+       NON-TECHNICAL — Page 8  Tagline: Play ✦ Connect ✦ Unwind ✦ Belong
        ===================================================================== */
     {
         id: "ipl-auction",
         title: "IPL Auction",
         category: "Non-Technical",
-        venue: "Seminar Hall",                                             /* KEEP */
-        date: "18-09-2026",                                                /* FIX: was 21st Feb (stale Vaagai date) — ASSUME, PDF gives no non-tech date */
+        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
+        venue: "Seminar Hall",
+        date: "18-09-2026",
         modes: ["TEAM"],
-        fee: { TEAM: 100 },                                                /* FIX: PDF says 100 per team of 4, you had 150 */
-        maxMembers: 4,                                                     /* PDF */
-        prize: { first: 500 }                                              /* PDF total prize 500 */
+        fee: { TEAM: 100 },
+        maxMembers: 4,
+        prize: { first: 500 }
     },
     {
         id: "carrom",
         title: "Carrom",
         category: "Non-Technical",
+        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "Drawing Hall",
         date: "18-09-2026",
         modes: ["TEAM"],
-        fee: { TEAM: 100 },                                                /* PDF: 100 per team of 2 */
-        maxMembers: 2,                                                     /* PDF */
+        fee: { TEAM: 100 },
+        maxMembers: 2,
         prize: { first: 400 }
     },
     {
         id: "chess",
         title: "Chess",
         category: "Non-Technical",
+        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "Mech Dept",
         date: "18-09-2026",
         modes: ["SOLO"],
-        fee: { SOLO: 50 },                                                 /* PDF: 50 per head */
+        fee: { SOLO: 50 },
         maxMembers: 1,
         prize: { first: 300 }
     },
@@ -18539,54 +18530,51 @@ Fa = [
         id: "free-fire",
         title: "Free Fire",
         category: "Non-Technical",
+        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "3rd Year Classroom",
         date: "18-09-2026",
         modes: ["TEAM"],
-        fee: { TEAM: 100 },                                                /* PDF: 100 per squad */
-        maxMembers: 4,                                                     /* KEEP: squad size not stated in PDF */
+        fee: { TEAM: 100 },
+        maxMembers: 4,
         prize: { first: 500 }
     },
     {
-        /* NEW — requested by you. No PDF entry, so fee/timing are ASSUME. */
         id: "mehandi",
-        title: "Mehandi",
+        title: "Mehendi",
         category: "Non-Technical",
+        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "Drawing Hall",
         date: "18-09-2026",
-        time: "10:00 AM – 11:00 AM",                                       /* ASSUME */
+        time: "10:00 AM – 11:00 AM",
         duration: 1,
-        genderRestriction: "GIRLS",                                        /* KEEP: from your existing entry */
         modes: ["SOLO"],
         fee: { SOLO: 30 },
         maxMembers: 1,
         rules: [
-            "Girls only.",
-            "One participant per hand; the model must be a fellow student, not a mannequin.",
-            "Bring your own mehandi cone if you prefer a particular cone — a basic one is provided.",
-            "Tie, gloves or stencils are not allowed.",
-            "Design must be complete within the time limit; late hands are judged as-is.",
-            "Judges' decision is final."
+            "Individual registration.",
+            "Decorate a hand with the most creative Mehandi design within the time limit.",
+            "Judged on intricacy, symmetry and overall presentation."
         ],
         judgingCriteria: [
-            "Intricacy and detailing of the design.",
-            "Symmetry and balance across the hand.",
-            "Creativity and originality.",
-            "Neatness and clarity of the final pattern."
+            "Intricacy and detailing of the design",
+            "Symmetry and balance across the hand",
+            "Creativity and originality",
+            "Neatness and clarity of the final pattern"
         ],
-        prize: { first: 250, second: 150 }                                 /* ASSUME — not in PDF */
+        prize: { first: 250, second: 150 }
     },
     {
-        /* NEW — requested by you. No PDF entry, so every value is ASSUME. */
         id: "treasure-hunt",
         title: "Treasure Hunt",
         category: "Non-Technical",
+        tagline: "Play ✦ Connect ✦ Unwind ✦ Belong",
         venue: "Campus Wide",
         date: "18-09-2026",
-        time: "11:30 AM – 01:00 PM",                                       /* ASSUME */
+        time: "11:30 AM – 01:00 PM",
         duration: 1.5,
         modes: ["TEAM"],
-        fee: { TEAM: 100 },                                                /* ASSUME */
-        maxMembers: 4,                                                     /* ASSUME */
+        fee: { TEAM: 100 },
+        maxMembers: 4,
         rules: [
             "Team of up to 4 members.",
             "Teams receive the first clue at the start point; each clue leads to the next.",
@@ -18597,11 +18585,11 @@ Fa = [
             "Judges' decision is final."
         ],
         judgingCriteria: [
-            "Completion time to the final marker.",
-            "All checkpoints cleared and signed.",
-            "Penalty time added for hints taken."
+            "Completion time to the final marker",
+            "All checkpoints cleared and signed",
+            "Penalty time added for hints taken"
         ],
-        prize: { first: 300, second: 200 }                                 /* ASSUME — not in PDF */
+        prize: { first: 300, second: 200 }
     },
 
 ],
@@ -18631,11 +18619,20 @@ Fa = [
                     })
                 }), y.jsxs("div", {
                     className: "rules-content",
-                    children: [y.jsx("ul", {
+                    children: [n.tagline && y.jsx("p", {
+                        style: { fontStyle: "italic", opacity: .85, marginBottom: ".75rem", fontSize: ".9rem" },
+                        children: n.tagline
+                    }), y.jsx("ul", {
                         children: n.rules?.map((s, o) => y.jsx("li", {
                             children: s
                         }, o))
-                    }), n.judgingCriteria && n.judgingCriteria.length > 0 && y.jsx(y.Fragment, {})]
+                    }), n.judgingCriteria && n.judgingCriteria.length > 0 && y.jsxs("div", {
+                        style: { marginTop: "1rem" },
+                        children: [y.jsx("h4", { style: { marginBottom: ".4rem" }, children: "Judging Criteria" }), y.jsx("ul", { children: n.judgingCriteria.map((s,o) => y.jsx("li", { children: s }, o)) })]
+                    }), n.prize && y.jsxs("div", {
+                        style: { marginTop: "1rem", fontWeight: "700" },
+                        children: [y.jsx("h4", { children: "Prizes" }), y.jsx("p", { children: (() => { const p=[]; if(n.prize.first) p.push("🥇 ₹"+n.prize.first); if(n.prize.second) p.push("🥈 ₹"+n.prize.second); if(n.prize.third) p.push("🥉 ₹"+n.prize.third); return p.join("  •  "); })() })]
+                    }), y.jsxs("p", { style: { marginTop: "1rem", fontSize: ".88rem", opacity: .85 }, children: ["📍 ", n.venue, "  •  📅 ", n.date, n.fee ? "  •  " + Object.entries(n.fee).map(([k,v]) => k + ": ₹"+v).join(" • ") : ""] })]
                 }), y.jsx("div", {
                     className: "rules-footer",
                     children: y.jsx("button", {
@@ -18656,6 +18653,13 @@ Fa = [
     }) => {
         const o = wy[t.id] || "Event details will be announced shortly.",
             c = Object.entries(t.fee || {}).map(([f, d]) => `${f}: ₹${d}`).join("  •  ");
+        const prizeText = t.prize ? (() => {
+            const parts = [];
+            if (t.prize.first) parts.push("🥇 ₹" + t.prize.first);
+            if (t.prize.second) parts.push("🥈 ₹" + t.prize.second);
+            if (t.prize.third) parts.push("🥉 ₹" + t.prize.third);
+            return parts.join("  •  ");
+        })() : "";
         return y.jsxs("article", {
             className: "event-card",
             style: {
@@ -18671,7 +18675,20 @@ Fa = [
                 children: t.category
             }), y.jsx("h3", {
                 children: t.title
+            }), t.tagline && y.jsx("span", {
+                style: {
+                    display: "block",
+                    marginTop: "4px",
+                    color: "var(--color-primary)",
+                    fontSize: ".72rem",
+                    fontWeight: "600",
+                    letterSpacing: ".08em",
+                    textTransform: "uppercase",
+                    opacity: .9
+                },
+                children: t.tagline
             }), y.jsx("p", {
+                style: { marginTop: "6px", lineHeight: "1.5", fontSize: ".88rem" },
                 children: o
             }), y.jsxs("p", {
                 style: {
@@ -18697,19 +18714,28 @@ Fa = [
                 }), t.rules?.length > 0 && y.jsx("button", {
                     className: "btn outline",
                     onClick: () => s(t),
-                    children: "Rules"
+                    children: "Rules & Judging"
                 })]
             }), n && y.jsxs("div", {
                 className: "event-details open",
                 style: {
-                    marginTop: "1rem"
+                    marginTop: "1rem",
+                    borderTop: "1px solid rgba(255,255,255,.08)",
+                    paddingTop: "1rem",
+                    display: "grid",
+                    gap: ".6rem"
                 },
                 children: [t.time && y.jsxs("p", {
-                    children: ["Time: ", t.time]
+                    style: { fontSize: ".88rem" },
+                    children: [y.jsx("b", { children: "Duration: " }), t.time]
                 }), t.maxMembers && y.jsxs("p", {
-                    children: ["Team size: up to ", t.maxMembers]
-                }), t.prize && y.jsxs("p", {
-                    children: ["Prize: ₹", t.prize.first || 0, t.prize.second ? ` / ₹${t.prize.second}` : ""]
+                    style: { fontSize: ".88rem" },
+                    children: [y.jsx("b", { children: "Team size: " }), "up to ", t.maxMembers, t.minMembers ? " (min " + t.minMembers + ")" : ""]
+                }), prizeText && y.jsxs("p", {
+                    style: { fontSize: ".88rem" },
+                    children: [y.jsx("b", { children: "Prizes: " }), prizeText]
+                }), t.judgingCriteria && t.judgingCriteria.length > 0 && y.jsxs("div", {
+                    children: [y.jsx("p", { style: { fontSize: ".88rem", fontWeight: "700", marginBottom: ".25rem" }, children: "Judging Criteria:" }), y.jsx("ul", { style: { marginLeft: "1.1rem", fontSize: ".86rem", display: "grid", gap: ".25rem" }, children: t.judgingCriteria.map((f,d) => y.jsx("li", { children: f }, d)) })]
                 })]
             })]
         })
