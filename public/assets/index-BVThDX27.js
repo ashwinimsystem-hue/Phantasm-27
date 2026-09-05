@@ -37339,6 +37339,21 @@ Thank you for your patience and continued support.
                     value: x,
                     onChange: X => E(X.target.value)
                 }), y.jsx("button", {
+                    className: "btnexcel sheets-sync-btn",
+                    onClick: async () => {
+                        try {
+                            const r = await (await fetch(`${on}/api/admin/sheets/sync`, {
+                                method: "POST",
+                                headers: VaagaiAdminHeaders()
+                            })).json();
+                            if (console.log("SHEETS SYNC RESPONSE:", r), r.success) alert(r.message || "Google Sheets updated.");
+                            else alert("Sheets sync failed: " + (r.message || "unknown error"));
+                        } catch (e) {
+                            console.error("SHEETS SYNC ERROR:", e), alert("Sheets sync failed: " + (e.message || "network error"));
+                        }
+                    },
+                    children: "\u27f3 Sync Sheets"
+                }), y.jsx("button", {
                     className: "btnexcel",
                     onClick: H,
                     children: "Export Excel"

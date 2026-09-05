@@ -1,6 +1,7 @@
 'use strict';
 const multer = require('multer');
 const store = require('./store');
+const sheets = require('./sheets');
 const { calculateCanonicalAmount } = require('./pricing');
 
 const upload = multer({
@@ -197,6 +198,7 @@ async function handler(req, res) {
 
       existing.updated_at = new Date().toISOString();
       await store.saveReg(existing);
+      await sheets.tryRun('re-register', () => sheets.upsertRegistration(existing));
 
       let adminNotified = false;
       let pendingMailSent = false;
@@ -318,6 +320,7 @@ async function handler(req, res) {
     registration.admin_notification_sent = adminNotified;
     registration.pending_mail_sent = pendingMailSent;
     await store.saveReg(registration);
+    await sheets.tryRun('register', () => sheets.appendRegistration(registration));
 
     return res.status(201).json({
       success: true,

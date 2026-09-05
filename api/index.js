@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const path = require('path');
 const multer = require('multer');
 const store = require('./store');
+const sheets = require('./sheets');
 const app = express();
 
 const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vaagai2k26@gmail.com').trim().toLowerCase();
@@ -184,6 +185,7 @@ app.put('/api/admin/payment/verify/:id', safe(async (req, res) => {
   r.confirmation_mail_sent = sent;
   r.confirmation_mail_sent_at = sent ? new Date().toISOString() : null;
   await store.saveReg(r);
+  await sheets.tryRun('verify', () => sheets.upsertRegistration(r));
   res.json({ success: true, verified: true, mailSent: sent, message: sent ? 'Payment verified and confirmation email sent.' : 'Payment verified; confirmation email could not be sent.' });
 }));
 
@@ -195,7 +197,20 @@ app.put('/api/admin/payment/undo/:id', safe(async (req, res) => {
   r.verified_by = null;
   r.confirmation_mail_sent = false;
   await store.saveReg(r);
+  await sheets.tryRun('undo', () => sheets.upsertRegistration(r));
   res.json({ success: true, message: 'Payment verification undone.' });
+}));
+
+app.post('/api/admin/sheets/sync', safe(async (_req, res) => {
+  if (!sheets.enabled) return res.status(400).json({ success: false, message: 'Google Sheets sync is not configured on the server. Set GOOGLE_SHEETS_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL and GOOGLE_PRIVATE_KEY, then redeploy.' });
+  try {
+    const rows = await store.listRegs();
+    const result = await sheets.syncAll(rows);
+    res.json({ success: true, ...result, message: `Google Sheets updated — ${result.appended} added, ${result.updated} refreshed, ${result.total} total rows.` });
+  } catch (e) {
+    console.error('[api/sheets-sync]', e.message);
+    res.status(502).json({ success: false, message: e.message });
+  }
 }));
 
 app.put('/api/admin/attendance/verify/:id', safe(async (req, res) => {
@@ -203,6 +218,7 @@ app.put('/api/admin/attendance/verify/:id', safe(async (req, res) => {
   if (!r) return res.status(404).json({ success: false, message: 'Registration not found.' });
   r.attendance_status = 'VERIFIED';
   await store.saveReg(r);
+  await sheets.tryRun('attendance', () => sheets.upsertRegistration(r));
   res.json({ success: true, message: 'Attendance verified.' });
 }));
 
@@ -211,6 +227,7 @@ app.put('/api/admin/attendance/undo/:id', safe(async (req, res) => {
   if (!r) return res.status(404).json({ success: false, message: 'Registration not found.' });
   r.attendance_status = 'PENDING';
   await store.saveReg(r);
+  await sheets.tryRun('attendance-undo', () => sheets.upsertRegistration(r));
   res.json({ success: true, message: 'Attendance undone.' });
 }));
 
@@ -225,12 +242,14 @@ app.put('/api/admin/add-event/:id', safe(async (req, res) => {
   for (const title of titles) if (!current.includes(title)) current.push(title);
   r.event = current.join(', ');
   await store.saveReg(r);
+  await sheets.tryRun('add-event', () => sheets.upsertRegistration(r));
   res.json({ success: true, message: 'Events added successfully.', event: r.event });
 }));
 
 app.delete('/api/admin/registration/:id', safe(async (req, res) => {
   const ok = await store.delReg(req.params.id);
   if (!ok) return res.status(404).json({ success: false, message: 'Registration not found.' });
+  await sheets.tryRun('delete', () => sheets.deleteRegistration(req.params.id));
   res.json({ success: true, message: 'Registration deleted.' });
 }));
 

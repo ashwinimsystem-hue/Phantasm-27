@@ -69,8 +69,45 @@ Preview):
 | `EMAIL_USER` | `vaagai2k26@gmail.com` (sends mail) |
 | `EMAIL_PASS` | 16-char app password from step 3 |
 | `CONTACT_TO` | `vaagai2k26@gmail.com` (receives contact form) |
+| `GOOGLE_SHEETS_ID` | `1xNgjW0muXdapmnhfXS28-mJATrnRnaRcyQRRi6jmyF0` (the registration spreadsheet ID, from its URL) |
+| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | service-account e-mail (see "Google Sheets sync" below) |
+| `GOOGLE_PRIVATE_KEY` | service-account private key (see "Google Sheets sync" below) |
 
 Then **Deployments → ⋯ → Redeploy** so the function picks them up.
+
+## 3b. Google Sheets sync (optional but recommended)
+
+Makes `/admin/panel` write every registration straight into [the registration
+spreadsheet](https://docs.google.com/spreadsheets/d/1xNgjW0muXdapmnhfXS28-mJATrnRnaRcyQRRi6jmyF0/edit)
+— no more exporting the Excel file. When configured:
+
+- **New registration** → a row is appended automatically (Team Name, Team ID,
+  Registration ID, Name, Email, Phone, College, Department, Year, Events,
+  Amount, UTR, Payment Status, Attendance, Verified By, Verified At, Registered At).
+- **Verify / Undo payment, attendance, +Add Event, Delete** → the row updates in place.
+- **"⟳ Sync Sheets" button** (next to Export Excel) → one-click full upsert,
+  including registrations created before the feature was switched on.
+
+One-time setup:
+
+1. <https://console.cloud.google.com> → create a project (free).
+2. **APIs & Services → Library** → enable **Google Sheets API**.
+3. **APIs & Services → Credentials → Create credentials → Service account**
+   (name doesn't matter; skip permissions) → open it → **Keys → Add key →
+   Create new key → JSON** → the key file downloads.
+4. Open the JSON file: copy `client_email` → that is `GOOGLE_SERVICE_ACCOUNT_EMAIL`;
+   copy `private_key` → that is `GOOGLE_PRIVATE_KEY` (paste the whole thing,
+   including the `-----BEGIN PRIVATE KEY-----` lines — the `\n` sequences can
+   stay as-is).
+5. Open the spreadsheet → **Share** → add the service-account e-mail as **Editor**.
+6. Add the three `GOOGLE_*` env vars above → **Redeploy** → in the panel hit
+   **⟳ Sync Sheets** once.
+
+Notes: rows go to a **"Registrations"** tab that the sync creates itself — the
+rest of the spreadsheet (e.g. form-response tabs) is never touched. If that tab
+name is taken by something else, set `GOOGLE_SHEETS_TAB` to a fresh name.
+Until the env vars are set the feature stays off and the button reports exactly
+that — nothing else changes.
 
 ## 5. Verify the live site
 
@@ -108,8 +145,11 @@ npm start        # http://localhost:3000 — full site + API, file-based data
 vaagai-26-vercel/
 ├── api/
 │   ├── index.js    ← entire API as one Vercel function (Express app export)
+│   ├── register.js ← registration endpoint (multipart + screenshot)
+│   ├── sheets.js   ← Google Sheets sync (service account, no deps)
 │   └── store.js    ← Upstash Redis (REST) + file/memory fallback
 ├── public/         ← the exact site currently live (HTML/JS/CSS/logos)
+├── tools/          ← jsdom verification scripts (node tools/verify-*.mjs)
 ├── vercel.json     ← routing: /api/* → function, everything else → SPA
 └── package.json
 ```
