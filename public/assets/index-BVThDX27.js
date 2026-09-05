@@ -37501,7 +37501,12 @@ Thank you for your patience and continued support.
                             display: "flex",
                             gap: "0.5rem"
                         },
-                        children: [X.payment_status === "PENDING_VERIFICATION" && y.jsx("button", {
+                        children: [y.jsx("button", {
+                            className: "shot-btn",
+                            title: "View payment screenshot",
+                            onClick: (_e) => window.__VaagaiShotViewer && window.__VaagaiShotViewer.open(X, _e.currentTarget.closest(".admin-row")),
+                            children: "\ud83e\uddf0 Screenshot"
+                        }), X.payment_status === "PENDING_VERIFICATION" && y.jsx("button", {
                             className: "payverify-btn",
                             onClick: () => ae(X.id),
                             children: "Verify Payment"

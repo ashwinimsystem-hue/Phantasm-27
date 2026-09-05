@@ -78,6 +78,7 @@ Then **Deployments → ⋯ → Redeploy** so the function picks them up.
 |---|---|
 | Site loads | `https://<your-app>.vercel.app/` |
 | Admin panel | `https://<your-app>.vercel.app/admin` (ADMIN_EMAIL/PASSWORD) |
+| Payment screenshots | `/admin/panel` → Registrations → **🧾 Screenshot** button on each row (lightbox with ID / UTR / amount, plus Verify / Undo) |
 | API healthy | `https://<your-app>.vercel.app/api/admin/event-count` → `401 Admin login required` |
 | Crash-proof | wrong admin password → `401` JSON, site stays up |
 
