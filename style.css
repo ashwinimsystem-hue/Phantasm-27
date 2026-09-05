@@ -440,6 +440,75 @@ section:nth-child(even) { background: var(--ink-2); }
 .tab-panel[data-panel="nontech"] .event-card .cat { color: var(--parchment-dim); }
 .event-card h4 { margin-top: 10px; font-size: 1.02rem; }
 .event-card p { margin-top: 7px; font-size: 0.84rem; color: var(--parchment-dim); line-height: 1.5; }
+.event-card .tagline {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  opacity: 0.95;
+}
+.event-card .desc { margin-top: 8px; min-height: 42px; }
+.event-card .event-meta {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: var(--parchment-dim);
+}
+.event-card .event-meta span {
+  background: rgba(200,146,42,0.08);
+  border: 1px solid rgba(200,146,42,0.18);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.event-card .event-fee {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--parchment);
+  background: rgba(200,146,42,0.09);
+  border: 1px solid rgba(200,146,42,0.18);
+  padding: 6px 12px;
+  border-radius: 999px;
+  display: inline-block;
+}
+.event-card .event-prize {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold-pale);
+  letter-spacing: 0.02em;
+}
+.event-card details {
+  margin-top: 14px;
+  border-top: 1px solid rgba(200,146,42,0.12);
+  padding-top: 10px;
+}
+.event-card details summary {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  cursor: pointer;
+  list-style: none;
+}
+.event-card details summary::-webkit-details-marker { display: none; }
+.event-card details summary::after {
+  content: " ▸";
+  transition: transform .2s ease;
+  display: inline-block;
+}
+.event-card details[open] summary::after { transform: rotate(90deg); }
+.event-card details ul {
+  margin: 8px 0 0 16px;
+  list-style: disc;
+  display: grid; gap: 6px;
+}
+.event-card details li { font-size: 0.82rem; color: var(--parchment-dim); line-height: 1.5; }
+.event-card.detailed { display: flex; flex-direction: column; }
 .events-note {
   text-align: center; margin-top: 28px;
   font-size: 0.84rem; color: var(--parchment-dim); font-style: italic;
