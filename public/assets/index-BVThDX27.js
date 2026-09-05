@@ -18381,6 +18381,7 @@ Fa = [
         fee: { SOLO: 200 },
         maxMembers: 1,
         rules: [
+            "Individual participation only — teams not allowed. Max 1 participant.",
             "Software provided: ANSYS Workbench / Fluent.",
             "Problem statement given on the spot; no pre-prepared files allowed.",
             "Must work independently within allotted time."
