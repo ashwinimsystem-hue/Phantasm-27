@@ -1,0 +1,17 @@
+/* Make the uploaded transaction proof easy to spot in each registration row. */
+body:has(.admin-wrapper) .screenshot-btn {
+  border: 1px solid rgba(240, 207, 139, .55) !important;
+  border-radius: 7px !important;
+  background: rgba(217, 164, 65, .14) !important;
+  color: #f0cf8b !important;
+  padding: .5rem .7rem !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+}
+body:has(.admin-wrapper) .screenshot-btn:hover {
+  background: rgba(217, 164, 65, .28) !important;
+  border-color: #f0cf8b !important;
+}
+@media (max-width: 760px) {
+  body:has(.admin-wrapper) .screenshot-btn { width: 100%; }
+}
