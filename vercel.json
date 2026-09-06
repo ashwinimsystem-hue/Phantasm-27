@@ -2,10 +2,13 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "outputDirectory": "public",
   "functions": {
-    "api/index.js": { "memory": 1024, "maxDuration": 20 },
-    "api/register.js": { "memory": 1024, "maxDuration": 20 },
-    "api/check-email.js": { "memory": 512, "maxDuration": 10 },
-    "api/health.js": { "memory": 512, "maxDuration": 10 }
+    "api/index.js": {
+      "maxDuration": 20,
+      "includeFiles": "VAAGAI26_*.pdf"
+    },
+    "api/register.js": { "maxDuration": 20 },
+    "api/check-email.js": { "maxDuration": 10 },
+    "api/health.js": { "maxDuration": 10 }
   },
   "rewrites": [
     { "source": "/api/register", "destination": "/api/register.js" },
