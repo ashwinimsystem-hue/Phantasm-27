@@ -22,7 +22,54 @@ const safe = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).cat
   if (!res.headersSent) res.status(500).json({ success: false, message: 'Internal server error.' });
 });
 
-async function mail(to, subject, text, html) {
+const EVENT_GUIDES = [
+  { names: ['water rocketry', 'water rocket', 'water rocketory'], file: 'VAAGAI26_WATER_ROCKETRY.pdf' },
+  { names: ['paper presentation', 'paper presentations'], file: 'VAAGAI26_PAPER_PRESENTATION.pdf' },
+  { names: ['line follower', 'line follower robot'], file: 'VAAGAI26_LINE_FOLLOWER.pdf' },
+  { names: ['technical quiz'], file: 'VAAGAI26_TECHNICAL_QUIZ.pdf' },
+  { names: ['glider competition'], file: 'VAAGAI26_GLIDER_COMPETITION.pdf' },
+  { names: ['ansys simulation challenge', 'ansys simulation'], file: 'VAAGAI26_ANSYS_SIMULATION.pdf' },
+  { names: ['cad modelling', 'cad modeling'], file: 'VAAGAI26_CAD_MODELLING.pdf' },
+  {
+    names: ['free fire', 'freefire', 'carrom', 'chess', 'ipl auction', 'college ipl auction', 'treasure hunt', 'treasure-hunt', 'mehendi', 'mehandi', 'mehndi'],
+    file: 'VAAGAI26_NON_TECHNICAL.pdf',
+  },
+];
+
+const normalizeEventText = (value) => String(value || '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+function eventNameMatches(eventText, alias) {
+  const text = normalizeEventText(eventText);
+  const target = normalizeEventText(alias);
+  if (!text || !target) return false;
+  return text === target || text.includes(` ${target} `) || text.startsWith(`${target} `) || text.endsWith(` ${target}`);
+}
+
+function getEventGuideAttachments(events) {
+  const eventText = Array.isArray(events)
+    ? events.map((event) => typeof event === 'string' ? event : event?.title || event?.eventName || event?.eventId || '').join(', ')
+    : String(events || '');
+  const seen = new Set();
+
+  return EVENT_GUIDES
+    .filter((guide) => guide.names.some((name) => eventNameMatches(eventText, name)))
+    .filter((guide) => {
+      if (seen.has(guide.file)) return false;
+      seen.add(guide.file);
+      return true;
+    })
+    .map((guide) => ({
+      filename: guide.file,
+      path: path.join(process.cwd(), guide.file),
+      contentType: 'application/pdf',
+    }));
+}
+
+async function mail(to, subject, text, html, attachments = []) {
   const user = String(process.env.EMAIL_USER || '').trim();
   const pass = String(process.env.EMAIL_PASS || '').trim();
   if (!user || !pass || !to) return false;
@@ -35,7 +82,7 @@ async function mail(to, subject, text, html) {
       secure: port === 465,
       auth: { user, pass },
     });
-    await transporter.sendMail({ from: `Vaagai'26 <${user}>`, to, subject, text, html });
+    await transporter.sendMail({ from: `Vaagai'26 <${user}>`, to, subject, text, html, attachments });
     return true;
   } catch (e) {
     console.error('[mail]', e.message);
@@ -180,7 +227,8 @@ app.put('/api/admin/payment/verify/:id', safe(async (req, res) => {
   r.verified_at = new Date().toISOString();
   r.verified_by = req.admin.email;
   await store.saveReg(r);
-  const sent = await mail(r.email, `Vaagai'26 Registration Confirmed — ${r.id}`, `Hi ${r.name},\n\nYour registration ${r.id} has been verified and approved.\nEvents: ${r.event}\nAmount: ₹${r.amount}${r.team_id ? `\nTeam ID: ${r.team_id}` : ''}`, `<h2>Registration Confirmed ✓</h2><p>Hi ${esc(r.name)},</p><p>Your registration <b>${esc(r.id)}</b> has been <b>verified and approved</b>.</p><p><b>Events:</b> ${esc(r.event)}</p><p><b>Amount:</b> ₹${r.amount}</p>${r.team_id ? `<p><b>Team ID:</b> ${esc(r.team_id)}</p>` : ''}`);
+  const attachments = getEventGuideAttachments(r.event);
+  const sent = await mail(r.email, `Vaagai'26 Registration Confirmed — ${r.id}`, `Hi ${r.name},\n\nYour registration ${r.id} has been verified and approved.\nEvents: ${r.event}\nAmount: ₹${r.amount}${r.team_id ? `\nTeam ID: ${r.team_id}` : ''}\n\nEvent guide(s) for your registered events are attached to this email.`, `<h2>Registration Confirmed ✓</h2><p>Hi ${esc(r.name)},</p><p>Your registration <b>${esc(r.id)}</b> has been <b>verified and approved</b>.</p><p><b>Events:</b> ${esc(r.event)}</p><p><b>Amount:</b> ₹${r.amount}</p>${r.team_id ? `<p><b>Team ID:</b> ${esc(r.team_id)}</p>` : ''}<p>The event guide(s) for your registered events are attached to this email.</p>`, attachments);
   r.confirmation_mail_sent = sent;
   r.confirmation_mail_sent_at = sent ? new Date().toISOString() : null;
   await store.saveReg(r);
