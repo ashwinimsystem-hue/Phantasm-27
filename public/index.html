@@ -43,6 +43,8 @@
     <link rel="stylesheet" crossorigin href="/assets/phantasm-registration-sample.css">
     <!-- Final targeted fixes: loaded after the legacy/mobile override stack. -->
     <link rel="stylesheet" crossorigin href="/assets/phantasm-final-verified-fixes.css">
+    <!-- Mobile hero gap fix: must stay last, it overrides an INLINE min-height:100vh -->
+    <link rel="stylesheet" crossorigin href="/assets/phantasm-hero-gap-fix.css">
   </head>
   <body>
     <div id="root"></div>
@@ -51,5 +53,7 @@
     <script src="/assets/phantasm-navbar-cleanup.js" defer></script>
     <script src="/assets/phantasm-mobile-nav-repair-v2.js" defer></script>
     <script src="/assets/phantasm-final-mobile-repair.js" defer></script>
+    <!-- Mobile hero gap fix: re-pins the override after every countdown re-render -->
+    <script src="/assets/phantasm-hero-gap-repair.js" defer></script>
   </body>
 </html>
