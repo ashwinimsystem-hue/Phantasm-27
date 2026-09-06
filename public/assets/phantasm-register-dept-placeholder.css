@@ -1,0 +1,53 @@
+/* PHANTASM'27 - registration: Department field hint colour
+   The compiled bundle renders
+
+     <label class="reg-field">
+       <span class="reg-field-label">Department</span>
+       <input name="dept" placeholder="Mechanical Engineering" required>
+     </label>
+
+   The *wording* is an attribute, which CSS cannot write, so
+   phantasm-register-dept-placeholder.js replaces it in the DOM. This sheet only
+   handles the colour, and exists because phantasm-registration-sample.css paints
+   every registration placeholder an opaque #746a56 - that is what made the hint
+   look like a pre-filled answer instead of a hint.
+
+   Scope: this one input, on the register page only. Every other field keeps the
+   app's own styling, and the admin screens are never matched (.register-page).
+   Only the placeholder is styled: whatever the student types stays fully legible.
+*/
+
+:root {
+  /* One knob. rgba alpha IS the transparency: .30 reads as a faint hint,
+     0 hides the wording completely, .58 matches the app's native placeholder tone. */
+  --phantasm-dept-placeholder: rgba(205, 191, 158, .3);
+}
+
+/* The only loaded rule this has to beat is
+     #root .register-page .reg-field :is(input, select)::placeholder  (phantasm-registration-sample.css:289)
+     color:#746a56 !important; opacity:1 !important
+   Mine is (1 id, 3 classes, 1 attribute) vs their (1 id, 2 classes) - both
+   !important, so the higher specificity wins outright and staying last in
+   <head> keeps it that way if sheets are reordered. opacity is forced to 1 so
+   the alpha above is the single source of truth across engines (Firefox dims
+   placeholders itself). phantasm-mobile-registration-step4.css and
+   registration-page-v3.css also set placeholder colours but are not referenced
+   by index.html; they are covered by the same specificity anyway. */
+#root .register-page .reg-field input[name="dept"]::placeholder {
+  color: var(--phantasm-dept-placeholder) !important;
+  opacity: 1 !important;
+  transition: color .18s ease;
+}
+
+/* Same rule without the .reg-field wrapper, so the hint still fades if the markup
+   ever loses that class. Kept separate on purpose: a comma-separated list with an
+   unknown pseudo-element would be dropped whole by other engines. */
+#root .register-page input[name="dept"]::placeholder {
+  color: var(--phantasm-dept-placeholder) !important;
+  opacity: 1 !important;
+}
+
+/* Faint, but never invisible while the student is actually filling it in. */
+#root .register-page .reg-field input[name="dept"]:focus::placeholder {
+  color: rgba(205, 191, 158, .42) !important;
+}
