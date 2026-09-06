@@ -3,6 +3,7 @@ const express = require('express');
 const crypto = require('crypto');
 const path = require('path');
 const multer = require('multer');
+const fs = require('fs');
 const store = require('./store');
 const app = express();
 
@@ -22,7 +23,78 @@ const safe = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).cat
   if (!res.headersSent) res.status(500).json({ success: false, message: 'Internal server error.' });
 });
 
-async function mail(to, subject, text, html) {
+const EVENT_GUIDES = [
+  { names: ['water rocketry', 'water rocket', 'water rocketory'], file: 'VAAGAI26_WATER_ROCKETRY.pdf' },
+  { names: ['paper presentation', 'paper presentations'], file: 'VAAGAI26_PAPER_PRESENTATION.pdf' },
+  { names: ['line follower', 'line follower robot'], file: 'VAAGAI26_LINE_FOLLOWER.pdf' },
+  { names: ['technical quiz'], file: 'VAAGAI26_TECHNICAL_QUIZ.pdf' },
+  { names: ['glider competition'], file: 'VAAGAI26_GLIDER_COMPETITION.pdf' },
+  { names: ['ansys simulation challenge', 'ansys simulation'], file: 'VAAGAI26_ANSYS_SIMULATION.pdf' },
+  { names: ['cad modelling', 'cad modeling'], file: 'VAAGAI26_CAD_MODELLING.pdf' },
+  {
+    names: ['free fire', 'freefire', 'carrom', 'chess', 'ipl auction', 'college ipl auction', 'treasure hunt', 'treasure-hunt', 'mehendi', 'mehandi', 'mehndi'],
+    file: 'VAAGAI26_NON_TECHNICAL.pdf',
+  },
+];
+
+const normalizeEventText = (value) => String(value || '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+function eventNameMatches(eventText, alias) {
+  const text = normalizeEventText(eventText);
+  const target = normalizeEventText(alias);
+  if (!text || !target) return false;
+  return text === target || text.includes(` ${target} `) || text.startsWith(`${target} `) || text.endsWith(` ${target}`);
+}
+
+function getEventGuideAttachments(events) {
+  const eventText = Array.isArray(events)
+    ? events.map((event) => typeof event === 'string' ? event : event?.title || event?.eventName || event?.eventId || '').join(', ')
+    : String(events || '');
+  const seen = new Set();
+
+  return EVENT_GUIDES
+    .filter((guide) => guide.names.some((name) => eventNameMatches(eventText, name)))
+    .filter((guide) => {
+      if (seen.has(guide.file)) return false;
+      seen.add(guide.file);
+      return true;
+    })
+    .map((guide) => ({ guide, file: resolveGuideFile(guide.file) }))
+    .filter((entry) => Boolean(entry.file))
+    .reduce((acc, entry) => {
+      // keep the total message under the 25 MB Gmail ceiling (base64 costs ~4/3)
+      const bytes = safeSize(entry.file);
+      if (totalBytes(acc) + bytes > MAX_GUIDE_BYTES) {
+        console.warn('[guides] skipped (size cap)', entry.guide.file, bytes);
+        return acc;
+      }
+      acc.push({ filename: entry.guide.file, path: entry.file, contentType: 'application/pdf' });
+      return acc;
+    }, []);
+}
+
+const MAX_GUIDE_BYTES = 14 * 1024 * 1024;
+
+function safeSize(file) { try { return fs.statSync(file).size; } catch { return 0; } }
+function totalBytes(list) { return list.reduce((n, a) => n + safeSize(a.path), 0); }
+
+/* PDFs live at the project root; on Vercel they are copied into the function
+   bundle by vercel.json -> functions.includeFiles. cwd is not guaranteed to be
+   the project root (it is locally only when you start from there), so probe. */
+function resolveGuideFile(file) {
+  for (const dir of [process.cwd(), path.join(__dirname, '..'), __dirname]) {
+    const candidate = path.join(dir, file);
+    try { if (fs.statSync(candidate).size > 0) return candidate; } catch {}
+  }
+  console.warn('[guides] not found in bundle:', file);
+  return null;
+}
+
+async function mail(to, subject, text, html, attachments = []) {
   const user = String(process.env.EMAIL_USER || '').trim();
   const pass = String(process.env.EMAIL_PASS || '').trim();
   if (!user || !pass || !to) return false;
@@ -35,8 +107,17 @@ async function mail(to, subject, text, html) {
       secure: port === 465,
       auth: { user, pass },
     });
-    await transporter.sendMail({ from: `Vaagai'26 <${user}>`, to, subject, text, html });
-    return true;
+    try {
+      await transporter.sendMail({ from: `Vaagai'26 <${user}>`, to, subject, text, html, attachments });
+      return true;
+    } catch (sendError) {
+      // An unreadable/oversized attachment must never cost the participant their
+      // confirmation — retry once without attachments.
+      if (!attachments || !attachments.length) throw sendError;
+      console.error('[mail] with attachments failed, retrying without:', sendError.message);
+      await transporter.sendMail({ from: `Vaagai'26 <${user}>`, to, subject, text, html });
+      return true;
+    }
   } catch (e) {
     console.error('[mail]', e.message);
     return false;
@@ -180,7 +261,14 @@ app.put('/api/admin/payment/verify/:id', safe(async (req, res) => {
   r.verified_at = new Date().toISOString();
   r.verified_by = req.admin.email;
   await store.saveReg(r);
-  const sent = await mail(r.email, `Vaagai'26 Registration Confirmed — ${r.id}`, `Hi ${r.name},\n\nYour registration ${r.id} has been verified and approved.\nEvents: ${r.event}\nAmount: ₹${r.amount}${r.team_id ? `\nTeam ID: ${r.team_id}` : ''}`, `<h2>Registration Confirmed ✓</h2><p>Hi ${esc(r.name)},</p><p>Your registration <b>${esc(r.id)}</b> has been <b>verified and approved</b>.</p><p><b>Events:</b> ${esc(r.event)}</p><p><b>Amount:</b> ₹${r.amount}</p>${r.team_id ? `<p><b>Team ID:</b> ${esc(r.team_id)}</p>` : ''}`);
+  const attachments = getEventGuideAttachments(r.event);
+  const guideNoteText = attachments.length
+    ? `\n\nEvent guide(s) for your registered events are attached to this email:${attachments.map((a) => ` ${a.filename}`).join(',')}`
+    : '';
+  const guideNoteHtml = attachments.length
+    ? `<p>The event guide(s) for your registered events are attached to this email:<br>${attachments.map((a) => esc(a.filename)).join('<br>')}</p>`
+    : '';
+  const sent = await mail(r.email, `Vaagai'26 Registration Confirmed — ${r.id}`, `Hi ${r.name},\n\nYour registration ${r.id} has been verified and approved.\nEvents: ${r.event}\nAmount: ₹${r.amount}${r.team_id ? `\nTeam ID: ${r.team_id}` : ''}${guideNoteText}`, `<h2>Registration Confirmed ✓</h2><p>Hi ${esc(r.name)},</p><p>Your registration <b>${esc(r.id)}</b> has been <b>verified and approved</b>.</p><p><b>Events:</b> ${esc(r.event)}</p><p><b>Amount:</b> ₹${r.amount}</p>${r.team_id ? `<p><b>Team ID:</b> ${esc(r.team_id)}</p>` : ''}${guideNoteHtml}`, attachments);
   r.confirmation_mail_sent = sent;
   r.confirmation_mail_sent_at = sent ? new Date().toISOString() : null;
   await store.saveReg(r);
