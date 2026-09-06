@@ -1,0 +1,97 @@
+/* PHANTASM'27 — FINAL VERIFIED TARGETED FIXES
+   Scope: mobile hero spacing + registration readability/overflow only.
+   This file is deliberately loaded last so it wins against the older
+   override stack without modifying the generated React bundle.
+*/
+
+/* --------------------------------------------------------------------------
+   Mobile homepage hero
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Remove the remaining top band before the institutional identity. */
+  .phantasm-mobile-rebuilt .phantasm-mobile-hero-shell {
+    padding-top: 4px !important;
+  }
+
+  .phantasm-mobile-rebuilt .phantasm-mobile-hero-institution {
+    margin-top: 0 !important;
+  }
+
+  /* The date and countdown should read as one compact block. */
+  .phantasm-mobile-rebuilt .phantasm-mobile-hero-date {
+    margin-top: 6px !important;
+  }
+
+  .phantasm-mobile-rebuilt .phantasm-mobile-hero-date + .phantasm-mobile-hero-countdown,
+  .phantasm-mobile-rebuilt .phantasm-mobile-hero-countdown {
+    margin-top: 6px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .phantasm-mobile-rebuilt .phantasm-mobile-hero-shell {
+    padding-top: 3px !important;
+  }
+
+  .phantasm-mobile-rebuilt .phantasm-mobile-hero-date + .phantasm-mobile-hero-countdown,
+  .phantasm-mobile-rebuilt .phantasm-mobile-hero-countdown {
+    margin-top: 5px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Registration inputs
+   -------------------------------------------------------------------------- */
+#root .register-page :is(input, select, textarea) {
+  color: #f3e6c8 !important;
+  -webkit-text-fill-color: #f3e6c8 !important;
+  caret-color: #f0cf8b !important;
+  color-scheme: dark;
+}
+
+#root .register-page :is(input, select, textarea):-webkit-autofill,
+#root .register-page :is(input, select, textarea):-webkit-autofill:hover,
+#root .register-page :is(input, select, textarea):-webkit-autofill:focus {
+  -webkit-text-fill-color: #f3e6c8 !important;
+  box-shadow: 0 0 0 1000px rgba(4, 3, 2, 0.98) inset !important;
+}
+
+/* --------------------------------------------------------------------------
+   Registration/payment status text
+   -------------------------------------------------------------------------- */
+#root .register-page :is(
+  .reg-summary-note,
+  .reg-total,
+  [class*="payment" i],
+  [class*="status" i],
+  [class*="success" i]
+) {
+  max-width: 100% !important;
+  min-width: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+#root .register-page :is(
+  .reg-summary-note,
+  [class*="payment" i],
+  [class*="status" i]
+) {
+  display: block !important;
+  line-height: 1.45 !important;
+}
+
+/* The same safeguard covers a payment/success view if it is rendered outside
+   .register-page, without changing its typography or layout. */
+#root :is(
+  [class*="payment" i],
+  [class*="success" i],
+  [class*="status" i]
+) {
+  max-width: 100%;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
