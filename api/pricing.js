@@ -23,7 +23,6 @@ const RULES = [
   { key: 'chess', aliases: ['chess', 'chess tournament'], solo: 50, team: 50, perPerson: true },
   { key: 'ipl auction', aliases: ['ipl auction', 'college ipl auction', 'ipl auction rules'], solo: 100, team: 100 },
   { key: 'treasure hunt', aliases: ['treasure hunt', 'treasure-hunt'], solo: 100, team: 100 },
-  { key: 'mehendi', aliases: ['mehendi', 'mehandi', 'mehndi'], solo: 30, team: 30 },
 ];
 
 function findRule(title) {
