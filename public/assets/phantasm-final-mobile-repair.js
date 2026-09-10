@@ -160,17 +160,6 @@
     if (!root || root.dataset.phantasmFinalMobileRepair === '1') return;
     root.dataset.phantasmFinalMobileRepair = '1';
 
-    const guardInteraction = (event) => {
-      const tile = event.target?.closest?.(eventTileSelector);
-      if (!tile || !root.contains(tile)) return;
-
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation?.();
-    };
-
-    ['pointerdown', 'click', 'keydown', 'keyup'].forEach((type) => root.addEventListener(type, guardInteraction, true));
-
     root.addEventListener('change', () => scheduleRepair(0), true);
 
     const observer = new MutationObserver(() => scheduleRepair(60));

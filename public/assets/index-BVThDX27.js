@@ -18534,9 +18534,6 @@ Fa = [
         prize: { first: 500 }
     },
     {
-        prize: { first: 250, second: 150 }
-    },
-    {
         id: "treasure-hunt",
         title: "Treasure Hunt",
         category: "Non-Technical",

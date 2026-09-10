@@ -5,6 +5,7 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const store = require('./store');
+const { calculateCanonicalAmount } = require('./pricing');
 const app = express();
 
 const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vaagai2k26@gmail.com').trim().toLowerCase();
@@ -308,7 +309,9 @@ app.put('/api/admin/add-event/:id', safe(async (req, res) => {
   const ids = req.body?.eventIds;
   if (!Array.isArray(ids) || !ids.length) return res.status(400).json({ success: false, message: 'Select at least one event to add.' });
   const titles = ids.map((e) => String(e?.title || '').trim()).filter(Boolean);
-  if (!titles.length) return res.status(400).json({ success: false, message: 'Selected events are invalid.' });
+  if (!calculateCanonicalAmount({ eventList: titles }).fullyKnown) {
+    return res.status(400).json({ success: false, message: 'Selected events are invalid or disabled.' });
+  }
   const current = String(r.event || '').split(',').map((x) => x.trim()).filter(Boolean);
   for (const title of titles) if (!current.includes(title)) current.push(title);
   r.event = current.join(', ');
