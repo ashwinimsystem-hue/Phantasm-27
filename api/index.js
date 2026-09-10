@@ -32,7 +32,7 @@ const EVENT_GUIDES = [
   { names: ['ansys simulation challenge', 'ansys simulation'], file: 'VAAGAI26_ANSYS_SIMULATION.pdf' },
   { names: ['cad modelling', 'cad modeling'], file: 'VAAGAI26_CAD_MODELLING.pdf' },
   {
-    names: ['free fire', 'freefire', 'carrom', 'chess', 'ipl auction', 'college ipl auction', 'treasure hunt', 'treasure-hunt', 'mehendi', 'mehandi', 'mehndi'],
+    names: ['free fire', 'freefire', 'carrom', 'chess', 'ipl auction', 'college ipl auction', 'treasure hunt', 'treasure-hunt', ],
     file: 'VAAGAI26_NON_TECHNICAL.pdf',
   },
 ];

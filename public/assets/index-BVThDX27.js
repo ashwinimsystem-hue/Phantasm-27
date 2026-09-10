@@ -18310,7 +18310,6 @@ wy = {
     "carrom": "A classic strike-and-pocket showdown. Cue control, angle reading and a steady hand under knockout pressure.",
     "chess": "Slow-thinking tactics over a fixed time control. Opening preparation, calculation and composure in time trouble.",
     "free-fire": "Squad-based battle royale on mobile. Rotate, loot and place your team — last circle standing takes it.",
-    "mehandi": "Decorate a hand with the most creative Mehandi design within the time limit. Judged on intricacy, symmetry and overall presentation.",
     "treasure-hunt": "Follow the clues, solve the puzzles and race to the final marker. Teams navigate a campus-wide hunt where speed, logic and teamwork decide the winners.",
 
 },
@@ -18535,27 +18534,6 @@ Fa = [
         prize: { first: 500 }
     },
     {
-        id: "mehandi",
-        title: "Mehendi",
-        category: "Non-Technical",
-        venue: "Drawing Hall",
-        date: "18-09-2026",
-        time: "10:00 AM – 11:00 AM",
-        duration: 1,
-        modes: ["SOLO"],
-        fee: { SOLO: 30 },
-        maxMembers: 1,
-        rules: [
-            "Individual registration.",
-            "Decorate a hand with the most creative Mehandi design within the time limit.",
-            "Judged on intricacy, symmetry and overall presentation."
-        ],
-        judgingCriteria: [
-            "Intricacy and detailing of the design",
-            "Symmetry and balance across the hand",
-            "Creativity and originality",
-            "Neatness and clarity of the final pattern"
-        ],
         prize: { first: 250, second: 150 }
     },
     {

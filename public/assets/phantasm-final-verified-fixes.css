@@ -1,6 +1,6 @@
 /* PHANTASM'27 — FINAL TARGETED MOBILE / REGISTRATION FIXES
-   Scope: mobile homepage spacing + registration readability/overflow + the
-   requested Mehendi eligibility label. Desktop presentation is preserved.
+   Scope: mobile homepage spacing + registration readability/overflow
+   Mobile layout fixes removed.
 */
 
 @media (max-width: 768px) {
@@ -126,37 +126,4 @@
   white-space: normal !important;
   overflow-wrap: anywhere !important;
   word-break: break-word !important;
-}
-
-/* The events-page base CSS styles every span inside an event card; use a more
-   specific rule so the eligibility pill remains deliberate and readable. */
-.events-page .event-card .phantasm-mehendi-eligibility,
-#root .event-card .phantasm-mehendi-eligibility {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: fit-content !important;
-  max-width: 100% !important;
-  margin: 8px 0 2px !important;
-  padding: 4px 10px !important;
-  border: 1px solid rgba(217,164,65,.35) !important;
-  border-radius: 999px !important;
-  color: #f0cf8b !important;
-  -webkit-text-fill-color: #f0cf8b !important;
-  font-family: 'Source Sans 3', Arial, sans-serif !important;
-  font-size: .7rem !important;
-  font-weight: 800 !important;
-  letter-spacing: .06em !important;
-  line-height: 1.2 !important;
-  text-transform: none !important;
-  box-sizing: border-box !important;
-}
-
-/* The Mehendi tile on /register is blocked for male registrants by
-   phantasm-final-mobile-repair.js via aria-disabled — make that state visible
-   instead of leaving a tile that looks selectable but silently ignores taps. */
-#root .event-card.reg-card[aria-disabled="true"] {
-  opacity: .45 !important;
-  border-color: rgba(217,164,65,.28) !important;
-  cursor: not-allowed !important;
 }
