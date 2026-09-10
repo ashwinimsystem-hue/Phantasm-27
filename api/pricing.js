@@ -29,7 +29,7 @@ function findRule(title) {
   const n = norm(title);
   return RULES.find((rule) => rule.aliases.some((alias) => {
     const a = norm(alias);
-    return n === a || n.includes(a) || a.includes(n);
+    return n === a;
   })) || null;
 }
 

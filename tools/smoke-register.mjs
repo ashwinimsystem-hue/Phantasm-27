@@ -70,7 +70,7 @@ check('.register-frame card', !!doc.querySelector('.Formcontainer.register-frame
 check('labelled fields', doc.querySelectorAll('.reg-field .reg-field-label').length >= 6, `${doc.querySelectorAll('.reg-field .reg-field-label').length} labels`);
 check('field labels are real text', ['Full name', 'Email', 'Phone', 'College', 'Department', 'Year of study', 'Gender'].every((l) => text().includes(l)));
 check('event cards rendered', doc.querySelectorAll('.event-card.reg-card').length > 0, `${doc.querySelectorAll('.event-card.reg-card').length} cards`);
-check('gold pill tabs', doc.querySelectorAll('.reg-tab').length === 4);
+check('active category tabs (All, Technical, Non-Technical)', doc.querySelectorAll('.reg-tab').length === 3);
 check('summary + total', !!doc.querySelector('.reg-summary .reg-total') && !!doc.querySelector('.reg-submit'));
 
 /* ── no "free" pricing anywhere ──────────────────────────────────────── */

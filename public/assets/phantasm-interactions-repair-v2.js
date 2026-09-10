@@ -49,6 +49,10 @@
     const cards = Array.from(root.querySelectorAll('.events-page .event-card'));
     cards.forEach((card, index) => {
       const controls = Array.from(card.querySelectorAll('a,button,[role="button"]'));
+      controls.forEach((el) => {
+        if (/^(view details|hide details)$/.test(textOf(el))) el.classList.add('phantasm-view-details');
+        if (/^(rules|view rules|rules & judging)$/.test(textOf(el))) el.classList.add('phantasm-rules-action');
+      });
       const existingRegisters = controls.filter(isRegisterControl);
 
       // Keep exactly one register control per event card.
@@ -98,8 +102,11 @@
   function handleRoute(event) {
     const el = event.target?.closest?.('a,button,[role="button"]');
     if (!el) return;
-    const route = el.dataset?.phantasmRouteV2;
-    if (!route) return;
+    // Resolve home CTAs at click time too: do not depend on observer timing.
+    const text = textOf(el);
+    const route = el.dataset?.phantasmRouteV2 || (isHome() &&
+      (text === 'view events' ? '/events' : text === 'register now' ? '/register' : null));
+    if (!route || event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     event.stopImmediatePropagation();
     window.location.assign(route);
