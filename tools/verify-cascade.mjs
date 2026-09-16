@@ -11,11 +11,16 @@
  */
 import { JSDOM, VirtualConsole } from 'jsdom';
 import { readFileSync, existsSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const pub = join(root, 'public');
+/* api/pricing.js is the authoritative event lineup: one registration card per
+   priced rule, so the card-count assertion follows RULES instead of a hard-coded
+   snapshot (the lineup shrank 15 → 12 after workshops/mehendi were cancelled). */
+const { RULES: PRICING_RULES } = createRequire(import.meta.url)(join(root, 'api', 'pricing.js'));
 const noise = [];
 const vc = new VirtualConsole();
 vc.on('jsdomError', (e) => noise.push('jsdomError: ' + (e.detail?.message || e.message)));
@@ -245,7 +250,7 @@ check('no "Register for Free"', !/register\s+for\s+free/i.test(text()));
 check('no struck-out prices', doc.querySelectorAll('.event-card s, .event-card del, .event-card strike').length === 0);
 const sampleCss = (sheets.find((x) => x.href === '/assets/phantasm-registration-sample.css') || {}).css || '';
 check('strike/del/strike suppressed by the sample layer', /\.reg-card-fee (s|del)/.test(sampleCss) && /display: none !important/.test(sampleCss), 'guarded in CSS');
-check('every card prices in ₹', feeLines().length === 15 && feeLines().every((t) => /₹\s?\d+/.test(t)), feeLines().slice(0, 2).join(' | '));
+check('every card prices in ₹', feeLines().length === PRICING_RULES.length && feeLines().every((t) => /₹\s?\d+/.test(t)), `${feeLines().length}/${PRICING_RULES.length} priced cards`);
 check('CTA reads a plain "Register" while nothing is selected', submit.textContent.trim() === 'Register', JSON.stringify(submit.textContent.trim()));
 
 /* ── behaviour ────────────────────────────────────────────────────────── */
@@ -271,8 +276,24 @@ check('male total identical', total() === picked, total());
 check('CTA shows the ₹ total once an event is picked', /Pay & Register ₹\d+/.test(q('.reg-submit').textContent), q('.reg-submit').textContent.trim());
 check('selected card is marked selected', !!q('.event-card.reg-card.selected') && /Selected/.test(q('.event-card.reg-card.selected .reg-card-state').textContent));
 
-/* ── shipping hygiene ──────────────────────────────────────────────────── */
-check('sample sheet is the last layer', sheetHrefs[sheetHrefs.length - 1] === '/assets/phantasm-registration-sample.css', sheetHrefs[sheetHrefs.length - 1]);
+/* ── shipping hygiene ────────────────────────────────────────────────────
+   The sample sheet must win over every legacy registration-era sheet. Three
+   fix layers merged AFTER it and intentionally sit above it:
+   - phantasm-final-verified-fixes.css   mobile registration readability (PR #7)
+   - phantasm-hero-gap-fix.css           home hero spacing (register page untouched)
+   - phantasm-register-dept-placeholder.css
+     dept hint tint (PR #13) — its own comment documents that it must beat the
+     sample sheet's opaque #746a56 placeholder colour.
+   Anything else stacked above the sample layer fails this check. */
+const POST_SAMPLE_ALLOWLIST = new Set([
+  '/assets/phantasm-final-verified-fixes.css',
+  '/assets/phantasm-hero-gap-fix.css',
+  '/assets/phantasm-register-dept-placeholder.css',
+]);
+const sampleAt = sheetHrefs.indexOf('/assets/phantasm-registration-sample.css');
+check('sample sheet is linked', sampleAt !== -1, sampleAt === -1 ? 'missing from index.html' : `layer ${sampleAt + 1} of ${sheetHrefs.length}`);
+const aboveSample = sampleAt === -1 ? [] : sheetHrefs.slice(sampleAt + 1).filter((h) => !POST_SAMPLE_ALLOWLIST.has(h));
+check('only approved fix layers above the sample sheet', sampleAt !== -1 && aboveSample.length === 0, aboveSample.length ? 'unapproved: ' + aboveSample.map((h) => h.replace('/assets/', '')).join(', ') : (sampleAt !== -1 && sheetHrefs[sheetHrefs.length - 1] === '/assets/phantasm-registration-sample.css' ? 'sample is last' : 'above sample: ' + sheetHrefs.slice(sampleAt + 1).map((h) => h.replace('/assets/', '')).join(', ')));
 for (const gone of ['registration-page-v3.css', 'phantasm-registration-final.css', 'phantasm-registration-pricing-ui.css', 'phantasm-registration-alignment-v1.css', 'phantasm-registration-pc-alignment-v1.css', 'phantasm-mobile-registration-step4.css']) {
   check(`${gone} unlinked`, !sheetHrefs.some((h) => h.includes(gone)));
 }

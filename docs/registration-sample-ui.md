@@ -81,7 +81,7 @@ The bundle is a generated artifact, so the edits are expressed as a replayable p
 ```bash
 node tools/patch-registration.mjs     # anchors on the shipped bundle, refuses to double-apply
 node --check public/assets/index-BVThDX27.js
-node tools/verify-cascade.mjs         # 45 assertions: mount, cascade winner per property, no FREE copy
+node tools/verify-cascade.mjs         # 46 assertions: mount, cascade winner per property, no FREE copy
 node tools/smoke-register.mjs         # behaviour: selection, totals, gender-independence, mode picker
 node tools/verify-routes.mjs          # every route still mounts with no runtime error
 ```
