@@ -242,6 +242,84 @@ app.get('/api/admin/screenshot/:id', safe(async (req, res) => {
   res.send(Buffer.from(shot.b64, 'base64'));
 }));
 
+app.get('/api/admin/mail/probe', safe(async (req, res) => {
+  // This endpoint deliberately sends only to the authenticated organiser and
+  // is capped separately from the normal API limiter. It is for Gmail "Show
+  // original" diagnosis, not for testing participant addresses.
+  const ip = String(req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown').split(',')[0].trim();
+  const key = `mail-probe:${req.admin.email}:${ip}`;
+  const attempts = await store.hit(key, 3600);
+  if (attempts > 5) {
+    res.set('Retry-After', '3600');
+    return res.status(429).json({ success: false, message: 'Mail probe limit reached. Try again later.' });
+  }
+  const recipient = ADMIN_EMAIL;
+  const built = mailer.probeMail({ requestedBy: req.admin.email, recipient });
+  const result = await mail(recipient, built.subject, built.text, built.html, [], 'admin-mail-probe');
+  return res.status(result.sent ? 200 : 503).json({
+    success: result.sent,
+    mailSent: result.sent,
+    recipient,
+    attempt: attempts,
+    ...(result.sent ? {} : { mailError: result.error || 'Mail probe could not be sent.' }),
+    message: result.sent
+      ? `Mail probe sent to ${recipient}. Open it and choose Show original.`
+      : 'Mail probe could not be sent. Check the mail configuration.',
+  });
+}));
+
+/* Recovery for a participant who reached the payment page but never
+   completed the multipart submit. This is intentionally one-way: it may move
+   AWAITING_PAYMENT to PENDING_VERIFICATION, but it never verifies a payment or
+   changes an already-paid record. */
+app.put('/api/admin/payment/mark-received/:id', safe(async (req, res) => {
+  const r = await store.getReg(req.params.id);
+  if (!r) return res.status(404).json({ success: false, message: 'Registration not found.' });
+  if (r.payment_status !== 'AWAITING_PAYMENT') {
+    return res.status(409).json({
+      success: false,
+      paymentStatus: r.payment_status,
+      message: 'Only an awaiting-payment registration can be marked received.',
+    });
+  }
+
+  const now = new Date().toISOString();
+  const suppliedUtr = String(req.body?.utr || req.body?.transactionId || '').trim();
+  if (suppliedUtr) r.utr = suppliedUtr;
+  r.payment_status = 'PENDING_VERIFICATION';
+  r.payment_received_at = now;
+  r.payment_received_by = req.admin.email;
+  // Keep explicit names for operators and for older exports that use the
+  // "marked" terminology.
+  r.payment_marked_received_at = now;
+  r.payment_marked_received_by = req.admin.email;
+  r.updated_at = now;
+  await store.saveReg(r);
+
+  const built = mailer.pendingMail(r);
+  const result = await mail(r.email, built.subject, built.text, built.html, [], 'payment-marked-received');
+  r.pending_mail_sent = result.sent;
+  r.payment_received_mail_sent = result.sent;
+  if (result.sent) {
+    r.payment_received_mail_sent_at = new Date().toISOString();
+    delete r.payment_received_mail_error;
+  } else {
+    r.payment_received_mail_error = result.error || 'Acknowledgment email could not be sent.';
+  }
+  await store.saveReg(r);
+
+  return res.status(200).json({
+    success: true,
+    registrationId: r.id,
+    paymentStatus: r.payment_status,
+    mailSent: result.sent,
+    ...(result.sent ? {} : { mailError: result.error || 'Acknowledgment email could not be sent.' }),
+    message: result.sent
+      ? 'Payment marked received; registration is pending verification and acknowledgment email sent.'
+      : 'Payment marked received; acknowledgment email could not be sent. Use Resend mail to retry.',
+  });
+}));
+
 app.put('/api/admin/payment/verify/:id', safe(async (req, res) => {
   const r = await store.getReg(req.params.id);
   if (!r) return res.status(404).json({ success: false, message: 'Registration not found.' });

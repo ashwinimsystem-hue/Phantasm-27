@@ -119,5 +119,8 @@ Status strings the admin panel depends on (do not change existing ones):
 
 Related endpoints: `POST /api/pre-register` (details snapshot before the
 payment page — no mail sent), `POST /api/register` (payment submit),
-`PUT /api/admin/confirmation/resend/:id` (admin "Resend mail" button).
-See `docs/email-deliverability.md` for the mail setup + spam checklist.
+`PUT /api/admin/confirmation/resend/:id` (admin "Resend mail" button),
+`PUT /api/admin/payment/mark-received/:id` (recover an awaiting-payment row),
+and `GET /api/admin/mail/probe` (admin-only Gmail delivery diagnostic, five
+attempts per hour). See `docs/email-deliverability.md` and
+`docs/admin-runbook.md` for the mail setup, recovery, and spam checklist.

@@ -38,6 +38,7 @@ const EMAIL_PASS = () => String(process.env.EMAIL_PASS || '').trim();
 const CONTACT_TO = () => String(process.env.CONTACT_TO || EMAIL_USER()).trim();
 const FROM_NAME = () => String(process.env.MAIL_FROM_NAME || 'Vaagai 26').trim() || 'Vaagai 26';
 const REPLY_TO = () => String(process.env.MAIL_REPLY_TO || CONTACT_TO()).trim() || EMAIL_USER();
+const MAIL_SEND_TIMEOUT_MS = 15000;
 
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -56,6 +57,10 @@ function getTransporter() {
     port,
     secure: port === 465,
     auth: { user: EMAIL_USER(), pass: EMAIL_PASS() },
+    // Bound the SMTP handshake/socket as well as the send promise below.
+    connectionTimeout: MAIL_SEND_TIMEOUT_MS,
+    greetingTimeout: MAIL_SEND_TIMEOUT_MS,
+    socketTimeout: MAIL_SEND_TIMEOUT_MS,
   });
 }
 
@@ -88,6 +93,20 @@ const footerHtml = (replyTo) => [
  * A mail with attachments that fails is retried once WITHOUT attachments so a
  * participant never loses their confirmation because of a PDF problem.
  */
+async function sendWithTimeout(transporter, message, timeoutMs) {
+  const limit = Math.max(1, Number(timeoutMs) || MAIL_SEND_TIMEOUT_MS);
+  let timer;
+  const operation = Promise.resolve().then(() => transporter.sendMail(message));
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`SMTP send timed out after ${limit} ms.`)), limit);
+  });
+  try {
+    return await Promise.race([operation, timeout]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function sendMail(to, { subject, text, html, attachments = [], kind = 'transactional' } = {}) {
   const cleanTo = String(to || '').trim();
   if (!cleanTo) return { sent: false, error: 'No recipient address.' };
@@ -105,17 +124,25 @@ async function sendMail(to, { subject, text, html, attachments = [], kind = 'tra
     html: String(html || ''),
     messageId: newMessageId(),
     headers: {
+      // Gmail's one-click action requires both headers. The mailto fallback
+      // keeps this useful in clients that do not implement RFC 8058 yet.
       'List-Unsubscribe': `<mailto:${replyTo}?subject=unsubscribe>`,
+      'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
       'X-Vaagai-Mail-Kind': String(kind || 'transactional'),
     },
   };
+  const deadline = Date.now() + MAIL_SEND_TIMEOUT_MS;
+  const attempt = async (message) => {
+    const remaining = Math.max(1, deadline - Date.now());
+    return sendWithTimeout(transporter, message, remaining);
+  };
   try {
-    await transporter.sendMail(attachments && attachments.length ? { ...base, attachments } : base);
+    await attempt(attachments && attachments.length ? { ...base, attachments } : base);
     return { sent: true, error: null };
   } catch (error) {
-    if (attachments && attachments.length) {
+    if (attachments && attachments.length && Date.now() < deadline) {
       try {
-        await transporter.sendMail(base);
+        await attempt(base);
         console.warn('[mailer] attachments failed, delivered without them:', error.message);
         return { sent: true, error: null, attachmentsSkipped: true };
       } catch (retryError) {
@@ -132,7 +159,7 @@ async function sendMail(to, { subject, text, html, attachments = [], kind = 'tra
 
 function pendingMail(reg) {
   const replyTo = REPLY_TO() || EMAIL_USER();
-  const subject = `Vaagai 26 registration received - ${reg.id}`;
+  const subject = `Vaagai 26 registration received for ${reg.name} - ${reg.id}`;
   const text = [
     `Hi ${reg.name},`,
     '',
@@ -158,7 +185,7 @@ function pendingMail(reg) {
 
 function confirmationMail(reg, guideFiles = []) {
   const replyTo = REPLY_TO() || EMAIL_USER();
-  const subject = `Vaagai 26 registration confirmed - ${reg.id}`;
+  const subject = `Vaagai 26 registration confirmed for ${reg.name} - ${reg.id}`;
   const attached = guideFiles.filter(Boolean);
   const guideNoteText = attached.length
     ? `\nEvent guide(s) for your registered events are attached to this email:\n${attached.map((f) => `- ${f}`).join('\n')}`
@@ -191,7 +218,7 @@ function confirmationMail(reg, guideFiles = []) {
 
 function addedEventsMail(reg, addedEvents) {
   const replyTo = REPLY_TO() || EMAIL_USER();
-  const subject = `Vaagai 26 registration ${reg.id} updated - new events added`;
+  const subject = `Vaagai 26 update for ${reg.name} - new events added`;
   const pending = reg.payment_status === 'PENDING_VERIFICATION';
   const text = [
     `Hi ${reg.name},`,
@@ -212,6 +239,29 @@ function addedEventsMail(reg, addedEvents) {
     pending
       ? '<p>Your updated payment is pending admin verification. You will receive a confirmation email once it is verified.</p>'
       : '<p>Your registration remains active.</p>',
+    footerHtml(replyTo),
+  ].join('');
+  return { subject, text, html };
+}
+
+
+function probeMail({ requestedBy, recipient, now = new Date().toISOString() } = {}) {
+  const replyTo = REPLY_TO() || EMAIL_USER();
+  const subject = `Vaagai 26 mail delivery check - ${now}`;
+  const text = [
+    `This is a delivery diagnostic for ${recipient || EMAIL_USER()}.`,
+    `Requested by: ${requestedBy || 'admin'}`,
+    `UTC time: ${now}`,
+    '',
+    'If this message arrives, open Gmail Show original and check SPF, DKIM, DMARC, List-Unsubscribe, and Message-ID.',
+    'This is a diagnostic message, not a participant registration.',
+    footerText(replyTo),
+  ].join('\n');
+  const html = [
+    `<p>This is a delivery diagnostic for <b>${esc(recipient || EMAIL_USER())}</b>.</p>`,
+    `<p><b>Requested by:</b> ${esc(requestedBy || 'admin')}<br><b>UTC time:</b> ${esc(now)}</p>`,
+    '<p>If this message arrives, open Gmail Show original and check SPF, DKIM, DMARC, List-Unsubscribe, and Message-ID.</p>',
+    '<p>This is a diagnostic message, not a participant registration.</p>',
     footerHtml(replyTo),
   ].join('');
   return { subject, text, html };
@@ -295,5 +345,6 @@ module.exports = {
   adminNewRegistrationMail,
   adminUpdatedRegistrationMail,
   contactMail,
+  probeMail,
   CONTACT_TO,
 };
