@@ -16,9 +16,18 @@ says "I didn't get the mail".
 - **One shared mailer** (`api/mailer.js`) for registration, verification,
   admin notifications and the contact form: stable From identity
   (`Vaagai 26 <EMAIL_USER>`), `Reply-To`, unique `Message-ID`,
-  `List-Unsubscribe`, plain-text + HTML bodies that say the same thing, calm
-  ASCII subjects (`Vaagai 26 registration received - REG-0001`), and an
-  organiser footer (who we are + why they got the mail).
+  `List-Unsubscribe` plus `List-Unsubscribe-Post: List-Unsubscribe=One-Click`,
+  plain-text + HTML bodies that say the same thing, calm personalised subjects
+  (`Vaagai 26 registration received for Asha - REG-0001`), and an organiser
+  footer (who we are + why they got the mail).
+- Registration records are saved before mail starts. The admin and participant
+  notifications run concurrently, while the SMTP transport has connection,
+  socket, and 15-second send limits. A slow mail server therefore cannot turn a
+  successful registration into a server error.
+- Payment screenshots are compressed in the browser by
+  `phantasm-payment-upload-fix-v1.js` to keep multipart requests below the
+  Vercel body limit. Proxy HTML errors are converted to actionable messages in
+  the payment page.
 - **Attachments can never eat a confirmation**: if sending *with* the event
   guides fails, the mailer automatically retries *without* them.
 - **Admin "Resend mail" button** on every registration row
@@ -79,3 +88,9 @@ curl -s -X PUT https://<your-app>.vercel.app/api/admin/confirmation/resend/REG-0
 
 `{"mailSent":true}` = accepted by Gmail. `mailError` tells you what Gmail
 rejected (auth, quota, malformed address, …).
+
+For an authenticated organiser-only diagnostic, use
+`GET /api/admin/mail/probe`. It sends to `ADMIN_EMAIL`, is capped at five
+attempts per hour, and puts the exact message headers in a real inbox so Gmail
+**Show original** can be inspected. See `docs/admin-runbook.md` for the curl
+command and payment recovery procedure.

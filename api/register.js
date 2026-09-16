@@ -207,14 +207,24 @@ async function handler(req, res) {
       let adminNotified = false;
       let pendingMailSent = false;
       if (paymentJustCompleted && !addedEvents.length) {
-        // Pre-registered details are now paid: the standard acknowledgment.
-        adminNotified = await sendAdminMail('new', existing);
+        // Save first, then notify both inboxes concurrently. A slow SMTP server
+        // must never make the participant wait for the admin copy (or vice
+        // versa), and both sends are individually timeout-bounded by mailer.
         const built = mailer.pendingMail(existing);
-        pendingMailSent = (await mailer.sendMail(existing.email, { ...built, kind: 'registration-pending' })).sent;
+        const [adminResult, participantResult] = await Promise.all([
+          sendAdminMail('new', existing),
+          mailer.sendMail(existing.email, { ...built, kind: 'registration-pending' }),
+        ]);
+        adminNotified = adminResult;
+        pendingMailSent = participantResult.sent;
       } else if (addedEvents.length) {
-        adminNotified = await sendAdminMail('updated', { reg: existing, addedEvents });
         const built = mailer.addedEventsMail(existing, addedEvents);
-        pendingMailSent = (await mailer.sendMail(existing.email, { ...built, kind: 'registration-updated' })).sent;
+        const [adminResult, participantResult] = await Promise.all([
+          sendAdminMail('updated', { reg: existing, addedEvents }),
+          mailer.sendMail(existing.email, { ...built, kind: 'registration-updated' }),
+        ]);
+        adminNotified = adminResult;
+        pendingMailSent = participantResult.sent;
       }
 
       return res.status(200).json({
@@ -301,9 +311,15 @@ async function handler(req, res) {
 
     await store.saveReg(registration);
 
-    const adminNotified = await sendAdminMail('new', registration);
+    // The record is durable before either SMTP request starts. Send both
+    // notifications concurrently so a slow/failed mailbox cannot prevent the
+    // registration response; mailer enforces a 15 second cap per send.
     const pendingBuilt = mailer.pendingMail(registration);
-    const pendingMailSent = (await mailer.sendMail(email, { ...pendingBuilt, kind: 'registration-pending' })).sent;
+    const [adminNotified, pendingResult] = await Promise.all([
+      sendAdminMail('new', registration),
+      mailer.sendMail(email, { ...pendingBuilt, kind: 'registration-pending' }),
+    ]);
+    const pendingMailSent = pendingResult.sent;
 
     registration.admin_notification_sent = adminNotified;
     registration.pending_mail_sent = pendingMailSent;
