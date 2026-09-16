@@ -6,6 +6,10 @@ const multer = require('multer');
 const fs = require('fs');
 const store = require('./store');
 const { calculateCanonicalAmount } = require('./pricing');
+const mailer = require('./mailer');
+const preRegisterHandler = require('./pre-register');
+const checkEmailHandler = require('./check-email');
+const registerHandler = require('./register');
 const app = express();
 
 const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vaagai2k26@gmail.com').trim().toLowerCase();
@@ -95,34 +99,12 @@ function resolveGuideFile(file) {
   return null;
 }
 
-async function mail(to, subject, text, html, attachments = []) {
-  const user = String(process.env.EMAIL_USER || '').trim();
-  const pass = String(process.env.EMAIL_PASS || '').trim();
-  if (!user || !pass || !to) return false;
-  try {
-    const nodemailer = require('nodemailer');
-    const port = Number(process.env.EMAIL_PORT || 465);
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-      port,
-      secure: port === 465,
-      auth: { user, pass },
-    });
-    try {
-      await transporter.sendMail({ from: `Vaagai'26 <${user}>`, to, subject, text, html, attachments });
-      return true;
-    } catch (sendError) {
-      // An unreadable/oversized attachment must never cost the participant their
-      // confirmation — retry once without attachments.
-      if (!attachments || !attachments.length) throw sendError;
-      console.error('[mail] with attachments failed, retrying without:', sendError.message);
-      await transporter.sendMail({ from: `Vaagai'26 <${user}>`, to, subject, text, html });
-      return true;
-    }
-  } catch (e) {
-    console.error('[mail]', e.message);
-    return false;
-  }
+/* All mail goes through the shared deliverability-focused transport
+   (api/mailer.js). It retries once without attachments, so an unreadable or
+   oversized PDF can never cost a participant their confirmation. */
+async function mail(to, subject, text, html, attachments = [], kind = 'transactional') {
+  const result = await mailer.sendMail(to, { subject, text, html, attachments, kind });
+  return result;
 }
 
 function makeToken(payload) {
@@ -165,13 +147,18 @@ app.get('/api/health', safe(async (_req, res) => res.json({
   emailConfigured: Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS),
 })));
 
-app.post('/api/check-email', safe(async (req, res) => {
-  const email = String(req.body?.email || '').trim().toLowerCase();
-  if (!emailOk(email)) return res.status(400).json({ success: false, message: 'Invalid email address.' });
-  const rows = await store.listRegs();
-  if (rows.some((r) => String(r.email || '').trim().toLowerCase() === email)) return res.status(409).json({ success: false, message: 'This email is already registered.' });
-  res.json({ success: true });
-}));
+/* Same handler Vercel serves at /api/check-email, so local `npm start` behaves
+   exactly like production (returning-participant info instead of a bare 409). */
+app.post('/api/check-email', safe(async (req, res) => checkEmailHandler(req, res)));
+
+/* Participant details are snapshotted here BEFORE the payment page so the
+   admin panel sees every interested participant (see api/pre-register.js). */
+app.post('/api/pre-register', safe(async (req, res) => preRegisterHandler(req, res)));
+
+/* Local-dev parity: on Vercel /api/register is rewritten to api/register.js,
+   but `npm start` only runs this file — mount it here too. Harmless in
+   production (the rewrite wins before this route is ever reached). */
+app.post('/api/register', (req, res) => registerHandler(req, res));
 
 app.post('/api/contact', safe(async (req, res) => {
   const { name, email, message } = req.body || {};
@@ -180,8 +167,9 @@ app.post('/api/contact', safe(async (req, res) => {
   const cleanMessage = String(message || '').trim();
   if (!cleanName || !emailOk(cleanEmail) || !cleanMessage) return res.status(400).json({ success: false, message: 'Invalid contact data.' });
   await store.pushMessage({ name: cleanName, email: cleanEmail, message: cleanMessage, created_at: new Date().toISOString() });
-  const sent = await mail(process.env.CONTACT_TO || 'vaagai2k26@gmail.com', `Vaagai'26 Contact — ${cleanName}`, cleanMessage, `<p><b>From:</b> ${esc(cleanName)} &lt;${esc(cleanEmail)}&gt;</p><p>${esc(cleanMessage)}</p>`);
-  res.status(sent ? 200 : 503).json({ success: sent, message: sent ? 'Message sent.' : 'Message saved, but email delivery is unavailable.' });
+  const built = mailer.contactMail({ cleanName, cleanEmail, cleanMessage });
+  const result = await mail(process.env.CONTACT_TO || 'vaagai2k26@gmail.com', built.subject, built.text, built.html, [], 'contact');
+  res.status(result.sent ? 200 : 503).json({ success: result.sent, message: result.sent ? 'Message sent.' : 'Message saved, but email delivery is unavailable.' });
 }));
 
 app.post('/api/join-team', safe(async (req, res) => {
@@ -263,17 +251,56 @@ app.put('/api/admin/payment/verify/:id', safe(async (req, res) => {
   r.verified_by = req.admin.email;
   await store.saveReg(r);
   const attachments = getEventGuideAttachments(r.event);
-  const guideNoteText = attachments.length
-    ? `\n\nEvent guide(s) for your registered events are attached to this email:${attachments.map((a) => ` ${a.filename}`).join(',')}`
-    : '';
-  const guideNoteHtml = attachments.length
-    ? `<p>The event guide(s) for your registered events are attached to this email:<br>${attachments.map((a) => esc(a.filename)).join('<br>')}</p>`
-    : '';
-  const sent = await mail(r.email, `Vaagai'26 Registration Confirmed — ${r.id}`, `Hi ${r.name},\n\nYour registration ${r.id} has been verified and approved.\nEvents: ${r.event}\nAmount: ₹${r.amount}${r.team_id ? `\nTeam ID: ${r.team_id}` : ''}${guideNoteText}`, `<h2>Registration Confirmed ✓</h2><p>Hi ${esc(r.name)},</p><p>Your registration <b>${esc(r.id)}</b> has been <b>verified and approved</b>.</p><p><b>Events:</b> ${esc(r.event)}</p><p><b>Amount:</b> ₹${r.amount}</p>${r.team_id ? `<p><b>Team ID:</b> ${esc(r.team_id)}</p>` : ''}${guideNoteHtml}`, attachments);
-  r.confirmation_mail_sent = sent;
-  r.confirmation_mail_sent_at = sent ? new Date().toISOString() : null;
+  const built = mailer.confirmationMail(r, attachments.map((a) => a.filename));
+  const result = await mail(r.email, built.subject, built.text, built.html, attachments, 'registration-confirmed');
+  r.confirmation_mail_sent = result.sent;
+  r.confirmation_mail_sent_at = result.sent ? new Date().toISOString() : null;
+  if (!result.sent) r.confirmation_mail_error = result.error || 'Unknown mail error';
+  else delete r.confirmation_mail_error;
   await store.saveReg(r);
-  res.json({ success: true, verified: true, mailSent: sent, message: sent ? 'Payment verified and confirmation email sent.' : 'Payment verified; confirmation email could not be sent.' });
+  res.json({
+    success: true,
+    verified: true,
+    mailSent: result.sent,
+    ...(result.sent ? {} : { mailError: result.error || 'Confirmation email could not be sent.' }),
+    message: result.sent ? 'Payment verified and confirmation email sent.' : 'Payment verified; confirmation email could not be sent. Use Resend mail to retry.',
+  });
+}));
+
+/* Re-send the participant mail for one registration (admin panel "Resend mail"
+   button calls this). Verified registrations get the confirmation mail with
+   event guides; anything else gets the pending acknowledgment instead — the
+   record itself is never modified apart from mail bookkeeping. */
+app.put('/api/admin/confirmation/resend/:id', safe(async (req, res) => {
+  const r = await store.getReg(req.params.id);
+  if (!r) return res.status(404).json({ success: false, message: 'Registration not found.' });
+  const verified = r.payment_status === 'VERIFIED';
+  const attachments = verified ? getEventGuideAttachments(r.event) : [];
+  const built = verified
+    ? mailer.confirmationMail(r, attachments.map((a) => a.filename))
+    : mailer.pendingMail(r);
+  const result = await mail(
+    r.email, built.subject, built.text, built.html, attachments,
+    verified ? 'registration-confirmed' : 'registration-pending',
+  );
+  r.confirmation_mail_sent = verified ? result.sent : Boolean(r.confirmation_mail_sent);
+  if (result.sent) {
+    r.confirmation_mail_sent_at = new Date().toISOString();
+    delete r.confirmation_mail_error;
+    r.last_mail_resent_at = new Date().toISOString();
+    r.last_mail_resent_by = req.admin.email;
+  } else {
+    r.confirmation_mail_error = result.error || 'Unknown mail error';
+  }
+  await store.saveReg(r);
+  res.json({
+    success: result.sent,
+    mailSent: result.sent,
+    ...(result.sent ? {} : { mailError: result.error || 'Email could not be sent.' }),
+    message: result.sent
+      ? (verified ? 'Confirmation email re-sent.' : 'Acknowledgment email re-sent (registration is not verified yet).')
+      : 'Email could not be sent. Check the mail configuration, then retry.',
+  });
 }));
 
 app.put('/api/admin/payment/undo/:id', safe(async (req, res) => {

@@ -113,6 +113,11 @@ vaagai-26-vercel/
 └── package.json
 ```
 
-Status strings the admin panel depends on (do not change):
-`payment_status`: `PENDING_VERIFICATION` → `VERIFIED` ·
+Status strings the admin panel depends on (do not change existing ones):
+`payment_status`: `AWAITING_PAYMENT` (details saved, no payment yet) → `PENDING_VERIFICATION` → `VERIFIED` ·
 `attendance_status`: `PENDING` → `VERIFIED`.
+
+Related endpoints: `POST /api/pre-register` (details snapshot before the
+payment page — no mail sent), `POST /api/register` (payment submit),
+`PUT /api/admin/confirmation/resend/:id` (admin "Resend mail" button).
+See `docs/email-deliverability.md` for the mail setup + spam checklist.

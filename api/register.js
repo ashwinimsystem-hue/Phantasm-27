@@ -2,6 +2,7 @@
 const multer = require('multer');
 const store = require('./store');
 const { calculateCanonicalAmount } = require('./pricing');
+const mailer = require('./mailer');
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -11,6 +12,8 @@ const upload = multer({
     cb(null, allowed.includes(file.mimetype));
   },
 });
+
+const AWAITING_PAYMENT = 'AWAITING_PAYMENT';
 
 const fail = (res, code, message, extra = {}) => res.status(code).json({ success: false, message, ...extra });
 const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
@@ -23,32 +26,17 @@ const parseArray = (v) => {
 const eventTitle = (e) => typeof e === 'string' ? e.trim() : String(e?.title || e?.eventName || e?.eventId || '').trim();
 const uniqueEvents = (...groups) => [...new Set(groups.flatMap((group) => Array.isArray(group) ? group.map(eventTitle).filter(Boolean) : []))];
 
-async function getMailer() {
-  const user = String(process.env.EMAIL_USER || '').trim();
-  const pass = String(process.env.EMAIL_PASS || '').trim();
-  if (!user || !pass) return null;
-  const nodemailer = require('nodemailer');
-  const port = Number(process.env.EMAIL_PORT || 465);
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-    port,
-    secure: port === 465,
-    auth: { user, pass },
-  });
-  return { transporter, user };
-}
+const adminEmail = () => String(process.env.ADMIN_EMAIL || process.env.EMAIL_USER || '').trim().toLowerCase();
 
-async function sendMail(to, subject, text, html) {
+async function sendAdminMail(kind, payload) {
+  const to = adminEmail();
   if (!to) return false;
-  try {
-    const mailer = await getMailer();
-    if (!mailer) return false;
-    await mailer.transporter.sendMail({ from: `Vaagai'26 <${mailer.user}>`, to, subject, text, html });
-    return true;
-  } catch (error) {
-    console.error('[register/mail]', error);
-    return false;
+  if (kind === 'updated') {
+    const built = mailer.adminUpdatedRegistrationMail(payload.reg, payload.addedEvents);
+    return (await mailer.sendMail(to, { ...built, kind: 'admin-registration-updated' })).sent;
   }
+  const built = mailer.adminNewRegistrationMail(payload);
+  return (await mailer.sendMail(to, { ...built, kind: 'admin-registration-new' })).sent;
 }
 
 function ensureCanonicalPricing(result) {
@@ -100,6 +88,7 @@ async function handler(req, res) {
 
     const incomingTeamName = String(data.teamName || '').trim();
     const incomingTeamId = String(data.team_id || data.teamId || '').trim();
+    const incomingUtr = String(data.utr || '').trim();
 
     const existingRows = await store.listRegs();
     const existing = existingRows.find((r) => String(r.email || '').trim().toLowerCase() === email);
@@ -148,6 +137,7 @@ async function handler(req, res) {
 
       const oldAmount = Number(existing.amount) || 0;
       const newTotalAmount = canonicalMergedAmount;
+      const wasAwaitingPayment = existing.payment_status === AWAITING_PAYMENT;
 
       const detailMap = new Map();
       mergedDetails.forEach((item) => {
@@ -168,26 +158,42 @@ async function handler(req, res) {
       existing.teamName = mergedTeamName;
       existing.team_id = mergedTeamId;
 
+      // Did this submission carry a payment for previously-unpaid events?
+      let paymentJustCompleted = false;
       if (addedEvents.length && newTotalAmount > oldAmount) {
         existing.amount = newTotalAmount;
-        existing.utr = String(data.utr || '').trim();
+        existing.utr = incomingUtr;
         existing.payment_status = 'PENDING_VERIFICATION';
         existing.verified_at = null;
         existing.verified_by = null;
         existing.confirmation_mail_sent = false;
+        paymentJustCompleted = true;
+      } else if (wasAwaitingPayment && (incomingUtr || req.file)) {
+        // Details were saved early via /api/pre-register; this submit is the
+        // actual payment for them (same events, so nothing was "added").
+        existing.amount = newTotalAmount;
+        if (incomingUtr) existing.utr = incomingUtr;
+        existing.payment_status = 'PENDING_VERIFICATION';
+        existing.verified_at = null;
+        existing.verified_by = null;
+        existing.confirmation_mail_sent = false;
+        paymentJustCompleted = true;
       } else if (canonicalMergedAmount !== oldAmount) {
         existing.amount = newTotalAmount;
-        existing.utr = String(data.utr || existing.utr || '').trim();
+        existing.utr = incomingUtr || existing.utr || '';
+      } else if (incomingUtr && incomingUtr !== String(existing.utr || '') && existing.payment_status !== 'VERIFIED') {
+        // Same events, same amount, but a corrected UTR — accept it silently.
+        existing.utr = incomingUtr;
       }
 
       let screenshotStored = Boolean(existing.screenshot_stored);
       if (req.file) {
+        existing.has_screenshot = true;
         try {
           const b64 = req.file.buffer.toString('base64');
           if (b64.length <= 750000) {
             await store.putShot(existing.id, req.file.mimetype, b64);
             screenshotStored = true;
-            existing.has_screenshot = true;
             existing.screenshot_stored = true;
           }
         } catch (error) {
@@ -200,20 +206,15 @@ async function handler(req, res) {
 
       let adminNotified = false;
       let pendingMailSent = false;
-      if (addedEvents.length) {
-        const adminEmail = String(process.env.ADMIN_EMAIL || process.env.EMAIL_USER || '').trim().toLowerCase();
-        adminNotified = await sendMail(
-          adminEmail,
-          `Additional Events Added — ${existing.id}`,
-          `Registration ${existing.id}\nName: ${existing.name}\nEmail: ${existing.email}\nAdded Events: ${addedEvents.join(', ')}\nAll Events: ${existing.event}\nAmount: ₹${existing.amount}\nStatus: ${existing.payment_status}`,
-          `<h2>Additional Events Added</h2><p><b>Registration ID:</b> ${existing.id}</p><p><b>Name:</b> ${existing.name}</p><p><b>Email:</b> ${existing.email}</p><p><b>Added Events:</b> ${addedEvents.join(', ')}</p><p><b>All Events:</b> ${existing.event}</p><p><b>Amount:</b> ₹${existing.amount}</p><p><b>Status:</b> ${existing.payment_status}</p>`,
-        );
-        pendingMailSent = await sendMail(
-          existing.email,
-          `Additional Events Added — ${existing.id}`,
-          `Hi ${existing.name},\n\nYour additional event selection has been received.\nAdded events: ${addedEvents.join(', ')}\nYour current events: ${existing.event}\n\n${existing.payment_status === 'PENDING_VERIFICATION' ? 'Your updated payment is pending admin verification.' : 'Your registration remains active.'}`,
-          `<h3>Hi ${existing.name},</h3><p>Your additional event selection has been received.</p><p><b>Added events:</b> ${addedEvents.join(', ')}</p><p><b>Your current events:</b> ${existing.event}</p><p>${existing.payment_status === 'PENDING_VERIFICATION' ? 'Your updated payment is pending admin verification.' : 'Your registration remains active.'}</p>`,
-        );
+      if (paymentJustCompleted && !addedEvents.length) {
+        // Pre-registered details are now paid: the standard acknowledgment.
+        adminNotified = await sendAdminMail('new', existing);
+        const built = mailer.pendingMail(existing);
+        pendingMailSent = (await mailer.sendMail(existing.email, { ...built, kind: 'registration-pending' })).sent;
+      } else if (addedEvents.length) {
+        adminNotified = await sendAdminMail('updated', { reg: existing, addedEvents });
+        const built = mailer.addedEventsMail(existing, addedEvents);
+        pendingMailSent = (await mailer.sendMail(existing.email, { ...built, kind: 'registration-updated' })).sent;
       }
 
       return res.status(200).json({
@@ -230,7 +231,9 @@ async function handler(req, res) {
         screenshotStored,
         message: addedEvents.length
           ? 'Additional events added to your existing registration.'
-          : 'Your registration is already active. Select additional events to continue.',
+          : paymentJustCompleted
+            ? 'Payment submitted successfully and is pending admin verification.'
+            : 'Your registration is already active. Select additional events to continue.',
       });
     }
 
@@ -285,7 +288,7 @@ async function handler(req, res) {
       amount: finalAmount,
       pricing_source: 'server-canonical-rules',
       pricing_unknown_events: [],
-      utr: String(data.utr || '').trim(),
+      utr: incomingUtr,
       payment_status: 'PENDING_VERIFICATION',
       attendance_status: 'PENDING',
       verified_at: null,
@@ -298,22 +301,9 @@ async function handler(req, res) {
 
     await store.saveReg(registration);
 
-    let adminNotified = false;
-    let pendingMailSent = false;
-    const adminEmail = String(process.env.ADMIN_EMAIL || process.env.EMAIL_USER || '').trim().toLowerCase();
-    adminNotified = await sendMail(
-      adminEmail,
-      `New Registration — ${id}`,
-      `Registration ${id}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nCollege: ${college}\nDepartment: ${dept}\nEvents: ${event}\nAmount: ₹${registration.amount}\nUTR: ${registration.utr || 'Not provided'}\nStatus: PENDING_VERIFICATION`,
-      `<h2>New Event Registration</h2><p><b>Registration ID:</b> ${id}</p><p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p><b>Phone:</b> ${phone}</p><p><b>College:</b> ${college}</p><p><b>Department:</b> ${dept}</p><p><b>Events:</b> ${event}</p><p><b>Amount:</b> ₹${registration.amount}</p><p><b>UTR:</b> ${registration.utr || 'Not provided'}</p><p><b>Status:</b> PENDING VERIFICATION</p>`,
-    );
-
-    pendingMailSent = await sendMail(
-      email,
-      `Vaagai'26 Registration Received — ${id}`,
-      `Hi ${name},\n\nYour registration ${id} has been received successfully and is pending admin verification. You will receive the official confirmation email after your payment is verified.`,
-      `<h3>Hi ${name},</h3><p>Your registration <b>${id}</b> has been received successfully and is <b>pending admin verification</b>.</p><p>You will receive the official confirmation email after your payment is verified.</p>`,
-    );
+    const adminNotified = await sendAdminMail('new', registration);
+    const pendingBuilt = mailer.pendingMail(registration);
+    const pendingMailSent = (await mailer.sendMail(email, { ...pendingBuilt, kind: 'registration-pending' })).sent;
 
     registration.admin_notification_sent = adminNotified;
     registration.pending_mail_sent = pendingMailSent;
